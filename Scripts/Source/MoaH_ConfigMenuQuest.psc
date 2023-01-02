@@ -98,12 +98,12 @@ state FlirtToggle
 	
 	event OnSelectST()
 		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
-		SetToggleOptionValueST(IsFlirtOn)
 		if(IsFlirtOn)
 			FlirtDialogueQuest.Stop()
 		else
 			FlirtDialogueQuest.Start()
 		endIf
+		SetToggleOptionValueST(FlirtDialogueQuest.IsRunning())
 	endEvent
 
 	event OnHighlightST()
@@ -122,11 +122,12 @@ state StartIntroductionToggle
 	
 	event OnSelectST()
 		bool optionOn = IntroductionQuest.IsRunning()
-		SetToggleOptionValueST(optionOn)
+		
 		if(!optionOn)
 			IntroductionQuest.Start()
 			;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		endIf
+		SetToggleOptionValueST(IntroductionQuest.IsRunning())
 	endEvent
 
 	event OnHighlightST()
