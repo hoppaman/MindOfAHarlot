@@ -1,0 +1,12 @@
+$PageGeneral		General
+$ToggleFlirt		Enable Flirt
+
+$PageHarlot			Harlot
+$PageSanguine		Sanguine
+$PageSuccubus		Succubus
+$PageDebug			Debug
+
+$HeaderDebug		Debug
+$HeaderQuests		Quests
+$HeaderStanding		Standing
+$HeaderBodyMorphs	Body Morphs
