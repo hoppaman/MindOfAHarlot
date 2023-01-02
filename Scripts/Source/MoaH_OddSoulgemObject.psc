@@ -3,12 +3,12 @@ Scriptname MoaH_OddSoulgemObject extends ObjectReference
 Actor Property PlayerRef Auto
 SexLabFramework Property SexLab Auto
 Actor Property TaraSpirit Auto
+MoaH_HarlotPerk Property HarlotPerk Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 bool done = false
 
 Event OnActivate(ObjectReference akActionRef)
 	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
-	Disable();
 	TriggerSex(PlayerRef)
 EndEvent
 
@@ -33,6 +33,8 @@ Function TriggerSex(Actor akActor)
 		RegisterForModEvent(hook, "AnimationEnd")
 		RegisterForModEvent(hook, "OrgasmStart")
 		thread.StartThread()
+	else
+		Debug.Trace("Player was not valid")
 	EndIf
 EndFunction
 
@@ -59,6 +61,9 @@ endEvent
 function SummonTara(int ThreadID)
 	If(!done)
 		done = true
+		if(!PlayerRef.HasPerk(HarlotPerk))
+			PlayerRef.AddPerk(HarlotPerk)
+		endIf
 		Debug.MessageBox("Sudden light bursts from the gem and it shatters in your hand. You gain control but what you just have experienced was stronger that you ever have had.")
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)

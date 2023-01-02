@@ -17,6 +17,8 @@ bool Property DebugSuccubus = true Auto
 bool Property DebugIntroduction = true Auto
 bool Property DebugSanguine = true Auto
 
+string morphFile = "MoaH_HarlotMorphs.json"
+
 int function GetVersion()
 	return 1
 endFunction
@@ -49,7 +51,7 @@ endEvent
 
 event OnPageReset (string a_page)
 	if (a_page == "")
-		LoadCustomContent("MoaH/title.dds", 258, 95)
+		LoadCustomContent("MoaH/res/mcm_logo.dds", 258, 95)
 		return
 	else
 		UnloadCustomContent()
@@ -61,6 +63,7 @@ event OnPageReset (string a_page)
 	elseIf(a_page == "$PageHarlot")
 		;AddHeaderOption("Desire")
 		AddHeaderOption("$HeaderBodyMorphs")
+		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save")
 		;AddHeaderOption("$HeaderDebug")
 	elseIf(a_page == "$PageSanguine")
 		AddHeaderOption("$HeaderStanding")
@@ -97,9 +100,9 @@ state FlirtToggle
 		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
 		SetToggleOptionValueST(IsFlirtOn)
 		if(IsFlirtOn)
-			FlirtDialogueQuest.Start()
-		else
 			FlirtDialogueQuest.Stop()
+		else
+			FlirtDialogueQuest.Start()
 		endIf
 	endEvent
 
@@ -110,7 +113,7 @@ endState
 
 state StartIntroductionToggle
 	event OnDefaultST()
-		bool optionOn = IntroductionQuest.GetCurrentStageID() > 0
+		bool optionOn = IntroductionQuest.IsRunning()
 		SetToggleOptionValueST(optionOn)
 		if(optionOn)
 			;SetOptionFlagsST(OPTION_FLAG_DISABLED)
@@ -118,7 +121,7 @@ state StartIntroductionToggle
 	endEvent
 	
 	event OnSelectST()
-		bool optionOn = IntroductionQuest.GetCurrentStageID() > 0
+		bool optionOn = IntroductionQuest.IsRunning()
 		SetToggleOptionValueST(optionOn)
 		if(!optionOn)
 			IntroductionQuest.Start()
@@ -142,9 +145,11 @@ state HarlotToggle
 	
 	event OnSelectST()		
 		if(PlayerRef.HasPerk(HarlotPerk))
-			PlayerRef.AddPerk(HarlotPerk)
-		else
+			Debug.Trace("Removing harlot perk")
 			PlayerRef.RemovePerk(HarlotPerk)
+		else
+			Debug.Trace("Adding harlot perk")
+			PlayerRef.AddPerk(HarlotPerk)
 		endIf
 		SetToggleOptionValueST(DebugHarlot)
 	endEvent
@@ -215,3 +220,22 @@ state IntroductionQuestDebugToggle
 	endEvent
 endState
 
+state SaveBodyMorphs
+	event OnDefaultST()
+	endEvent
+
+	event OnSelectST()
+		string[] names = NiOverride.GetMorphNames(PlayerRef)
+		int index = 0
+		while index < names.Length
+			string morphName = names[index]
+			JSONUtil.SetFloatValue(morphFile, morphName, NiOverride.GetMorphValue(PlayerRef,morphName))
+			index += 1
+		endWhile
+		JSONUtil.Unload(morphFile, true, false)
+	endEvent
+	
+	event OnHighlightST()
+		SetInfoText("Save current body values as harlot target body values.")
+	endEvent
+endState
