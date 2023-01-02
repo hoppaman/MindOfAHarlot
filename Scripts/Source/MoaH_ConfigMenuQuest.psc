@@ -12,6 +12,9 @@ MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_HarlotPerk Property HarlotPerk Auto
 
+Spell Property MasturbateAbility Auto
+Spell Property FondleAbility Auto
+
 bool Property DebugHarlot = true Auto
 bool Property DebugSuccubus = true Auto
 bool Property DebugIntroduction = true Auto
@@ -24,17 +27,17 @@ int function GetVersion()
 endFunction
 
 event OnConfigRegister()
-	Debug.Trace("Mind of a Harlot SKY UI registered")
+	Debug.Trace("[MoaH] Mind of a Harlot SKY UI registered")
 endEvent
 
 event OnConfigInit()
 	; Version 1 pages
 	Pages = new string[5]
-	Pages[0] = "$PageGeneral"
-	Pages[1] = "$PageHarlot"
-	Pages[2] = "$PageSanguine"
-	Pages[3] = "$PageSuccubus"
-	Pages[4] = "$PageDebug"
+	Pages[0] = "General"
+	Pages[1] = "Harlot"
+	Pages[2] = "Sanguine"
+	Pages[3] = "Succubus"
+	Pages[4] = "Debug"
 endEvent
 
 event OnConfigOpen()
@@ -45,7 +48,7 @@ endEvent
 
 event OnVersionUpdate(int a_version)
 	if(a_version > CurrentVersion)
-		Debug.Trace("MoaH version update")
+		Debug.Trace("[MoaH] version update old " + CurrentVersion + " new version " + a_version)
 	endIf
 endEvent
 
@@ -57,23 +60,23 @@ event OnPageReset (string a_page)
 		UnloadCustomContent()
 	endIf
 	
-	if(a_page == "$PageGeneral")
+	if(a_page == "General")
 		AddHeaderOption("Dialogue")
 		AddToggleOptionST("FlirtToggle","$ToggleFlirt", FlirtDialogueQuest.IsRunning())
-	elseIf(a_page == "$PageHarlot")
+	elseIf(a_page == "Harlot")
 		;AddHeaderOption("Desire")
-		AddHeaderOption("$HeaderBodyMorphs")
+		AddHeaderOption("BodyMorphs")
 		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save")
-		;AddHeaderOption("$HeaderDebug")
-	elseIf(a_page == "$PageSanguine")
-		AddHeaderOption("$HeaderStanding")
-		AddHeaderOption("$HeaderQuests")
-		;AddHeaderOption("$HeaderDebug")
-	elseIf(a_page == "$PageSuccubus")
+		;AddHeaderOption("Debug")
+	elseIf(a_page == "Sanguine")
+		AddHeaderOption("Standing")
+		AddHeaderOption("Quests")
+		;AddHeaderOption("Debug")
+	elseIf(a_page == "Succubus")
 		;AddHeaderOption("Skills")
 		;AddHeaderOption("Curse")
 		;AddHeaderOption("$HeaderDebug")
-	elseIf(a_page == "$PageDebug")
+	elseIf(a_page == "Debug")
 		AddHeaderOption("Introduction")
 		AddToggleOptionST("IntroductionQuestDebugToggle","$ToggleIntroductionQuestDebug",DebugIntroduction)
 		AddToggleOptionST("StartIntroductionToggle", "Introduction started",IntroductionQuest.GetCurrentStageID() > 0)
@@ -108,6 +111,48 @@ state FlirtToggle
 
 	event OnHighlightST()
 		SetInfoText("Show <flirt> in chat.")
+	endEvent
+endState
+
+state ToggleMasturbateAbility
+	event OnDefaultST()
+		; Default 
+		if(!PlayerRef.HasSpell(MasturbateAbility))
+			PlayerRef.AddSpell(MasturbateAbility)
+		endIf
+		SetToggleOptionValueST(PlayerRef.HasSpell(MasturbateAbility))
+	endEvent
+	event OnSelectST()
+		if(PlayerRef.HasSpell(MasturbateAbility))
+			PlayerRef.RemoveSpell(MasturbateAbility)
+		else
+			PlayerRef.AddSpell(MasturbateAbility)
+		endIf
+		SetToggleOptionValueST(PlayerRef.HasSpell(MasturbateAbility))
+	endEvent
+	event OnHighlightST()
+		SetInfoText("Add/remove masturbate ability.")
+	endEvent
+endState
+
+state ToggleFondleAbility
+	event OnDefaultST()
+		; Default 
+		if(!PlayerRef.HasSpell(FondleAbility))
+			PlayerRef.AddSpell(FondleAbility)
+		endIf
+		SetToggleOptionValueST(PlayerRef.HasSpell(FondleAbility))
+	endEvent
+	event OnSelectST()
+		if(PlayerRef.HasSpell(FondleAbility))
+			PlayerRef.RemoveSpell(FondleAbility)
+		else
+			PlayerRef.AddSpell(FondleAbility)
+		endIf
+		SetToggleOptionValueST(PlayerRef.HasSpell(FondleAbility))
+	endEvent
+	event OnHighlightST()
+		SetInfoText("Add/remove masturbate ability.")
 	endEvent
 endState
 
@@ -146,10 +191,10 @@ state HarlotToggle
 	
 	event OnSelectST()		
 		if(PlayerRef.HasPerk(HarlotPerk))
-			Debug.Trace("Removing harlot perk")
+			Debug.Trace("[MoaH] Removing harlot perk")
 			PlayerRef.RemovePerk(HarlotPerk)
 		else
-			Debug.Trace("Adding harlot perk")
+			Debug.Trace("[MoaH] Adding harlot perk")
 			PlayerRef.AddPerk(HarlotPerk)
 		endIf
 		SetToggleOptionValueST(DebugHarlot)
@@ -226,19 +271,19 @@ state SaveBodyMorphs
 	endEvent
 
 	event OnSelectST()
-		SetOptionFlagsST(OPTION_FLAG_DISABLED)
+		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		string[] names = NiOverride.GetMorphNames(PlayerRef)
 		int index = 0
 		while index < names.Length
 			string morphName = names[index]
 			float morphValue = NiOverride.GetMorphValue(PlayerRef,morphName)
-			Debug.Trace("Got value " + morphValue + " for " + morphName)
+			Debug.Trace("[MoaH] Got value " + morphValue + " for " + morphName)
 			JSONUtil.SetFloatValue(morphFile, morphName, morphValue)
 			index += 1
 		endWhile
 		JSONUtil.Unload(morphFile, true, false)
-		SetOptionFlagsST(0)
-		Debug.MessageBox("Save done")
+		;SetOptionFlagsST(0)
+		Debug.MessageBox("[MoaH] Save done")
 	endEvent
 	
 	event OnHighlightST()

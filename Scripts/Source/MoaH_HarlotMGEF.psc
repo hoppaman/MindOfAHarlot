@@ -18,7 +18,7 @@ Float curseStep = 0.0208
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	if(ConfigMenuQuest.DebugHarlot)
-		Debug.Trace("Harlot status starting.")
+		Debug.Trace("[MoaH] Harlot status starting.")
 	endIf
 	RegisterForUpdateGameTime(UpdateInterval)
 endEvent
@@ -26,7 +26,7 @@ endEvent
 event OnUpdateGameTime()
 	Actor target = GetTargetActor()
 	if(ConfigMenuQuest.DebugHarlot)
-		Debug.Notification("Debug :: Harlot curse update")
+		Debug.Notification("[MoaH] Harlot curse update")
 	endIf
 	Progress = Progress + curseStep
 	if(Progress > 1.0)
@@ -48,7 +48,7 @@ event OnUpdateGameTime()
 		endIf	
 	elseif (!target.HasKeyword(DesireStage1) || target.HasKeyword(DesireStage3) || target.HasKeyword(DesireStage2))
 		if(ConfigMenuQuest.DebugHarlot)
-			Debug.Notification("Debug :: Cleared desire")
+			Debug.Notification("[MoaH] Cleared desire")
 		endIf
 		PO3_SKSEFunctions.AddKeywordToForm(target, DesireStage1)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(target, DesireStage2)
@@ -58,7 +58,7 @@ endEvent
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
 	if(ConfigMenuQuest.DebugHarlot)
-		Debug.Trace("Harlot status ending. On " + akTarget.GetDisplayName())
+		Debug.Trace("[MoaH] Harlot status ending. On " + akTarget.GetDisplayName())
 	endIf
 	UnregisterForUpdateGameTime()
 endEvent

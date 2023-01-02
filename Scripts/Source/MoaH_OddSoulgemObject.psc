@@ -11,7 +11,7 @@ Event OnActivate(ObjectReference akActionRef)
 	Utility.Wait(0.2)
 	TriggerSex(PlayerRef)
 	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
-	Disable()
+	
 EndEvent
 
 Function TriggerSex(Actor akActor)
@@ -19,8 +19,7 @@ Function TriggerSex(Actor akActor)
 		sslBaseAnimation Animation1 = SexLab.GetAnimationByName("Leito Female Dildo Anal")
 
 		IF (Animation1 == None)
-			Debug.Trace("Required animation <leito> are not installed.")
-			Return
+			Debug.Trace("[MoaH] Required animation <leito> are not installed.")
 		EndIf
 		
 		sslBaseAnimation[] AnimationList = new sslBaseAnimation[1]
@@ -28,25 +27,25 @@ Function TriggerSex(Actor akActor)
 		sslThreadModel thread = SexLab.NewThread()
 		thread.AddActor(akActor)
 		thread.SetAnimations(AnimationList)
-		Thread.DisableBedUse(false)
+		Thread.DisableBedUse(true)
 		string hook = "MoaH_introduction"
 		thread.SetHook(hook)
-		Debug.Trace("Hook is " + hook)
-		RegisterForModEvent(hook, "AnimationEnd")
-		RegisterForModEvent(hook, "OrgasmStart")
+		Debug.Trace("[MoaH] Hook is " + hook)
+		RegisterForModEvent(hook+"ae", "AnimationEnd")
+		RegisterForModEvent(hook+"os", "OrgasmStart")
 		thread.StartThread()
 	else
-		Debug.Trace("Player was not valid")
+		Debug.Trace("[MoaH] Player was not valid")
 	EndIf
 EndFunction
 
 event OrgasmStart(int ThreadID, bool HasPlayer)
-	Debug.Trace("OrgasmStart")
+	Debug.Trace("[MoaH] OrgasmStart")
 	SummonTara(ThreadID)
 endEvent
 
 event AnimationEnd(int ThreadID, bool HasPlayer)
-	Debug.Trace("AnimationEnd")
+	Debug.Trace("[MoaH] AnimationEnd")
 	sslThreadController Thread = SexLab.GetController(ThreadID)
 	
 	Actor[] Positions = Thread.Positions
@@ -69,6 +68,7 @@ function SummonTara(int ThreadID)
 		Debug.MessageBox("Sudden light bursts from the gem and it shatters in your hand. You gain control but what you just have experienced was stronger that you ever have had.")
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)
+		Disable()
 		TaraSpirit.MoveTo(PlayerRef, abMatchRotation = false)
 		TaraSpirit.Enable()
 		TaraSpirit.SetLookAt(PlayerRef, false)
