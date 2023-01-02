@@ -8,8 +8,10 @@ MoaH_IntroductionQuest Property IntroductionQuest Auto
 bool done = false
 
 Event OnActivate(ObjectReference akActionRef)
-	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
+	Utility.Wait(0.2)
 	TriggerSex(PlayerRef)
+	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
+	Disable()
 EndEvent
 
 Function TriggerSex(Actor akActor)
@@ -67,7 +69,12 @@ function SummonTara(int ThreadID)
 		Debug.MessageBox("Sudden light bursts from the gem and it shatters in your hand. You gain control but what you just have experienced was stronger that you ever have had.")
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)
+		TaraSpirit.MoveTo(PlayerRef, abMatchRotation = false)
+		TaraSpirit.Enable()
+		TaraSpirit.SetLookAt(PlayerRef, false)
 		IntroductionQuest.SetObjectiveCompleted(30)
+		Utility.Wait(1.0)
+		TaraSpirit.ClearLookAt()
 		; TODO: set player to pose and hold it
 	EndIf
 endFunction
