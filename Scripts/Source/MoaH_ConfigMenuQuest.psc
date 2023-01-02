@@ -12,12 +12,10 @@ MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_HarlotPerk Property HarlotPerk Auto
 
-bool DebugHarlot = true
-bool DebugSuccubus = true
-bool DebugIntroduction = true
-bool DebugSanguine = true
-
-bool IsFlirtOn = true
+bool Property DebugHarlot = true Auto
+bool Property DebugSuccubus = true Auto
+bool Property DebugIntroduction = true Auto
+bool Property DebugSanguine = true Auto
 
 int function GetVersion()
 	return 1
@@ -51,7 +49,7 @@ endEvent
 
 event OnPageReset (string a_page)
 	if (a_page == "")
-		LoadCustomContent("MoaH/title.dds")
+		LoadCustomContent("MoaH/title.dds", 258, 95)
 		return
 	else
 		UnloadCustomContent()
@@ -59,7 +57,7 @@ event OnPageReset (string a_page)
 	
 	if(a_page == "$PageGeneral")
 		AddHeaderOption("Dialogue")
-		AddToggleOptionST("FlirtToggle","$ToggleFlirt", IsFlirtOn)
+		AddToggleOptionST("FlirtToggle","$ToggleFlirt", FlirtDialogueQuest.IsRunning())
 	elseIf(a_page == "$PageHarlot")
 		;AddHeaderOption("Desire")
 		AddHeaderOption("$HeaderBodyMorphs")
@@ -91,12 +89,12 @@ endEvent
 
 state FlirtToggle
 	event OnDefaultST()
-		IsFlirtOn = FlirtDialogueQuest.IsRunning()
+		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
 		SetToggleOptionValueST(IsFlirtOn)
 	endEvent
 	
 	event OnSelectST()
-		IsFlirtOn = !IsFlirtOn
+		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
 		SetToggleOptionValueST(IsFlirtOn)
 		if(IsFlirtOn)
 			FlirtDialogueQuest.Start()
@@ -115,7 +113,7 @@ state StartIntroductionToggle
 		bool optionOn = IntroductionQuest.GetCurrentStageID() > 0
 		SetToggleOptionValueST(optionOn)
 		if(optionOn)
-			SetOptionFlagsST(OPTION_FLAG_DISABLED)
+			;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		endIf
 	endEvent
 	
@@ -124,7 +122,7 @@ state StartIntroductionToggle
 		SetToggleOptionValueST(optionOn)
 		if(!optionOn)
 			IntroductionQuest.Start()
-			SetOptionFlagsST(OPTION_FLAG_DISABLED)
+			;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		endIf
 	endEvent
 
