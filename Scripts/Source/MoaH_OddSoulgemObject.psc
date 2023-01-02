@@ -1,13 +1,11 @@
 Scriptname MoaH_OddSoulgemObject extends ObjectReference  
 
-Actor Property PlayerRef Auto
-SexLabFramework Property SexLab Auto
-Actor Property TaraSpirit Auto
-MoaH_HarlotPerk Property HarlotPerk Auto
-MoaH_IntroductionQuest Property IntroductionQuest Auto
+MoaH_CommonProperties property CommonProperties auto
+
 bool done = false
 
 Event OnActivate(ObjectReference akActionRef)
+	Actor PlayerRef = CommonProperties.PlayerRef
 	Utility.Wait(0.2)
 	TriggerSex(PlayerRef)
 	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
@@ -15,6 +13,7 @@ Event OnActivate(ObjectReference akActionRef)
 EndEvent
 
 Function TriggerSex(Actor akActor)
+	SexLabFramework SexLab = CommonProperties.SexLab
 	If SexLab.IsValidActor(akActor)
 		sslBaseAnimation Animation1 = SexLab.GetAnimationByName("Leito Female Dildo Anal")
 
@@ -46,6 +45,7 @@ endEvent
 
 event AnimationEnd(int ThreadID, bool HasPlayer)
 	Debug.Trace("[MoaH] AnimationEnd")
+	SexLabFramework SexLab = CommonProperties.SexLab
 	sslThreadController Thread = SexLab.GetController(ThreadID)
 	
 	Actor[] Positions = Thread.Positions
@@ -62,6 +62,10 @@ endEvent
 function SummonTara(int ThreadID)
 	If(!done)
 		done = true
+		SexLabFramework SexLab = CommonProperties.SexLab
+		Actor PlayerRef = CommonProperties.PlayerRef
+		MoaH_HarlotPerk HarlotPerk = CommonProperties.HarlotPerk
+		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 		if(!PlayerRef.HasPerk(HarlotPerk))
 			PlayerRef.AddPerk(HarlotPerk)
 		endIf
@@ -69,12 +73,11 @@ function SummonTara(int ThreadID)
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)
 		Disable()
-		TaraSpirit.MoveTo(PlayerRef, abMatchRotation = false)
-		TaraSpirit.Enable()
-		TaraSpirit.SetLookAt(PlayerRef, false)
+		Actor TarasSpirit = PlaceActorAtMe(CommonProperties.TarasSpirit)
+		TarasSpirit.SetLookAt(PlayerRef, false)
 		IntroductionQuest.SetObjectiveCompleted(30)
 		Utility.Wait(1.0)
-		TaraSpirit.ClearLookAt()
+		TarasSpirit.ClearLookAt()
 		; TODO: set player to pose and hold it
 	EndIf
 endFunction

@@ -5,20 +5,7 @@ Scriptname MoaH_ConfigMenuQuest extends SKI_ConfigBase
 ; History
 ;
 
-; Localization in Data/Interface/Translations/MoaH_<lang>.txt
-
-Actor Property PlayerRef Auto
-MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
-MoaH_IntroductionQuest Property IntroductionQuest Auto
-MoaH_HarlotPerk Property HarlotPerk Auto
-
-Spell Property MasturbateAbility Auto
-Spell Property FondleAbility Auto
-
-bool Property DebugHarlot = true Auto
-bool Property DebugSuccubus = true Auto
-bool Property DebugIntroduction = true Auto
-bool Property DebugSanguine = true Auto
+MoaH_CommonProperties property CommonProperties auto
 
 string morphFile = "MoaH_HarlotMorphs.json"
 
@@ -31,6 +18,7 @@ event OnConfigRegister()
 endEvent
 
 event OnConfigInit()
+	SetCursorFillMode(TOP_TO_BOTTOM)
 	; Version 1 pages
 	Pages = new string[5]
 	Pages[0] = "General"
@@ -54,39 +42,77 @@ endEvent
 
 event OnPageReset (string a_page)
 	if (a_page == "")
+		AddHeaderOption("Mind of a Harlot")
+		;AddTextOption(1,"Configuration menu","")
 		LoadCustomContent("MoaH/res/mcm_logo.dds", 258, 95)
 		return
 	else
 		UnloadCustomContent()
 	endIf
 	
+	MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
+	Actor playerRef = CommonProperties.PlayerRef
+	Spell MasturbateAbility = CommonProperties.MasturbateAbility
+	Spell FondleAbility = CommonProperties.FondleAbility
+	Perk HarlotPerk = CommonProperties.HarlotPerk
+	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
+	bool DebugHarlot = CommonProperties.DebugHarlot
+	bool DebugSanguine = CommonProperties.DebugSanguine
+	bool DebugSuccubus = CommonProperties.DebugSuccubus
+	bool DebugIntroduction = CommonProperties.DebugIntroduction
+	
 	if(a_page == "General")
 		AddHeaderOption("Dialogue")
-		AddToggleOptionST("FlirtToggle","$ToggleFlirt", FlirtDialogueQuest.IsRunning())
+		AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
+		AddEmptyOption()
+		AddHeaderOption("Abilities")
+		AddToggleOptionST("ToggleFondleAbility", "Add/remove fondle", PlayerRef.HasSpell(FondleAbility))
+		AddToggleOptionST("ToggleMasturbateAbility", "Add/remove masturbate", PlayerRef.HasSpell(MasturbateAbility))
+		AddEmptyOption()
 	elseIf(a_page == "Harlot")
-		;AddHeaderOption("Desire")
+		bool playerIsHarlot = false
+		string yesNo = "No"
+		if(PlayerRef.HasPerk(HarlotPerk))
+			yesNo = "Yes"
+			playerIsHarlot = true
+		endIf
+		AddTextOptionST("DisplayHarlotST","Is player harlot?",yesNo)
+		int opt = OPTION_FLAG_DISABLED
+		if(playerIsHarlot)
+			opt = 0
+		endIf
+		AddHeaderOption("Desire", opt)
+		AddTextOptionST("DisplayDesireST","Current desire level", opt)
+		AddEmptyOption()
 		AddHeaderOption("BodyMorphs")
 		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save")
+		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Sanguine")
 		AddHeaderOption("Standing")
-		AddHeaderOption("Quests")
+		AddEmptyOption()
+		AddHeaderOption("Sanguine chores")
+		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Succubus")
 		;AddHeaderOption("Skills")
 		;AddHeaderOption("Curse")
-		;AddHeaderOption("$HeaderDebug")
+		;AddHeaderOption("Debug")
 	elseIf(a_page == "Debug")
 		AddHeaderOption("Introduction")
-		AddToggleOptionST("IntroductionQuestDebugToggle","$ToggleIntroductionQuestDebug",DebugIntroduction)
+		AddToggleOptionST("IntroductionQuestDebugToggle","Toggle Introduction Quest Debug",DebugIntroduction)
 		AddToggleOptionST("StartIntroductionToggle", "Introduction started",IntroductionQuest.GetCurrentStageID() > 0)
+		AddEmptyOption()
 		AddHeaderOption("Harlot")
-		AddToggleOptionST("HarlotDebugToggle","$ToggleHarlotDebug",DebugHarlot)
+		AddToggleOptionST("HarlotDebugToggle","Toggle Harlot Debug",DebugHarlot)
 		AddToggleOptionST("HarlotToggle", "You are a harlot", PlayerRef.HasPerk(HarlotPerk))
+		AddEmptyOption()
 		AddHeaderOption("Sanguine")
-		AddToggleOptionST("SanguineDebugToggle","$ToggleSanguineDebug",DebugSanguine)
+		AddToggleOptionST("SanguineDebugToggle","Toggle Sanguine Debug",DebugSanguine)
+		AddEmptyOption()
 		AddHeaderOption("Introduction")
-		AddToggleOptionST("SuccubusDebugToggle","$ToggleSuccubusDebug",DebugSuccubus)
+		AddToggleOptionST("SuccubusDebugToggle","Toggle Succubus Debug",DebugSuccubus)
+		AddEmptyOption()
 	else
 		; unknown
 	endIf
@@ -95,11 +121,13 @@ endEvent
 
 state FlirtToggle
 	event OnDefaultST()
+		MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
 		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
 		SetToggleOptionValueST(IsFlirtOn)
 	endEvent
 	
 	event OnSelectST()
+		MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
 		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
 		if(IsFlirtOn)
 			FlirtDialogueQuest.Stop()
@@ -117,12 +145,16 @@ endState
 state ToggleMasturbateAbility
 	event OnDefaultST()
 		; Default 
+		Actor playerRef = CommonProperties.PlayerRef
+		Spell MasturbateAbility = CommonProperties.MasturbateAbility
 		if(!PlayerRef.HasSpell(MasturbateAbility))
 			PlayerRef.AddSpell(MasturbateAbility)
 		endIf
 		SetToggleOptionValueST(PlayerRef.HasSpell(MasturbateAbility))
 	endEvent
 	event OnSelectST()
+		Actor playerRef = CommonProperties.PlayerRef
+		Spell MasturbateAbility = CommonProperties.MasturbateAbility
 		if(PlayerRef.HasSpell(MasturbateAbility))
 			PlayerRef.RemoveSpell(MasturbateAbility)
 		else
@@ -138,12 +170,16 @@ endState
 state ToggleFondleAbility
 	event OnDefaultST()
 		; Default 
+		Actor playerRef = CommonProperties.PlayerRef
+		Spell FondleAbility = CommonProperties.FondleAbility
 		if(!PlayerRef.HasSpell(FondleAbility))
 			PlayerRef.AddSpell(FondleAbility)
 		endIf
 		SetToggleOptionValueST(PlayerRef.HasSpell(FondleAbility))
 	endEvent
 	event OnSelectST()
+		Actor playerRef = CommonProperties.PlayerRef
+		Spell FondleAbility = CommonProperties.FondleAbility
 		if(PlayerRef.HasSpell(FondleAbility))
 			PlayerRef.RemoveSpell(FondleAbility)
 		else
@@ -156,8 +192,31 @@ state ToggleFondleAbility
 	endEvent
 endState
 
+state DisplayDesireST
+	event OnDefaultST()
+		Actor playerRef = CommonProperties.PlayerRef
+		Perk HarlotPerk = CommonProperties.HarlotPerk
+		if(PlayerRef.HasPerk(HarlotPerk))
+			
+			if(PlayerRef.HasKeyword(CommonProperties.DesireStage3))
+				SetTextOptionValueST("3")
+			elseif(PlayerRef.HasKeyword(CommonProperties.DesireStage2))
+				SetTextOptionValueST("2")
+			elseif(PlayerRef.HasKeyword(CommonProperties.DesireStage1))
+				SetTextOptionValueST("1")
+			endIf
+		else
+			SetTextOptionValueST("-")
+		endIf
+	endEvent
+	event OnHighlightST()
+		SetInfoText("Players current harlot desire. [0,1]")
+	endEvent
+endState
+
 state StartIntroductionToggle
 	event OnDefaultST()
+		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 		bool optionOn = IntroductionQuest.IsRunning()
 		SetToggleOptionValueST(optionOn)
 		if(optionOn)
@@ -166,8 +225,8 @@ state StartIntroductionToggle
 	endEvent
 	
 	event OnSelectST()
+		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 		bool optionOn = IntroductionQuest.IsRunning()
-		
 		if(!optionOn)
 			IntroductionQuest.Start()
 			;SetOptionFlagsST(OPTION_FLAG_DISABLED)
@@ -176,7 +235,8 @@ state StartIntroductionToggle
 	endEvent
 
 	event OnHighlightST()
-		if(IntroductionQuest.GetCurrentStageID() > 0)
+		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
+		if(IntroductionQuest.IsRunning())
 			SetInfoText("Introduction quest is running.")
 		else
 			SetInfoText("Start introduction quest. You should not do this before DA14.")
@@ -186,10 +246,14 @@ endState
 
 state HarlotToggle
 	event OnDefaultST()
+		Actor playerRef = CommonProperties.PlayerRef
+		Perk HarlotPerk = CommonProperties.HarlotPerk
 		SetToggleOptionValueST(PlayerRef.HasPerk(HarlotPerk))
 	endEvent
 	
-	event OnSelectST()		
+	event OnSelectST()
+		Actor playerRef = CommonProperties.PlayerRef
+		Perk HarlotPerk = CommonProperties.HarlotPerk
 		if(PlayerRef.HasPerk(HarlotPerk))
 			Debug.Trace("[MoaH] Removing harlot perk")
 			PlayerRef.RemovePerk(HarlotPerk)
@@ -197,7 +261,7 @@ state HarlotToggle
 			Debug.Trace("[MoaH] Adding harlot perk")
 			PlayerRef.AddPerk(HarlotPerk)
 		endIf
-		SetToggleOptionValueST(DebugHarlot)
+		SetToggleOptionValueST(PlayerRef.HasPerk(HarlotPerk))
 	endEvent
 
 	event OnHighlightST()
@@ -208,12 +272,15 @@ endState
 ; Debug
 state HarlotDebugToggle
 	event OnDefaultST()
+		bool DebugHarlot = CommonProperties.DebugHarlot
 		SetToggleOptionValueST(DebugHarlot)
 	endEvent
 	
 	event OnSelectST()
+		bool DebugHarlot = CommonProperties.DebugHarlot
 		DebugHarlot = !DebugHarlot
 		SetToggleOptionValueST(DebugHarlot)
+		CommonProperties.DebugHarlot = DebugHarlot
 	endEvent
 
 	event OnHighlightST()
@@ -223,12 +290,15 @@ endState
 
 state SanguineDebugToggle
 	event OnDefaultST()
+		bool DebugSanguine = CommonProperties.DebugSanguine
 		SetToggleOptionValueST(DebugSanguine)
 	endEvent
 	
 	event OnSelectST()
+		bool DebugSanguine = CommonProperties.DebugSanguine
 		DebugSanguine = !DebugSanguine
 		SetToggleOptionValueST(DebugSanguine)
+		CommonProperties.DebugSanguine = DebugSanguine
 	endEvent
 
 	event OnHighlightST()
@@ -238,12 +308,15 @@ endState
 
 state SuccubusDebugToggle
 	event OnDefaultST()
+		bool DebugSuccubus = CommonProperties.DebugSuccubus
 		SetToggleOptionValueST(DebugSuccubus)
 	endEvent
 	
 	event OnSelectST()
+		bool DebugSuccubus = CommonProperties.DebugSuccubus
 		DebugSuccubus = !DebugSuccubus
 		SetToggleOptionValueST(DebugSuccubus)
+		CommonProperties.DebugSuccubus = DebugSuccubus
 	endEvent
 
 	event OnHighlightST()
@@ -253,12 +326,15 @@ endState
 
 state IntroductionQuestDebugToggle
 	event OnDefaultST()
+		bool DebugIntroduction = CommonProperties.DebugIntroduction
 		SetToggleOptionValueST(DebugIntroduction)
 	endEvent
 	
 	event OnSelectST()
+		bool DebugIntroduction = CommonProperties.DebugIntroduction
 		DebugIntroduction = !DebugIntroduction
 		SetToggleOptionValueST(DebugIntroduction)
+		CommonProperties.DebugIntroduction = DebugIntroduction
 	endEvent
 
 	event OnHighlightST()
@@ -271,6 +347,7 @@ state SaveBodyMorphs
 	endEvent
 
 	event OnSelectST()
+		Actor playerRef = CommonProperties.PlayerRef
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		string[] names = NiOverride.GetMorphNames(PlayerRef)
 		int index = 0

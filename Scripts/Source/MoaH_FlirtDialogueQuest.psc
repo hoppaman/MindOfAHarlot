@@ -1,1 +1,3 @@
 Scriptname MoaH_FlirtDialogueQuest extends Quest  
+
+MoaH_CommonProperties property CommonProperties auto

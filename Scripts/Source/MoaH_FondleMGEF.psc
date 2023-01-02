@@ -1,8 +1,9 @@
 Scriptname MoaH_FondleMGEF extends activemagiceffect  
 
-SexLabFramework Property SexLab Auto
+MoaH_CommonProperties property CommonProperties auto
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
+	SexLabFramework SexLab = CommonProperties.SexLab
 	Debug.Trace("[MoaH] Fondle starting.")
 	int gender = SexLab.GetGender(akCaster)
 	if( gender == 0) ; is Male

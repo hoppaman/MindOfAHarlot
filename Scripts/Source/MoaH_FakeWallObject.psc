@@ -1,8 +1,9 @@
 Scriptname MoaH_FakeWallObject extends ObjectReference  
 
-MoaH_IntroductionQuest Property IntroductionQuest Auto
+MoaH_CommonProperties property CommonProperties auto
 
 Event OnActivate(ObjectReference akActionRef)
+	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 	if (!IntroductionQuest.IsObjectiveCompleted(20))
 		Debug.Notification("As you touch the " + GetDisplayName() +". It begins to fade.")
 		Disable(true)
