@@ -5,5 +5,5 @@ MoaH_CommonProperties property CommonProperties auto
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	SexLabFramework SexLab = CommonProperties.SexLab
 	Debug.Trace("[MoaH] Masturbate starting.")
-	SexLab.QuickStart(akCaster)
+	MOAH_Utility.Masturbate(akCaster)
 endEvent

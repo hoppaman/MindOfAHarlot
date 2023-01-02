@@ -27,11 +27,14 @@ Function TriggerSex(Actor akActor)
 		thread.AddActor(akActor)
 		thread.SetAnimations(AnimationList)
 		Thread.DisableBedUse(true)
-		string hook = "MoaH_introduction"
-		thread.SetHook(hook)
-		Debug.Trace("[MoaH] Hook is " + hook)
-		RegisterForModEvent(hook+"ae", "AnimationEnd")
-		RegisterForModEvent(hook+"os", "OrgasmStart")
+		; hook format Hook<animation event>_<hook name>
+		string hookName = "MoaHIntroduction"
+		string hookAnimationEnd = "HookAnimationEnd_"+hookName
+		string hookOrgasmStart = "HookOrgasmStart_"+hookName
+		thread.SetHook(hookName)
+		Debug.Trace("[MoaH] starting with hooks " + hookAnimationEnd + " " + hookOrgasmStart)
+		RegisterForModEvent(hookAnimationEnd, "AnimationEnd")
+		RegisterForModEvent(hookOrgasmStart, "OrgasmStart")
 		thread.StartThread()
 	else
 		Debug.Trace("[MoaH] Player was not valid")
