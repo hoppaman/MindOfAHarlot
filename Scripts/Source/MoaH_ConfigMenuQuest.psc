@@ -226,14 +226,19 @@ state SaveBodyMorphs
 	endEvent
 
 	event OnSelectST()
+		SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		string[] names = NiOverride.GetMorphNames(PlayerRef)
 		int index = 0
 		while index < names.Length
 			string morphName = names[index]
-			JSONUtil.SetFloatValue(morphFile, morphName, NiOverride.GetMorphValue(PlayerRef,morphName))
+			float morphValue = NiOverride.GetMorphValue(PlayerRef,morphName)
+			Debug.Trace("Got value " + morphValue + " for " + morphName)
+			JSONUtil.SetFloatValue(morphFile, morphName, morphValue)
 			index += 1
 		endWhile
 		JSONUtil.Unload(morphFile, true, false)
+		SetOptionFlagsST(0)
+		Debug.MessageBox("Save done")
 	endEvent
 	
 	event OnHighlightST()
