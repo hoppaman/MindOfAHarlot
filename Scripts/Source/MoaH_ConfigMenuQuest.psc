@@ -10,8 +10,7 @@ Scriptname MoaH_ConfigMenuQuest extends SKI_ConfigBase
 Actor Property PlayerRef Auto
 MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
-Spell Property HarlotSelfSpell Auto
-Keyword Property HarlotKeyword Auto
+MoaH_HarlotPerk Property HarlotPerk Auto
 
 bool DebugHarlot = true
 bool DebugSuccubus = true
@@ -79,7 +78,7 @@ event OnPageReset (string a_page)
 		AddToggleOptionST("StartIntroductionToggle", "Introduction started",IntroductionQuest.GetCurrentStageID() > 0)
 		AddHeaderOption("Harlot")
 		AddToggleOptionST("HarlotDebugToggle","$ToggleHarlotDebug",DebugHarlot)
-		AddToggleOptionST("HarlotToggle", "You are a harlot", PlayerRef.HasKeyword(HarlotKeyword))
+		AddToggleOptionST("HarlotToggle", "You are a harlot", PlayerRef.HasPerk(HarlotPerk))
 		AddHeaderOption("Sanguine")
 		AddToggleOptionST("SanguineDebugToggle","$ToggleSanguineDebug",DebugSanguine)
 		AddHeaderOption("Introduction")
@@ -123,7 +122,7 @@ state StartIntroductionToggle
 	event OnSelectST()
 		bool optionOn = IntroductionQuest.GetCurrentStageID() > 0
 		SetToggleOptionValueST(optionOn)
-		if(optionOn)
+		if(!optionOn)
 			IntroductionQuest.Start()
 			SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		endIf
@@ -140,14 +139,14 @@ endState
 
 state HarlotToggle
 	event OnDefaultST()
-		SetToggleOptionValueST(PlayerRef.HasKeyword(HarlotKeyword))
+		SetToggleOptionValueST(PlayerRef.HasPerk(HarlotPerk))
 	endEvent
 	
 	event OnSelectST()		
-		if(PlayerRef.HasKeyword(HarlotKeyword))
-			PlayerRef.DispelSpell(HarlotSelfSpell)
+		if(PlayerRef.HasPerk(HarlotPerk))
+			PlayerRef.AddPerk(HarlotPerk)
 		else
-			HarlotSelfSpell.Cast(PlayerRef,PlayerRef)
+			PlayerRef.RemovePerk(HarlotPerk)
 		endIf
 		SetToggleOptionValueST(DebugHarlot)
 	endEvent

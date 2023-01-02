@@ -1,6 +1,6 @@
 Scriptname MoaH_HarlotMGEF extends activemagiceffect  
 
-;MoaH_ConfigMenuQuest Property ConfigMenuQuest Auto
+MoaH_ConfigMenuQuest Property ConfigMenuQuest Auto
 Quest Property IntroductionQuest Auto
 Actor Property PlayerRef Auto
 
@@ -17,16 +17,17 @@ Float Property UpdateInterval = 0.5 Auto ; every half hour gt
 Float curseStep = 0.0208
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
-	Debug.Trace("Harlot status starting.")
-	akTarget.AddPerk(HarlotPerk)
+	if(ConfigMenuQuest.DebugHarlot)
+		Debug.Trace("Harlot status starting.")
+	endIf
 	RegisterForUpdateGameTime(UpdateInterval)
 endEvent
 
 event OnUpdateGameTime()
 	Actor target = GetTargetActor()
-;	if(ConfigMenuQuest.DebugAll)
+	if(ConfigMenuQuest.DebugHarlot)
 		Debug.Notification("Debug :: Harlot curse update")
-;	endIf
+	endIf
 	Progress = Progress + curseStep
 	if(Progress > 1.0)
 		Progress = 1.0
@@ -46,9 +47,9 @@ event OnUpdateGameTime()
 			Debug.MessageBox("My hands wonder on my body and its tingling. My nipples are visibly stiff and its difficult to hold the excitement. Its so difficult to think now!")
 		endIf	
 	elseif (!target.HasKeyword(DesireStage1) || target.HasKeyword(DesireStage3) || target.HasKeyword(DesireStage2))
-;		if(ConfigMenuQuest.DebugAll)
+		if(ConfigMenuQuest.DebugHarlot)
 			Debug.Notification("Debug :: Cleared desire")
-;		endIf
+		endIf
 		PO3_SKSEFunctions.AddKeywordToForm(target, DesireStage1)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(target, DesireStage2)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(target, DesireStage3)
@@ -56,7 +57,8 @@ event OnUpdateGameTime()
 endEvent
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
-	Debug.Trace("Harlot status ending.")
-	akTarget.RemovePerk(HarlotPerk)
+	if(ConfigMenuQuest.DebugHarlot)
+		Debug.Trace("Harlot status ending. On " + akTarget.GetDisplayName())
+	endIf
 	UnregisterForUpdateGameTime()
 endEvent
