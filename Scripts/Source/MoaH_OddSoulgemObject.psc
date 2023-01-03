@@ -15,7 +15,7 @@ EndEvent
 Function TriggerSex(Actor akActor)
 	SexLabFramework SexLab = CommonProperties.SexLab
 	If SexLab.IsValidActor(akActor)
-		sslBaseAnimation Animation1 = SexLab.GetAnimationByName("Leito Female Dildo Anal")
+		sslBaseAnimation Animation1 = SexLab.GetAnimationByName("Leito Female Dildo Vaginal")
 
 		IF (Animation1 == None)
 			Debug.Trace("[MoaH] Required animation <leito> are not installed.")
