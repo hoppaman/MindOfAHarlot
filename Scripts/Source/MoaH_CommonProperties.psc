@@ -48,12 +48,12 @@ bool Property DebugIntroduction = true Auto
 bool Property DebugSanguine = true Auto
 
 ; Harlot
-int Property HarlotScoreMaxRank = 255 Auto
-int Property HarlotScorePerDay = 36 Auto ; 255.0/7.0
+int Property HarlotScoreMaxRank = 127 Auto
+int Property HarlotScorePerDay = 24 Auto ; 255.0/7.0
 
-Float Property HarlotScoreUpdateIntervalGameTime = 0.5 Auto ; every half hour gt
+Float Property HarlotScoreUpdateIntervalGameTime = 1.0 Auto ; every half hour gt
 ; Curse will fulfill in a 2 days
-int Property ScoreProgressStepPerInterval = 18 Auto ; (255/7)/(1/0.5)
+int Property ScoreProgressStepPerInterval = 1 Auto ; (255/7)/(1/0.5)
 
 Spell Property TurnHarlotAbility Auto
 

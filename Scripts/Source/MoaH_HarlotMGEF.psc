@@ -53,12 +53,8 @@ int function UpdateScore(Actor akTarget)
 	
 	if(Score < HarlotScoreMaxRank)
 		int Step = CommonProperties.ScoreProgressStepPerInterval
-		Score = Score + Step
+		Score = PapyrusUtil.ClampInt(Score + Step, 0, HarlotScoreMaxRank)
 		
-		if(Score > HarlotScoreMaxRank)
-			Step = Step-(Score-HarlotScoreMaxRank)
-			Score = HarlotScoreMaxRank
-		endIf
 		akTarget.ModFactionRank(HarlotScoreFaction, Step)
 	endIf
 	
@@ -73,11 +69,11 @@ function UpdateKeywords(Actor akTarget, int Score)
 	Keyword DesireStage1 = CommonProperties.DesireStage1
 	Keyword DesireStage2 = CommonProperties.DesireStage2
 	Keyword DesireStage3 = CommonProperties.DesireStage3
-	if (!akTarget.HasKeyword(DesireStage3) && Score > 192) ; {HarlotScoreMaxRank*2/3}
+	if (!akTarget.HasKeyword(DesireStage3) && Score > 90) ; {HarlotScoreMaxRank*2/3}
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage3)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage2)
 		UpdateAbilities(akTarget,3)
-	elseif(!akTarget.HasKeyword(DesireStage2) && Score > 128) ; {HarlotScoreMaxRank/2}
+	elseif(!akTarget.HasKeyword(DesireStage2) && Score > 40) ; {HarlotScoreMaxRank/2}
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage2)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage1)
 		UpdateAbilities(akTarget,2)
