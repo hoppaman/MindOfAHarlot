@@ -7,7 +7,11 @@ Actor Property PlayerRef Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_SuccubusIntroductionQuest Property SuccubusIntroductionQuest Auto
+
+; Integrations
 SexLabFramework Property SexLab Auto
+SOS_SetupQuest_Script Property SOSSetupQuest Auto
+SLSF_CompatibilityScript Property SLSF Auto
 
 ; Keywords
 Keyword Property DesireStage1  Auto

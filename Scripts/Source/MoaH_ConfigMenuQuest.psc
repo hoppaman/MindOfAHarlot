@@ -356,6 +356,8 @@ state SaveBodyMorphs
 	event OnSelectST()
 		Actor playerRef = CommonProperties.PlayerRef
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
+		JSONUtil.Load(morphFile)
+		JSONUtil.ClearAll(morphFile)
 		string[] names = NiOverride.GetMorphNames(PlayerRef)
 		int indexNames = 0
 		int indexKeys = 0

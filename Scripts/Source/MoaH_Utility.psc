@@ -76,7 +76,7 @@ Function SetAnimating(actor akActor, bool isAnimating=true)
 	EndIf
 EndFunction
 
-bool[] Function StartThirdPersonAnimation(actor akActor, string animation)
+bool[] Function StartThirdPersonAnimation(actor akActor, Idle animation)
 	Debug.Trace("StartThirdPersonAnimation("+akActor.GetDisplayName()+","+animation+")")
 	bool[] ret = new bool[2]
 	if IsAnimating(akActor)
@@ -130,11 +130,11 @@ bool[] Function StartThirdPersonAnimation(actor akActor, string animation)
 		akActor.SetDontMove(true)
 	EndIf
 	SetAnimating(akActor, true)
-	Debug.SendAnimationEvent(akActor, animation)
+	akActor.PlayIdle(animation)
 	return ret
 EndFunction
 
-Function PlayThirdPersonAnimation(actor akActor, string animation, int duration)
+Function PlayThirdPersonAnimation(actor akActor, Idle animation, int duration)
 	Debug.Trace("PlayThirdPersonAnimation("+akActor.GetLeveledActorBase().GetName()+","+animation+","+duration+")")
 	if IsAnimating(akActor)
 		Debug.Trace("Actor already in animating faction.")
