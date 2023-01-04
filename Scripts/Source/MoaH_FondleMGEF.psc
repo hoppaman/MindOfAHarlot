@@ -1,6 +1,7 @@
 Scriptname MoaH_FondleMGEF extends activemagiceffect  
 
 MoaH_CommonProperties property CommonProperties auto
+MoaH_Utility property MUtility auto
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	SexLabFramework SexLab = CommonProperties.SexLab
@@ -9,18 +10,18 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	if( gender == 0) ; is Male
 		int r = Utility.RandomInt(0,2)
 		if(r == 0)
-			Debug.SendAnimationEvent(akCaster, "Aroused_Male_Idle1")
+			MUtility.PlayThirdPersonAnimation(akCaster, "Aroused_Male_Idle1", 2)
 		elseif(r == 1)
-			Debug.SendAnimationEvent(akCaster, "Aroused_Male_Idle2")
+			MUtility.PlayThirdPersonAnimation(akCaster, "Aroused_Male_Idle2", 2)
 		endIf
 	elseif(gender == 1) ; female
 		int r = Utility.RandomInt(0,2)
 		if(r == 0)
-			Debug.SendAnimationEvent(akCaster, "Aroused_Idle1")
+			MUtility.PlayThirdPersonAnimation(akCaster, "Aroused_Idle1", 2)
 		elseif(r == 1)
-			Debug.SendAnimationEvent(akCaster, "Aroused_Idle2")
+			MUtility.PlayThirdPersonAnimation(akCaster, "Aroused_Idle2", 2)
 		elseif(r == 2)
-			Debug.SendAnimationEvent(akCaster, "Aroused_Tease")
+			MUtility.PlayThirdPersonAnimation(akCaster, "Aroused_Tease", 2)
 		endIf
 	else
 		Debug.Trace("[MoaH] Creature cannot fondle.")

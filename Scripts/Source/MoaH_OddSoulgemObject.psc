@@ -79,6 +79,7 @@ function SummonTara(int ThreadID)
 		Actor TarasSpirit = PlaceActorAtMe(CommonProperties.TarasSpirit)
 		TarasSpirit.SetLookAt(PlayerRef, false)
 		IntroductionQuest.SetObjectiveCompleted(30)
+		CommonProperties.Tara = TarasSpirit
 		Utility.Wait(1.0)
 		TarasSpirit.ClearLookAt()
 		; TODO: set player to pose and hold it

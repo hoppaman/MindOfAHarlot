@@ -9,14 +9,26 @@ MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 SexLabFramework Property SexLab Auto
 
 ; Keywords
-Keyword Property DesireStage1  Auto 
-Keyword Property DesireStage2  Auto 
-Keyword Property DesireStage3  Auto  
+Keyword Property DesireStage1  Auto
+{Feels the effects}
+Keyword Property DesireStage2  Auto
+{Effects get much stronger}
+Keyword Property DesireStage3  Auto
+{Constantly aroused and horny}
 
 ; Perks/Spell/MGEF
-MoaH_HarlotPerk Property HarlotPerk  Auto  
+MoaH_HarlotPerk Property HarlotPerk  Auto
 Spell Property MasturbateAbility Auto
 Spell Property FondleAbility Auto
+
+; Factions
+Faction property HarlotFaction Auto
+Faction property HarlotScoreFaction Auto
+Faction property SanguineStandingFaction Auto
+Faction property SuccubusFaction Auto
+Faction property SuccubusSatiationFaction Auto
+Faction property IsAnimatingFaction Auto
+
 
 ; Active properties
 
@@ -31,7 +43,36 @@ bool Property DebugIntroduction = true Auto
 bool Property DebugSanguine = true Auto
 
 ; Harlot
-Float Property PlayerHarlotProgress = 0.0 Auto  
-Float Property HarlotUpdateIntervalGameTime = 0.5 Auto ; every half hour gt
+int Property HarlotScoreMaxRank = 255 Auto
+int Property HarlotScorePerDay = 36 Auto ; 255.0/7.0
+
+Float Property HarlotScoreUpdateIntervalGameTime = 0.5 Auto ; every half hour gt
 ; Curse will fulfill in a 2 days
-Float Property DesireProgressStep = 0.0208 Auto
+int Property ScoreProgressStepPerInterval = 18 Auto ; (255/7)/(1/0.5)
+
+; Harlot buffs and debuffs
+
+; Long nails
+Spell Property HarlotLongNailsStage1Ability Auto
+Spell Property HarlotLongNailsStage2Ability Auto
+Spell Property HarlotLongNailsStage3Ability Auto
+
+; Light minded
+Spell Property HarlotLightMindedStage1Ability Auto
+Spell Property HarlotLightMindedStage2Ability Auto
+Spell Property HarlotLightMindedStage3Ability Auto
+
+; Pretty
+Spell Property HarlotPrettyStage1Ability Auto
+Spell Property HarlotPrettyStage2Ability Auto
+Spell Property HarlotPrettyStage3Ability Auto
+
+; Fragile
+Spell Property HarlotFragileStage1Ability Auto
+Spell Property HarlotFragileStage2Ability Auto
+Spell Property HarlotFragileStage3Ability Auto
+
+; Cunning
+Spell Property HarlotCunningStage1Ability Auto
+Spell Property HarlotCunningStage2Ability Auto
+Spell Property HarlotCunningStage3Ability Auto
