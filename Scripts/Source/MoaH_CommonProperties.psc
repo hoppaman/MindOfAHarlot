@@ -1,4 +1,4 @@
-Scriptname MoaH_CommonProperties extends Quest
+Scriptname MoaH_CommonProperties extends MoaH_QuestBase
 
 ; Actors
 Actor Property PlayerRef Auto

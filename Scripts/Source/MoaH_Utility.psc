@@ -1,4 +1,4 @@
-scriptname MoaH_Utility extends Quest
+scriptname MoaH_Utility extends MoaH_QuestBase
 
 MoaH_CommonProperties Property CommonProperties Auto
 

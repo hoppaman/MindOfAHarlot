@@ -1,4 +1,4 @@
-Scriptname MoaH_ModEventTrackerQuest extends Quest  
+Scriptname MoaH_ModEventTrackerQuest extends MoaH_QuestBase  
 
 MoaH_CommonProperties Property CommonProperties Auto 
 
@@ -15,6 +15,10 @@ Event OnInit()
 	NotAPenis[2] = "SOS Pubic Hair Wild"
 	NotAPenis[3] = "SOS Pubic Hair Landing Strip"
 	NotAPenis[4] = "SOS Pubic Hair Untamed"
+endEvent
+
+function OnLoadGame()
+	Debug.MessageBox("ModEventTracker reloading")
 	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
 	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
 	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
@@ -23,7 +27,7 @@ Event OnInit()
 	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
 	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
 	RegisterForUpdateGameTime(0.5)
-endEvent
+endFunction
 
 Event OnUpdateGameTime()
 	int lastTotal = CalculateSLSFFame(Last_SLSF_fame)
