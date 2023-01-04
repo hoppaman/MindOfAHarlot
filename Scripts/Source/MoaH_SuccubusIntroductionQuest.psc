@@ -1,0 +1,3 @@
+Scriptname MoaH_SuccubusIntroductionQuest extends Quest  
+
+MoaH_CommonProperties Property CommonProperties Auto

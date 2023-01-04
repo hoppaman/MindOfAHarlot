@@ -41,9 +41,10 @@ endEvent
 
 event OnPageReset (string a_page)
 	if (a_page == "")
+		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Mind of a Harlot")
 		;AddTextOption(1,"Configuration menu","")
-		LoadCustomContent("MoaH/res/mcm_logo.dds", 258, 95)
+		LoadCustomContent("skyui/MoaH/mcm_logo.dds", 258, 95)
 		return
 	else
 		UnloadCustomContent()
@@ -53,7 +54,7 @@ event OnPageReset (string a_page)
 	Actor playerRef = CommonProperties.PlayerRef
 	Spell MasturbateAbility = CommonProperties.MasturbateAbility
 	Spell FondleAbility = CommonProperties.FondleAbility
-	Perk HarlotPerk = CommonProperties.HarlotPerk
+	Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 	bool DebugHarlot = CommonProperties.DebugHarlot
 	bool DebugSanguine = CommonProperties.DebugSanguine
@@ -73,7 +74,7 @@ event OnPageReset (string a_page)
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		bool playerIsHarlot = false
 		string yesNo = "No"
-		if(PlayerRef.HasPerk(HarlotPerk))
+		if(PlayerRef.HasSpell(TurnHarlotAbility))
 			yesNo = "Yes"
 			playerIsHarlot = true
 		endIf
@@ -111,12 +112,12 @@ event OnPageReset (string a_page)
 		AddEmptyOption()
 		AddHeaderOption("Harlot")
 		AddToggleOptionST("HarlotDebugToggle","Toggle Harlot Debug",DebugHarlot)
-		AddToggleOptionST("HarlotToggle", "You are a harlot", PlayerRef.HasPerk(HarlotPerk))
+		AddToggleOptionST("HarlotToggle", "You are a harlot", PlayerRef.HasSpell(TurnHarlotAbility))
 		AddEmptyOption()
 		AddHeaderOption("Sanguine")
 		AddToggleOptionST("SanguineDebugToggle","Toggle Sanguine Debug",DebugSanguine)
 		AddEmptyOption()
-		AddHeaderOption("Introduction")
+		AddHeaderOption("Succubus")
 		AddToggleOptionST("SuccubusDebugToggle","Toggle Succubus Debug",DebugSuccubus)
 		AddEmptyOption()
 	else
@@ -253,21 +254,21 @@ endState
 state HarlotToggle
 	event OnDefaultST()
 		Actor playerRef = CommonProperties.PlayerRef
-		Perk HarlotPerk = CommonProperties.HarlotPerk
-		SetToggleOptionValueST(PlayerRef.HasPerk(HarlotPerk))
+		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
+		SetToggleOptionValueST(PlayerRef.HasSpell(TurnHarlotAbility))
 	endEvent
 	
 	event OnSelectST()
 		Actor playerRef = CommonProperties.PlayerRef
-		Perk HarlotPerk = CommonProperties.HarlotPerk
-		if(PlayerRef.HasPerk(HarlotPerk))
-			Debug.Trace("[MoaH] Removing harlot perk")
-			PlayerRef.RemovePerk(HarlotPerk)
+		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
+		if(PlayerRef.HasSpell(TurnHarlotAbility))
+			Debug.Trace("[MoaH] Removing harlot")
+			PlayerRef.RemoveSpell(TurnHarlotAbility)
 		else
-			Debug.Trace("[MoaH] Adding harlot perk")
-			PlayerRef.AddPerk(HarlotPerk)
+			Debug.Trace("[MoaH] Adding harlot")
+			PlayerRef.AddSpell(TurnHarlotAbility)
 		endIf
-		SetToggleOptionValueST(PlayerRef.HasPerk(HarlotPerk))
+		SetToggleOptionValueST(PlayerRef.HasSpell(TurnHarlotAbility))
 	endEvent
 
 	event OnHighlightST()

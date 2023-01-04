@@ -6,6 +6,7 @@ Actor Property PlayerRef Auto
 ; Common quests
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
+MoaH_SuccubusIntroductionQuest Property SuccubusIntroductionQuest Auto
 SexLabFramework Property SexLab Auto
 
 ; Keywords
@@ -49,6 +50,8 @@ int Property HarlotScorePerDay = 36 Auto ; 255.0/7.0
 Float Property HarlotScoreUpdateIntervalGameTime = 0.5 Auto ; every half hour gt
 ; Curse will fulfill in a 2 days
 int Property ScoreProgressStepPerInterval = 18 Auto ; (255/7)/(1/0.5)
+
+Spell Property TurnHarlotAbility Auto
 
 ; Harlot buffs and debuffs
 

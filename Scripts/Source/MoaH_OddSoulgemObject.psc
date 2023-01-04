@@ -19,6 +19,8 @@ Function TriggerSex(Actor akActor)
 
 		IF (Animation1 == None)
 			Debug.Trace("[MoaH] Required animation <leito> are not installed.")
+		else
+			Disable()
 		EndIf
 		
 		sslBaseAnimation[] AnimationList = new sslBaseAnimation[1]
@@ -57,19 +59,23 @@ event AnimationEnd(int ThreadID, bool HasPlayer)
 endEvent
 
 function SummonTara(int ThreadID)
+	UnregisterForAllModEvents()
 	If(!done)
 		done = true
 		SexLabFramework SexLab = CommonProperties.SexLab
 		Actor PlayerRef = CommonProperties.PlayerRef
-		MoaH_HarlotPerk HarlotPerk = CommonProperties.HarlotPerk
+		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
-		if(!PlayerRef.HasPerk(HarlotPerk))
-			PlayerRef.AddPerk(HarlotPerk)
+		if(!PlayerRef.HasSpell(TurnHarlotAbility))
+			PlayerRef.AddSpell(TurnHarlotAbility)
+		endIf
+		if(IsEnabled())
+			Disable()
 		endIf
 		Debug.MessageBox("Sudden light bursts from the gem and it shatters in your hand. You gain control but what you just have experienced was stronger that you ever have had.")
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)
-		Disable()
+		
 		Actor TarasSpirit = PlaceActorAtMe(CommonProperties.TarasSpirit)
 		TarasSpirit.SetLookAt(PlayerRef, false)
 		IntroductionQuest.SetObjectiveCompleted(30)
