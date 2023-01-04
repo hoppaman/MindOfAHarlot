@@ -6,7 +6,7 @@ Scriptname MoaH_DialogueFlirt_EndFragment Extends TopicInfo Hidden
 Function Fragment_2(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-Actor target = akSpeaker.GetDialogueTarget()
+Actor target = akSpeaker
 target.SetExpressionOverride(2,Utility.RandomInt(25,100))
 Debug.Notification(target.GetDisplayName() + " smiles at you.")
 ;END CODE

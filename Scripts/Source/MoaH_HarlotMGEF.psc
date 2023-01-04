@@ -1,6 +1,7 @@
 Scriptname MoaH_HarlotMGEF extends activemagiceffect  
 
 MoaH_CommonProperties property CommonProperties auto
+Topic Property OtherSayTopic Auto
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status starting.")
@@ -18,9 +19,22 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	if(!akTarget.IsInFaction(CommonProperties.SanguineStandingFaction))
 		akTarget.AddToFaction(CommonProperties.SanguineStandingFaction)
 	endIf
+	
+	if(akTarget == CommonProperties.PlayerRef)
+		Debug.MessageBox("Your body tingles and blood rushes. Every bit of you is throbbing. Something has happened to you.")
+	else
+		akTarget.Say(OtherSayTopic)
+	endIf
+	
+	; Do first update immediately
+	Update()
 endEvent
 
 event OnUpdateGameTime()
+	Update()
+endEvent
+
+function Update()
 	Actor akTarget = GetTargetActor()
 
 	int Score = UpdateScore(akTarget)
@@ -30,7 +44,7 @@ event OnUpdateGameTime()
 	endIf
 	UpdateKeywords(akTarget,Score)
 	UpdateAbilities(akTarget,Score)
-endEvent
+endFunction
 
 int function UpdateScore(Actor akTarget)
 	Faction HarlotScoreFaction = CommonProperties.HarlotScoreFaction
@@ -66,7 +80,7 @@ function UpdateKeywords(Actor akTarget, int Score)
 	elseif(!akTarget.HasKeyword(DesireStage2) && Score > 128) ; {HarlotScoreMaxRank/2}
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage2)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage1)
-		UpdateAbilities(akTarget,3)
+		UpdateAbilities(akTarget,2)
 	elseif (!akTarget.HasKeyword(DesireStage1) || akTarget.HasKeyword(DesireStage3) || akTarget.HasKeyword(DesireStage2))
 		if(CommonProperties.DebugHarlot)
 			Debug.Notification("[MoaH] Clearing keywords")
@@ -74,7 +88,7 @@ function UpdateKeywords(Actor akTarget, int Score)
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage1)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage2)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage3)
-		UpdateAbilities(akTarget,3)
+		UpdateAbilities(akTarget,1)
 	endIf
 endFunction
 
@@ -124,7 +138,7 @@ function SwitchSpell(Actor akTarget, Spell toEnable, Spell disable1, Spell disab
 		akTarget.RemoveSpell(disable2)
 	endif
 	if(!akTarget.HasSpell(toEnable))
-		akTarget.AddSpell(toEnable)
+		akTarget.AddSpell(toEnable, false)
 	endif
 endfunction
 

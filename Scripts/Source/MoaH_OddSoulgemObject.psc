@@ -75,13 +75,12 @@ function SummonTara(int ThreadID)
 		Debug.MessageBox("Sudden light bursts from the gem and it shatters in your hand. You gain control but what you just have experienced was stronger that you ever have had.")
 		sslThreadController Thread = SexLab.GetController(ThreadID)
 		Thread.EndAnimation(true)
+		PlayerRef.SetDontMove(true)
+		Debug.SendAnimationEvent(PlayerRef,"IdleWounded_01")
 		
 		Actor TarasSpirit = PlaceActorAtMe(CommonProperties.TarasSpirit)
-		TarasSpirit.SetLookAt(PlayerRef, false)
-		IntroductionQuest.SetObjectiveCompleted(30)
 		CommonProperties.Tara = TarasSpirit
-		Utility.Wait(1.0)
-		TarasSpirit.ClearLookAt()
+		IntroductionQuest.SetObjectiveCompleted(30)
 		; TODO: set player to pose and hold it
 	EndIf
 endFunction

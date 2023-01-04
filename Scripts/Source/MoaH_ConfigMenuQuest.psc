@@ -357,13 +357,19 @@ state SaveBodyMorphs
 		Actor playerRef = CommonProperties.PlayerRef
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		string[] names = NiOverride.GetMorphNames(PlayerRef)
-		int index = 0
-		while index < names.Length
-			string morphName = names[index]
-			float morphValue = NiOverride.GetMorphValue(PlayerRef,morphName)
-			Debug.Trace("[MoaH] Got value " + morphValue + " for " + morphName)
-			JSONUtil.SetFloatValue(morphFile, morphName, morphValue)
-			index += 1
+		int indexNames = 0
+		int indexKeys = 0
+		while indexNames < names.Length
+			string morphName = names[indexNames]
+			string[] keys = NiOverride.GetMorphKeys(PlayerRef,morphName)
+			while indexKeys < keys.Length
+				string keyName = keys[indexKeys]
+				float morphValue = NiOverride.GetBodyMorph(PlayerRef,morphName, keyName)
+				Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName + ";;" + keyName)
+				JSONUtil.SetFloatValue(morphFile, morphName+";;"+keyName, morphValue)
+				indexKeys += 1
+			endWhile
+			indexNames += 1
 		endWhile
 		JSONUtil.Unload(morphFile, true, false)
 		;SetOptionFlagsST(0)
