@@ -18,7 +18,6 @@ event OnConfigRegister()
 endEvent
 
 event OnConfigInit()
-	SetCursorFillMode(TOP_TO_BOTTOM)
 	; Version 1 pages
 	Pages = new string[5]
 	Pages[0] = "General"
@@ -62,6 +61,7 @@ event OnPageReset (string a_page)
 	bool DebugIntroduction = CommonProperties.DebugIntroduction
 	
 	if(a_page == "General")
+		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Dialogue")
 		AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
 		AddEmptyOption()
@@ -70,6 +70,7 @@ event OnPageReset (string a_page)
 		AddToggleOptionST("ToggleMasturbateAbility", "Add/remove masturbate", PlayerRef.HasSpell(MasturbateAbility))
 		AddEmptyOption()
 	elseIf(a_page == "Harlot")
+		SetCursorFillMode(TOP_TO_BOTTOM)
 		bool playerIsHarlot = false
 		string yesNo = "No"
 		if(PlayerRef.HasPerk(HarlotPerk))
@@ -81,24 +82,29 @@ event OnPageReset (string a_page)
 		if(playerIsHarlot)
 			opt = 0
 		endIf
-		AddHeaderOption("Desire", opt)
-		AddTextOptionST("DisplayDesireST","Current desire level", opt)
+		AddHeaderOption("Progress", opt)
+		AddTextOptionST("DisplayDesireST","Current desire level", "-",opt)
 		AddEmptyOption()
 		AddHeaderOption("BodyMorphs")
 		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save")
 		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Sanguine")
+		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Standing")
 		AddEmptyOption()
 		AddHeaderOption("Sanguine chores")
 		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Succubus")
-		;AddHeaderOption("Skills")
-		;AddHeaderOption("Curse")
+		SetCursorFillMode(TOP_TO_BOTTOM)
+		AddHeaderOption("Skills")
+		AddEmptyOption()
+		AddHeaderOption("Curse")
+		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Debug")
+		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Introduction")
 		AddToggleOptionST("IntroductionQuestDebugToggle","Toggle Introduction Quest Debug",DebugIntroduction)
 		AddToggleOptionST("StartIntroductionToggle", "Introduction started",IntroductionQuest.GetCurrentStageID() > 0)

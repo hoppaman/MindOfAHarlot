@@ -52,14 +52,8 @@ event AnimationEnd(int ThreadID, bool HasPlayer)
 	sslThreadController Thread = SexLab.GetController(ThreadID)
 	
 	Actor[] Positions = Thread.Positions
-	
-	If ((Positions[1].GetItemCount(Self) > 0)&&(!HasPlayer))
-		Positions[1].DropObject(Self,1)
-		SetActorOwner(NONE)
-	EndIf
-	
+		
 	SummonTara(ThreadID)
-	
 endEvent
 
 function SummonTara(int ThreadID)
