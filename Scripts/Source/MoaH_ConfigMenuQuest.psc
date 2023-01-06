@@ -56,16 +56,20 @@ event OnPageReset (string a_page)
 	Spell FondleAbility = CommonProperties.FondleAbility
 	Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
-	bool DebugHarlot = CommonProperties.DebugHarlot
-	bool DebugSanguine = CommonProperties.DebugSanguine
-	bool DebugSuccubus = CommonProperties.DebugSuccubus
-	bool DebugIntroduction = CommonProperties.DebugIntroduction
+	MoaH_ThoughtsQuest ThoughtsQuest = CommonProperties.ThoughtsQuest
+	bool DebugHarlot = CommonProperties.SettingDebugHarlot
+	bool DebugSanguine = CommonProperties.SettingDebugSanguine
+	bool DebugSuccubus = CommonProperties.SettingDebugSuccubus
+	bool DebugIntroduction = CommonProperties.SettingDebugIntroduction
 	
 	if(a_page == "General")
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Dialogue")
 		AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
 		AddEmptyOption()
+		AddHeaderOption("Thoughts")
+		AddToggleOptionST("ThoughtsToggle","Enable Thoughts", ThoughtsQuest.IsRunning())
+		AddSliderOptionST("ThoughtsInterval","Thoughts interval (seconds)", CommonProperties.SettingThoughtsInterval)
 		AddHeaderOption("Abilities")
 		AddToggleOptionST("ToggleFondleAbility", "Add/remove fondle", PlayerRef.HasSpell(FondleAbility))
 		AddToggleOptionST("ToggleMasturbateAbility", "Add/remove masturbate", PlayerRef.HasSpell(MasturbateAbility))
@@ -149,6 +153,51 @@ state FlirtToggle
 	endEvent
 endState
 
+state ThoughtsToggle
+	event OnDefaultST()
+		MoaH_ThoughtsQuest thoughtsQuest = CommonProperties.ThoughtsQuest
+		bool IsOn = thoughtsQuest.IsRunning()
+		SetToggleOptionValueST(IsOn)
+	endEvent
+	
+	event OnSelectST()
+		MoaH_ThoughtsQuest thoughtsQuest = CommonProperties.ThoughtsQuest
+		bool IsOn = thoughtsQuest.IsRunning()
+		if(IsOn)
+			thoughtsQuest.Stop()
+		else
+			thoughtsQuest.Start()
+		endIf
+		SetToggleOptionValueST(thoughtsQuest.IsRunning())
+	endEvent
+
+	event OnHighlightST()
+		SetInfoText("Player thoughts on/off")
+	endEvent
+endState
+
+state ThoughtsInterval
+	event OnSliderOpenST()
+		SetSliderDialogStartValue(CommonProperties.SettingThoughtsInterval)
+		SetSliderDialogDefaultValue(CommonProperties.SettingThoughtsInterval)
+		SetSliderDialogRange(0, 600)
+		SetSliderDialogInterval(1)
+	endEvent
+
+	event OnSliderAcceptST(float value)
+		CommonProperties.SettingThoughtsInterval = value
+		SetSliderOptionValueST(CommonProperties.SettingThoughtsInterval)
+	endEvent
+
+	event OnDefaultST()
+		SetSliderOptionValueST(CommonProperties.SettingThoughtsInterval)
+	endEvent
+
+	event OnHighlightST()
+		SetInfoText("In seconds how often thoughts should update.")
+	endEvent
+endState
+
 state ToggleMasturbateAbility
 	event OnDefaultST()
 		; Default 
@@ -205,11 +254,11 @@ state DisplayDesireST
 		Perk HarlotPerk = CommonProperties.HarlotPerk
 		if(PlayerRef.HasPerk(HarlotPerk))
 			
-			if(PlayerRef.HasKeyword(CommonProperties.DesireStage3))
+			if(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))
 				SetTextOptionValueST("3")
-			elseif(PlayerRef.HasKeyword(CommonProperties.DesireStage2))
+			elseif(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage2Keyword))
 				SetTextOptionValueST("2")
-			elseif(PlayerRef.HasKeyword(CommonProperties.DesireStage1))
+			elseif(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage1Keyword))
 				SetTextOptionValueST("1")
 			endIf
 		else
@@ -279,15 +328,15 @@ endState
 ; Debug
 state HarlotDebugToggle
 	event OnDefaultST()
-		bool DebugHarlot = CommonProperties.DebugHarlot
+		bool DebugHarlot = CommonProperties.SettingDebugHarlot
 		SetToggleOptionValueST(DebugHarlot)
 	endEvent
 	
 	event OnSelectST()
-		bool DebugHarlot = CommonProperties.DebugHarlot
+		bool DebugHarlot = CommonProperties.SettingDebugHarlot
 		DebugHarlot = !DebugHarlot
 		SetToggleOptionValueST(DebugHarlot)
-		CommonProperties.DebugHarlot = DebugHarlot
+		CommonProperties.SettingDebugHarlot = DebugHarlot
 	endEvent
 
 	event OnHighlightST()
@@ -297,15 +346,15 @@ endState
 
 state SanguineDebugToggle
 	event OnDefaultST()
-		bool DebugSanguine = CommonProperties.DebugSanguine
+		bool DebugSanguine = CommonProperties.SettingDebugSanguine
 		SetToggleOptionValueST(DebugSanguine)
 	endEvent
 	
 	event OnSelectST()
-		bool DebugSanguine = CommonProperties.DebugSanguine
+		bool DebugSanguine = CommonProperties.SettingDebugSanguine
 		DebugSanguine = !DebugSanguine
 		SetToggleOptionValueST(DebugSanguine)
-		CommonProperties.DebugSanguine = DebugSanguine
+		CommonProperties.SettingDebugSanguine = DebugSanguine
 	endEvent
 
 	event OnHighlightST()
@@ -315,15 +364,15 @@ endState
 
 state SuccubusDebugToggle
 	event OnDefaultST()
-		bool DebugSuccubus = CommonProperties.DebugSuccubus
+		bool DebugSuccubus = CommonProperties.SettingDebugSuccubus
 		SetToggleOptionValueST(DebugSuccubus)
 	endEvent
 	
 	event OnSelectST()
-		bool DebugSuccubus = CommonProperties.DebugSuccubus
+		bool DebugSuccubus = CommonProperties.SettingDebugSuccubus
 		DebugSuccubus = !DebugSuccubus
 		SetToggleOptionValueST(DebugSuccubus)
-		CommonProperties.DebugSuccubus = DebugSuccubus
+		CommonProperties.SettingDebugSuccubus = DebugSuccubus
 	endEvent
 
 	event OnHighlightST()
@@ -333,15 +382,15 @@ endState
 
 state IntroductionQuestDebugToggle
 	event OnDefaultST()
-		bool DebugIntroduction = CommonProperties.DebugIntroduction
+		bool DebugIntroduction = CommonProperties.SettingDebugIntroduction
 		SetToggleOptionValueST(DebugIntroduction)
 	endEvent
 	
 	event OnSelectST()
-		bool DebugIntroduction = CommonProperties.DebugIntroduction
+		bool DebugIntroduction = CommonProperties.SettingDebugIntroduction
 		DebugIntroduction = !DebugIntroduction
 		SetToggleOptionValueST(DebugIntroduction)
-		CommonProperties.DebugIntroduction = DebugIntroduction
+		CommonProperties.SettingDebugIntroduction = DebugIntroduction
 	endEvent
 
 	event OnHighlightST()
@@ -363,14 +412,20 @@ state SaveBodyMorphs
 		int indexKeys = 0
 		while indexNames < names.Length
 			string morphName = names[indexNames]
-			string[] keys = NiOverride.GetMorphKeys(PlayerRef,morphName)
-			while indexKeys < keys.Length
-				string keyName = keys[indexKeys]
-				float morphValue = NiOverride.GetBodyMorph(PlayerRef,morphName, keyName)
-				Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName + ";;" + keyName)
-				JSONUtil.SetFloatValue(morphFile, morphName+";;"+keyName, morphValue)
-				indexKeys += 1
-			endWhile
+			; This was bullshit
+			;string[] keys = NiOverride.GetMorphKeys(PlayerRef,morphName)
+			;while indexKeys < keys.Length
+			;	string keyName = keys[indexKeys]
+			;	float morphValue = NiOverride.GetBodyMorph(PlayerRef,morphName, keyName)
+			;	Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName + ";;" + keyName)
+			;	JSONUtil.SetFloatValue(morphFile, morphName+";;"+keyName, morphValue)
+			;	indexKeys += 1
+			;endWhile
+			
+			float morphValue = NiOverride.GetMorphValue(PlayerRef,morphName)
+			Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName)
+			JSONUtil.SetFloatValue(morphFile, morphName, morphValue)
+
 			indexNames += 1
 		endWhile
 		JSONUtil.Unload(morphFile, true, false)

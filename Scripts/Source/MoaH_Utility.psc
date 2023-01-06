@@ -7,7 +7,7 @@ Function DisableControls()
 EndFunction
 
 Function UpdateControls()
-	Debug.Trace("UpdateControls()")
+	Debug.Trace("[MoaH] UpdateControls()")
 	; Centralized control management function.
 	bool movement = true
 	bool fighting = true
@@ -20,7 +20,11 @@ Function UpdateControls()
 EndFunction
 
 bool Function Masturbate(Actor performer, Bool allowBed = false, ObjectReference centerOn = none)
-	Debug.Trace("Masturbate actor: " + (performer As String))
+	Debug.Trace("[MoaH] Masturbate actor: " + (performer As String))
+	if(IsAnimating(performer))
+		Debug.Trace("[MoaH] Could not start animation actor is already animating")
+		return false
+	endIf
 	sslBaseAnimation[] animsSearch
 	sslBaseAnimation[] anims
 	Actor[] aActors = New Actor[1]
@@ -35,14 +39,14 @@ bool Function Masturbate(Actor performer, Bool allowBed = false, ObjectReference
 	EndIf
 
 	If (!(animsSearch))
-		Debug.Trace("Masturbate did not find any animations for masturbation.")
+		Debug.Trace("[MoaH] Masturbate did not find any animations for masturbation.")
 	Else
-		Debug.Trace("Masturbate found " + (animsSearch.Length As String) + " animations.")
+		Debug.Trace("[MoaH] Masturbate found " + (animsSearch.Length As String) + " animations.")
 		anims = animsSearch
 	EndIf
 
 	If (!SexLab.IsValidActor(performer))
-		Debug.Trace("Masturbate got an invalid actor: " + (performer As String))
+		Debug.Trace("[MoaH] Masturbate got an invalid actor: " + (performer As String))
 		Return false
 	EndIf
 
@@ -77,15 +81,15 @@ Function SetAnimating(actor akActor, bool isAnimating=true)
 EndFunction
 
 bool[] Function StartThirdPersonAnimation(actor akActor, Idle animation)
-	Debug.Trace("StartThirdPersonAnimation("+akActor.GetDisplayName()+","+animation+")")
+	Debug.Trace("[MoaH] StartThirdPersonAnimation("+akActor.GetDisplayName()+","+animation+")")
 	bool[] ret = new bool[2]
 	if IsAnimating(akActor)
-		Debug.Trace("Actor already in animation faction.")
+		Debug.Trace("[MoaH] Actor already in animation faction.")
 		return ret
 	EndIf
 	
 	if !IsValidActor(akActor)
-		Debug.Trace("Actor is not loaded (Or is otherwise invalid). Aborting.")
+		Debug.Trace("[MoaH] Actor is not loaded (Or is otherwise invalid). Aborting.")
 		return ret
 	EndIf
 	
@@ -112,10 +116,10 @@ bool[] Function StartThirdPersonAnimation(actor akActor, Idle animation)
 				timeout += 1
 			EndWhile
 		ElseIf cameraOld == 11; Bleeding out.
-			Debug.Trace("Actor is bleeding out. Hmm.")
+			Debug.Trace("[MoaH] Actor is bleeding out. Hmm.")
 			return ret
 		ElseIf cameraOld == 12 ; Dragon?
-			Debug.Trace("Actor is dragon? Not sure what happened here.")
+			Debug.Trace("[MoaH] Actor is dragon? Not sure what happened here.")
 			return ret
 		ElseIf cameraOld == 8 || cameraOld == 9 || cameraOld ==  7 ;;; 8 / 9 are third person. 7 is tween menu.
 		;
@@ -129,33 +133,35 @@ bool[] Function StartThirdPersonAnimation(actor akActor, Idle animation)
 	Else
 		akActor.SetDontMove(true)
 	EndIf
+	akActor.SetAnimationVariableBool("bHumanoidFootIKDisable", true)
+	Utility.Wait(0.2)
 	SetAnimating(akActor, true)
 	akActor.PlayIdle(animation)
 	return ret
 EndFunction
 
-Function PlayThirdPersonAnimation(actor akActor, Idle animation, int duration)
-	Debug.Trace("PlayThirdPersonAnimation("+akActor.GetLeveledActorBase().GetName()+","+animation+","+duration+")")
+Function PlayThirdPersonAnimation(actor akActor, Idle animation, float duration)
+	Debug.Trace("[MoaH] PlayThirdPersonAnimation("+akActor.GetLeveledActorBase().GetName()+","+animation+","+duration+")")
 	if IsAnimating(akActor)
-		Debug.Trace("Actor already in animating faction.")
+		Debug.Trace("[MoaH] Actor already in animating faction.")
 		return
 	EndIf
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	if SexLab.ValidateActor(akActor) < 0 || akActor.IsSwimming() || akActor.IsOnMount() || akActor.GetCurrentScene() != none || akActor.GetSitState() != 0
-		Debug.Trace("Not playing third person animation: Actor is already in a blocking animation.")
+		Debug.Trace("[MoaH] Not playing third person animation: Actor is already in a blocking animation.")
 		return
 	EndIf
 	bool[] cameraState=StartThirdPersonAnimation(akActor, animation)
-	Debug.Trace("Playing animation for "+duration+" seconds.")
+	Debug.Trace("[MoaH] Playing animation for "+duration+" seconds.")
 	Utility.Wait(duration)
 	EndThirdPersonAnimation(akActor, cameraState)
 EndFunction
 
 Function EndThirdPersonAnimation(actor akActor, bool[] cameraState)
-	Debug.Trace("EndThirdPersonAnimation("+akActor.GetDisplayName()+","+cameraState+")")
+	Debug.Trace("[MoaH] EndThirdPersonAnimation("+akActor.GetDisplayName()+","+cameraState+")")
 	SetAnimating(akActor, false)
 	if (!akActor.Is3DLoaded() ||  akActor.IsDead() || akActor.IsDisabled())
-		Debug.Trace("Actor is not loaded (Or is otherwise invalid). Aborting.")
+		Debug.Trace("[MoaH] Actor is not loaded (Or is otherwise invalid). Aborting.")
 		return
 	EndIf
 	; Reset idle 
@@ -173,3 +179,68 @@ Function EndThirdPersonAnimation(actor akActor, bool[] cameraState)
 		akActor.SetDontMove(false)
 	EndIf
 EndFunction
+
+int function GetAddictionStage(Actor akActor)
+	if(akActor.HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))
+		return 3
+	elseif(akActor.HasKeyword(CommonProperties.HarlotSexAddictionStage2Keyword))
+		return 2
+	elseif(akActor.HasKeyword(CommonProperties.HarlotSexAddictionStage1Keyword))
+		return 1
+	endIf
+	return 0
+endFunction
+
+
+int function GetArousalStage(Actor akActor)
+	int arousal = CommonProperties.SLA.GetActorArousal(akActor)
+	if(arousal >= CommonProperties.PlayerArousalBoundaryHorny)
+		return 3
+	elseIf(arousal >= CommonProperties.PlayerArousalBoundaryExcited)
+		return 2
+	else
+		return 1
+	endIf
+endFunction
+
+string function GetRandomString(string[] stringArray)
+	if(stringArray != None && stringArray.Length > 0)
+		int randomInt = Utility.RandomInt(0,stringArray.Length - 1)
+		return stringArray[randomInt]
+	endIf
+	return None
+endFunction
+
+Actor[] function FindAdultActorsNear(Actor akTarget, float radius, int sex = -1)
+	Actor[] actors = MiscUtil.ScanCellNPCs(akTarget, radius, CommonProperties.ActorTypeNPCKeyword)
+	PapyrusUtil.RemoveActor(actors, akTarget) ; don't allow self
+	
+	int index = 0
+	While index < actors.Length
+		Actor randomNPC = (actors[index] as Actor)
+		
+		if( (sex == -1 || CommonProperties.SexLab.GetGender(randomNPC) == sex) && !randomNPC.IsChild() && !randomNPC.IsDead())
+			index + 1
+		else
+			PapyrusUtil.RemoveActor(actors, randomNPC)
+		endIf
+	endWhile
+endFunction
+
+string function ReplaceString(string from, string toReplace, string replacingString)
+	string retString = from
+	bool keepSeeking = true
+	int ind = 0
+	While keepSeeking
+		ind = StringUtil.Find(from, toReplace)
+		if ( ind == -1 )
+			keepSeeking = false
+		else
+			string startString = StringUtil.Substring(from, 0, ind - 1)
+			int endStart = ind + StringUtil.GetLength(toReplace) - 1
+			string endString = StringUtil.Substring(from, endStart, StringUtil.GetLength(from) - endStart)
+			retString = startString + replacingString + endString
+		endIf
+	endWhile
+	return retString
+endFunction

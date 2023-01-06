@@ -7,19 +7,24 @@ Actor Property PlayerRef Auto
 MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_SuccubusIntroductionQuest Property SuccubusIntroductionQuest Auto
+MoaH_ThoughtsQuest Property ThoughtsQuest Auto
 
 ; Integrations
 SexLabFramework Property SexLab Auto
 SOS_SetupQuest_Script Property SOSSetupQuest Auto
 SLSF_CompatibilityScript Property SLSF Auto
+slaFrameworkScr Property SLA Auto
 
 ; Keywords
-Keyword Property DesireStage1  Auto
+Keyword Property HarlotSexAddictionStage1Keyword  Auto
 {Feels the effects}
-Keyword Property DesireStage2  Auto
+Keyword Property HarlotSexAddictionStage2Keyword  Auto
 {Effects get much stronger}
-Keyword Property DesireStage3  Auto
+Keyword Property HarlotSexAddictionStage3Keyword  Auto
 {Constantly aroused and horny}
+
+Keyword Property ActorTypeNPCKeyword auto
+
 
 ; Perks/Spell/MGEF
 MoaH_HarlotPerk Property HarlotPerk  Auto
@@ -41,19 +46,6 @@ Faction property IsAnimatingFaction Auto
 Actor Property Tara = None Auto
 ActorBase Property TarasSpirit Auto
 
-; Debug flags
-bool Property DebugHarlot = true Auto
-bool Property DebugSuccubus = true Auto
-bool Property DebugIntroduction = true Auto
-bool Property DebugSanguine = true Auto
-
-; Harlot
-int Property HarlotScoreMaxRank = 127 Auto
-int Property HarlotScorePerDay = 24 Auto ; 255.0/7.0
-
-Float Property HarlotScoreUpdateIntervalGameTime = 1.0 Auto ; every half hour gt
-; Curse will fulfill in a 2 days
-int Property ScoreProgressStepPerInterval = 1 Auto ; (255/7)/(1/0.5)
 
 Spell Property TurnHarlotAbility Auto
 
@@ -83,3 +75,31 @@ Spell Property HarlotFragileStage3Ability Auto
 Spell Property HarlotCunningStage1Ability Auto
 Spell Property HarlotCunningStage2Ability Auto
 Spell Property HarlotCunningStage3Ability Auto
+
+; Player
+float Property PlayerArousalBoundaryExcited = 60.0 Auto Hidden
+float Property PlayerArousalBoundaryHorny = 80.0 Auto Hidden
+
+; At stage1
+float Property DefaultArousalBoundaryExcited = 60.0 autoReadonly Hidden; Feeling ok or "normal" until over this
+float Property DefaultArousalBoundaryHorny = 80.0 autoReadonly Hidden; a between b you feel horny, 
+
+; Harlot
+int Property HarlotScoreMaxRank = 127 autoReadonly Hidden
+int Property HarlotScorePerDay = 24 autoReadonly Hidden ; 255.0/7.0
+
+Float Property HarlotScoreUpdateIntervalGameTime = 1.0 autoReadonly Hidden; every half hour gt
+; Curse will fulfill in a 2 days
+
+;;;;;
+;; Config
+;;;;;
+
+; Debug settings
+bool Property SettingDebugHarlot = true Auto Hidden
+bool Property SettingDebugSuccubus = true Auto Hidden
+bool Property SettingDebugIntroduction = true Auto Hidden
+bool Property SettingDebugSanguine = true Auto Hidden
+
+; Thought settings
+float Property SettingThoughtsInterval = 60.0 Auto Hidden

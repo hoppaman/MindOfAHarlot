@@ -5,5 +5,5 @@ MOAH_Utility property MUtility auto
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Masturbate starting.")
-	MUtility.Masturbate(akCaster)
+	MUtility.Masturbate(akTarget)
 endEvent

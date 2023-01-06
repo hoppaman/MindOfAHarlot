@@ -9,6 +9,7 @@ string[] NotAPenis
 int[] Last_SLSF_fame
 
 Event OnInit()
+	Debug.Trace("[MoaH] ModEventTracker init")
 	NotAPenis = new string[5]
 	NotAPenis[0] = "SOS No Schlong for Females"
 	NotAPenis[1] = "SOS Pubic Hair for Females"
@@ -18,7 +19,7 @@ Event OnInit()
 endEvent
 
 function OnLoadGame()
-	Debug.MessageBox("ModEventTracker reloading")
+	Debug.Trace("[MoaH] ModEventTracker reloading")
 	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
 	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
 	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
@@ -30,6 +31,7 @@ function OnLoadGame()
 endFunction
 
 Event OnUpdateGameTime()
+	Debug.Trace("[MoaH] ModEventTracker update")
 	int lastTotal = CalculateSLSFFame(Last_SLSF_fame)
 	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
 	int current = CalculateSLSFFame(Last_SLSF_fame)
@@ -40,6 +42,7 @@ EndEvent
 
 
 Event OnSexLabOrgasm(String _eventName, String _args, Float _argc, Form _sender)
+	Debug.Trace("[MoaH] OnSexlabOrgasm.")
 	SexLabFramework SexLab = CommonProperties.SexLab
 	Actor[] actors = SexLab.HookActors(_args)
 	int idx = 0
@@ -52,6 +55,7 @@ EndEvent
 
 ; SLSO
 Event OnSexLabOrgasmSeparate(Form ActorRef, Int Thread)
+	Debug.Trace("[MoaH] OnSLSOOrgasm.")
 	actor akActor = ActorRef as actor
 	string _args =  Thread as string
 	
@@ -59,6 +63,7 @@ Event OnSexLabOrgasmSeparate(Form ActorRef, Int Thread)
 EndEvent
 
 Function DetectOrgasmEffect(Actor akActor, String _args)
+	Debug.Trace("[MoaH] Detect orgasm.")
 	SexLabFramework SexLab = CommonProperties.SexLab
 
 	Actor PlayerRef = CommonProperties.PlayerRef
@@ -84,7 +89,7 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 	if(SexLab.GetGender(akActor) == 0)
 		heShe = "he"
 		heSheCap = "He"
-	endIf
+	endIf			
 	
 	if (animation.HasTag("Oral"))
 		if(playerGettingFilled)
@@ -103,6 +108,7 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 EndFunction
 	
 Event OnSexLabStageStart(String _eventName, String _args, Float _argc, Form _sender)
+	Debug.Trace("[MoaH] SexLabStageStart")
 	SexLabFramework SexLab = CommonProperties.SexLab
 	
 	Actor[] actors = SexLab.HookActors(_args)
@@ -115,6 +121,7 @@ Event OnSexLabStageStart(String _eventName, String _args, Float _argc, Form _sen
 EndEvent
 
 Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form sender)
+	Debug.Trace("[MoaH] SexLabAnimationStart")
 	SexLabFramework SexLab = CommonProperties.SexLab
 	sslThreadController thread = SexLab.GetController(strArg as int)
 	if thread.HasPlayer == true
@@ -124,6 +131,7 @@ Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form
 EndEvent
 
 Event OnSexlabAnimationEnd(string eventName, string strArg, float numArg, Form sender)
+	Debug.Trace("[MoaH] SexLabAnimationEnd")
 	SexLabFramework SexLab = CommonProperties.SexLab
 			
 	sslThreadController thread = SexLab.GetController(strArg as int)

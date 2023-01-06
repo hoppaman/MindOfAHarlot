@@ -2,10 +2,12 @@ Scriptname MoaH_HarlotMGEF extends activemagiceffect
 
 MoaH_CommonProperties property CommonProperties auto
 Topic Property OtherSayTopic Auto
-
+int lastUpdateStage = 0
+float lastUpdateTime = 0.0
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status starting.")
 	RegisterForUpdateGameTime(CommonProperties.HarlotScoreUpdateIntervalGameTime)
+	RegisterForSleep()
 	akTarget.AddPerk(CommonProperties.HarlotPerk)
 	; Will handle any possible ranks relation between harlots
 	if(!akTarget.IsInFaction(CommonProperties.HarlotFaction))
@@ -22,11 +24,22 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	
 	if(akTarget == CommonProperties.PlayerRef)
 		Debug.MessageBox("Your body tingles and blood rushes. Every bit of you is throbbing. Something has happened to you.")
+		if(!CommonProperties.ThoughtsQuest.IsRunning())
+			CommonProperties.ThoughtsQuest.Start()
+		endIf
 	else
 		akTarget.Say(OtherSayTopic)
 	endIf
-	
+	lastUpdateTime = Utility.GetCurrentGameTime()
 	; Do first update immediately
+	Update()
+endEvent
+
+event OnSleepStart(float afSleepStartTime, float afDesiredSleepEndTime)
+
+endEvent
+
+Event OnSleepStop(bool abInterrupted)
 	Update()
 endEvent
 
@@ -35,29 +48,31 @@ event OnUpdateGameTime()
 endEvent
 
 function Update()
+	; As player can wait or sleep we cannot trust that Update hits always. Count the real time passed.
+	float step = PapyrusUtil.ClampFloat((Utility.GetCurrentGameTime() - lastUpdateTime) * 24, CommonProperties.HarlotScoreUpdateIntervalGameTime, 48)
+	lastUpdateTime = Utility.GetCurrentGameTime()
 	Actor akTarget = GetTargetActor()
 
-	int Score = UpdateScore(akTarget)
+	int Score = UpdateScore(akTarget, step)
 	
-	if(CommonProperties.DebugHarlot)
+	if(CommonProperties.SettingDebugHarlot)
 		Debug.Notification("[MoaH] Harlot score update on " + akTarget.GetDisplayName() + ". Current value " + Score)
 	endIf
 	UpdateKeywords(akTarget,Score)
-	UpdateAbilities(akTarget,Score)
+	; TODO: update self text
 endFunction
 
-int function UpdateScore(Actor akTarget)
+int function UpdateScore(Actor akTarget, float updateStep)
 	Faction HarlotScoreFaction = CommonProperties.HarlotScoreFaction
 	int HarlotScoreMaxRank = CommonProperties.HarlotScoreMaxRank
 	int Score = akTarget.GetFactionRank(HarlotScoreFaction)
 	
 	if(Score < HarlotScoreMaxRank)
-		int Step = CommonProperties.ScoreProgressStepPerInterval
+		int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
 		Score = PapyrusUtil.ClampInt(Score + Step, 0, HarlotScoreMaxRank)
 		
 		akTarget.ModFactionRank(HarlotScoreFaction, Step)
 	endIf
-	
 	
 	return Score
 endFunction
@@ -66,9 +81,9 @@ function UpdateKeywords(Actor akTarget, int Score)
 	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
 	int iqCSI = IntroductionQuest.GetCurrentStageID()
 	; Update keywords
-	Keyword DesireStage1 = CommonProperties.DesireStage1
-	Keyword DesireStage2 = CommonProperties.DesireStage2
-	Keyword DesireStage3 = CommonProperties.DesireStage3
+	Keyword DesireStage1 = CommonProperties.HarlotSexAddictionStage1Keyword
+	Keyword DesireStage2 = CommonProperties.HarlotSexAddictionStage2Keyword
+	Keyword DesireStage3 = CommonProperties.HarlotSexAddictionStage3Keyword
 	if (!akTarget.HasKeyword(DesireStage3) && Score > 90) ; {HarlotScoreMaxRank*2/3}
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage3)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage2)
@@ -77,18 +92,25 @@ function UpdateKeywords(Actor akTarget, int Score)
 		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage2)
 		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage1)
 		UpdateAbilities(akTarget,2)
-	elseif (!akTarget.HasKeyword(DesireStage1) || akTarget.HasKeyword(DesireStage3) || akTarget.HasKeyword(DesireStage2))
-		if(CommonProperties.DebugHarlot)
-			Debug.Notification("[MoaH] Clearing keywords")
-		endIf
-		PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage1)
-		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage2)
-		PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage3)
+	else
+		if (!akTarget.HasKeyword(DesireStage1)) 
+			PO3_SKSEFunctions.AddKeywordToForm(akTarget, DesireStage1)
+		endif
+		if(akTarget.HasKeyword(DesireStage3))	
+			PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage3)
+		endif
+		if(akTarget.HasKeyword(DesireStage2))
+			PO3_SKSEFunctions.RemoveKeywordOnForm(akTarget, DesireStage2)
+		endif
 		UpdateAbilities(akTarget,1)
 	endIf
 endFunction
 
 function UpdateAbilities(Actor akTarget, int stage)
+	if(lastUpdateStage == stage) 
+		return
+	endif
+	lastUpdateStage = stage
 	Spell LongNails1 = CommonProperties.HarlotLongNailsStage1Ability
 	Spell LongNails2 = CommonProperties.HarlotLongNailsStage2Ability
 	Spell LongNails3 = CommonProperties.HarlotLongNailsStage3Ability
@@ -140,6 +162,73 @@ endfunction
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status ending. On " + akTarget.GetDisplayName())
-	akTarget.RemovePerk(CommonProperties.HarlotPerk)
 	UnregisterForUpdateGameTime()
+	UnregisterForSleep()
+	akTarget.RemovePerk(CommonProperties.HarlotPerk)
+	
+	Spell LongNails1 = CommonProperties.HarlotLongNailsStage1Ability
+	Spell LongNails2 = CommonProperties.HarlotLongNailsStage2Ability
+	Spell LongNails3 = CommonProperties.HarlotLongNailsStage3Ability
+	Spell LightMinded1 = CommonProperties.HarlotLightMindedStage1Ability
+	Spell LightMinded2 = CommonProperties.HarlotLightMindedStage2Ability
+	Spell LightMinded3 = CommonProperties.HarlotLightMindedStage3Ability
+	Spell Pretty1 = CommonProperties.HarlotPrettyStage1Ability
+	Spell Pretty2 = CommonProperties.HarlotPrettyStage2Ability
+	Spell Pretty3 = CommonProperties.HarlotPrettyStage3Ability
+	Spell Fragile1 = CommonProperties.HarlotFragileStage1Ability
+	Spell Fragile2 = CommonProperties.HarlotFragileStage2Ability
+	Spell Fragile3 = CommonProperties.HarlotFragileStage3Ability
+	Spell Cunning1 = CommonProperties.HarlotCunningStage1Ability
+	Spell Cunning2 = CommonProperties.HarlotCunningStage2Ability
+	Spell Cunning3 = CommonProperties.HarlotCunningStage3Ability
+	
+	if(akTarget.HasSpell(LongNails1))
+		akTarget.RemoveSpell(LongNails1)
+	endif
+	if(akTarget.HasSpell(LongNails2))
+		akTarget.RemoveSpell(LongNails2)
+	endif
+	if(akTarget.HasSpell(LongNails3))
+		akTarget.RemoveSpell(LongNails3)
+	endif
+	
+	if(akTarget.HasSpell(LightMinded1))
+		akTarget.RemoveSpell(LightMinded1)
+	endif
+	if(akTarget.HasSpell(LightMinded2))
+		akTarget.RemoveSpell(LightMinded2)
+	endif
+	if(akTarget.HasSpell(LightMinded3))
+		akTarget.RemoveSpell(LightMinded3)
+	endif
+	
+	if(akTarget.HasSpell(Pretty1))
+		akTarget.RemoveSpell(Pretty1)
+	endif
+	if(akTarget.HasSpell(Pretty2))
+		akTarget.RemoveSpell(Pretty2)
+	endif
+	if(akTarget.HasSpell(Pretty3))
+		akTarget.RemoveSpell(Pretty3)
+	endif
+	
+	if(akTarget.HasSpell(Fragile1))
+		akTarget.RemoveSpell(Fragile1)
+	endif
+	if(akTarget.HasSpell(Fragile2))
+		akTarget.RemoveSpell(Fragile2)
+	endif
+	if(akTarget.HasSpell(Fragile3))
+		akTarget.RemoveSpell(Fragile3)
+	endif
+	
+	if(akTarget.HasSpell(Cunning1))
+		akTarget.RemoveSpell(Cunning1)
+	endif
+	if(akTarget.HasSpell(Cunning2))
+		akTarget.RemoveSpell(Cunning2)
+	endif
+	if(akTarget.HasSpell(Cunning3))
+		akTarget.RemoveSpell(Cunning3)
+	endif
 endEvent
