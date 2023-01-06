@@ -36,6 +36,11 @@ endEvent
 event OnVersionUpdate(int a_version)
 	if(a_version > CurrentVersion)
 		Debug.Trace("[MoaH] version update old " + CurrentVersion + " new version " + a_version)
+		Actor player = Game.GetPlayer()
+		if(player.HasSpell(CommonProperties.TurnHarlotAbility))
+			player.RemoveSpell(CommonProperties.TurnHarlotAbility)
+			player.AddSpell(CommonProperties.TurnHarlotAbility)
+		endIf
 	endIf
 endEvent
 
@@ -143,7 +148,10 @@ state FlirtToggle
 		if(IsFlirtOn)
 			FlirtDialogueQuest.Stop()
 		else
-			FlirtDialogueQuest.Start()
+			FlirtDialogueQuest.Reset()
+			if(!FlirtDialogueQuest.Start())
+				Debug.Trace("[MoaH] failed to start Flirt")
+			endIf
 		endIf
 		SetToggleOptionValueST(FlirtDialogueQuest.IsRunning())
 	endEvent
@@ -166,7 +174,10 @@ state ThoughtsToggle
 		if(IsOn)
 			thoughtsQuest.Stop()
 		else
-			thoughtsQuest.Start()
+			thoughtsQuest.Reset()
+			if(!thoughtsQuest.Start())
+				Debug.Trace("[MoaH] failed to start thoughts")
+			endIf
 		endIf
 		SetToggleOptionValueST(thoughtsQuest.IsRunning())
 	endEvent

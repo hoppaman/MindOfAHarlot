@@ -20,6 +20,9 @@ endEvent
 
 function OnLoadGame()
 	Debug.Trace("[MoaH] ModEventTracker reloading")
+	Debug.Trace("[MoaH] ModEventTracker unsub")
+	UnregisterForAllModEvents()
+	Debug.Trace("[MoaH] ModEventTracker resub")
 	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
 	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
 	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")

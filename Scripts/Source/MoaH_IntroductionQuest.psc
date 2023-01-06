@@ -4,8 +4,13 @@ MoaH_CommonProperties Property CommonProperties Auto
 
 Event OnInit()
 	; TODO: Randomize interval
-	RegisterForUpdateGameTime(1)
+
 EndEvent
+
+event OnLoadGame()
+	UnregisterForUpdateGameTime()
+	RegisterForUpdateGameTime(1)
+endEvent
 
 Event OnUpdateGameTime()
 	Actor PlayerRef = CommonProperties.PlayerRef
