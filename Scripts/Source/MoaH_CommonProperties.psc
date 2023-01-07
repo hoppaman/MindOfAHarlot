@@ -8,6 +8,7 @@ MoaH_IntroductionQuest Property IntroductionQuest Auto
 MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_SuccubusIntroductionQuest Property SuccubusIntroductionQuest Auto
 MoaH_ThoughtsQuest Property ThoughtsQuest Auto
+MoaH_ModEventTrackerQuest Property ModEventTrackerQuest Auto
 
 ; Integrations
 SexLabFramework Property SexLab Auto

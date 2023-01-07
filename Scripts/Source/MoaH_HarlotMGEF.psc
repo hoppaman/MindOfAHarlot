@@ -58,6 +58,7 @@ function Update()
 	if(CommonProperties.SettingDebugHarlot)
 		Debug.Notification("[MoaH] Harlot score update on " + akTarget.GetDisplayName() + ". Current value " + Score)
 	endIf
+	;Debug.Notification("Your body is getting more sensitive.")
 	UpdateKeywords(akTarget,Score)
 	; TODO: update self text
 endFunction

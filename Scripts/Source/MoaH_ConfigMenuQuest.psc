@@ -10,7 +10,7 @@ MoaH_CommonProperties property CommonProperties auto
 string morphFile = "MoaH_HarlotMorphs.json"
 
 int function GetVersion()
-	return 1
+	return 2
 endFunction
 
 event OnConfigRegister()
@@ -75,6 +75,7 @@ event OnPageReset (string a_page)
 		AddHeaderOption("Thoughts")
 		AddToggleOptionST("ThoughtsToggle","Enable Thoughts", ThoughtsQuest.IsRunning())
 		AddSliderOptionST("ThoughtsInterval","Thoughts interval (seconds)", CommonProperties.SettingThoughtsInterval)
+		AddEmptyOption()
 		AddHeaderOption("Abilities")
 		AddToggleOptionST("ToggleFondleAbility", "Add/remove fondle", PlayerRef.HasSpell(FondleAbility))
 		AddToggleOptionST("ToggleMasturbateAbility", "Add/remove masturbate", PlayerRef.HasSpell(MasturbateAbility))
@@ -129,6 +130,8 @@ event OnPageReset (string a_page)
 		AddHeaderOption("Succubus")
 		AddToggleOptionST("SuccubusDebugToggle","Toggle Succubus Debug",DebugSuccubus)
 		AddEmptyOption()
+		AddHeaderOption("Common")
+		AddTextOptionST("ResetModEventTracker", "Reset mod event tracker.", "Reset")
 	else
 		; unknown
 	endIf
@@ -191,7 +194,7 @@ state ThoughtsInterval
 	event OnSliderOpenST()
 		SetSliderDialogStartValue(CommonProperties.SettingThoughtsInterval)
 		SetSliderDialogDefaultValue(CommonProperties.SettingThoughtsInterval)
-		SetSliderDialogRange(0, 600)
+		SetSliderDialogRange(12, 300)
 		SetSliderDialogInterval(1)
 	endEvent
 
@@ -262,8 +265,8 @@ endState
 state DisplayDesireST
 	event OnDefaultST()
 		Actor playerRef = CommonProperties.PlayerRef
-		Perk HarlotPerk = CommonProperties.HarlotPerk
-		if(PlayerRef.HasPerk(HarlotPerk))
+		Perk HarlotAbility = CommonProperties.TurnHarlotAbility
+		if(PlayerRef.HasSpell(HarlotAbility))
 			
 			if(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))
 				SetTextOptionValueST("3")
@@ -352,6 +355,24 @@ state HarlotDebugToggle
 
 	event OnHighlightST()
 		SetInfoText("Verbose harlot related debug.")
+	endEvent
+endState
+
+state ResetModEventTracker
+	event OnDefaultST()
+		SetTextOptionValueST("RESET")
+	endEvent
+	
+	event OnSelectST()
+		CommonProperties.ModEventTrackerQuest.Stop()
+		Utility.Wait(1.0)
+		CommonProperties.ModEventTrackerQuest.Reset()
+		Utility.Wait(1.0)
+		CommonProperties.ModEventTrackerQuest.Start()
+	endEvent
+	
+	event OnHighlightST()
+		SetInfoText("Reset event tracker.")
 	endEvent
 endState
 

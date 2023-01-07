@@ -4,7 +4,7 @@ MoaH_CommonProperties Property CommonProperties Auto
 
 Event OnInit()
 	; TODO: Randomize interval
-
+	RegisterForUpdateGameTime(1)
 EndEvent
 
 event OnLoadGame()

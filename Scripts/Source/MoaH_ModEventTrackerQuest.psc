@@ -16,6 +16,25 @@ Event OnInit()
 	NotAPenis[2] = "SOS Pubic Hair Wild"
 	NotAPenis[3] = "SOS Pubic Hair Landing Strip"
 	NotAPenis[4] = "SOS Pubic Hair Untamed"
+	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
+	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
+	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
+	RegisterForModEvent("AnimationEnd", "OnSexLabAnimationEnd")
+	RegisterForModEvent("StageStart", "OnSexLabStageStart")
+	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
+	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
+	RegisterForUpdateGameTime(0.5)
+endEvent
+
+event OnReset()
+	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
+	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
+	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
+	RegisterForModEvent("AnimationEnd", "OnSexLabAnimationEnd")
+	RegisterForModEvent("StageStart", "OnSexLabStageStart")
+	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
+	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
+	RegisterForUpdateGameTime(0.5)
 endEvent
 
 function OnLoadGame()

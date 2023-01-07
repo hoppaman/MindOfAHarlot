@@ -13,7 +13,12 @@ MoaH_ThoughtProviderMaleMemory Property MaleMemoryThoughtProvider Auto
 {Not supported yet}
 
 event OnInit()
+	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
+endEvent
 	
+event OnReset()
+	UnregisterForUpdate()
+	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
 endEvent
 
 event OnLoadGame()
@@ -22,7 +27,7 @@ event OnLoadGame()
 endEvent
 
 event OnUpdate()
-	
+	Debug.Trace("[MoaH] Thoughts update")
 	; Updates arousal limits to correct addiction stage
 	UpdateArousalBoundaries(MUtility.GetAddictionStage(Game.GetPlayer()))
 	
