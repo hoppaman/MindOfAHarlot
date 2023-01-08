@@ -103,3 +103,5 @@ bool Property SettingDebugSanguine = true Auto Hidden
 
 ; Thought settings
 float Property SettingThoughtsInterval = 60.0 Auto Hidden
+
+string Property SettingHarlotMorphFile = "MoaH_HarlotMorphs.json" Auto Hidden

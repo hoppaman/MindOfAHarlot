@@ -7,7 +7,6 @@ Scriptname MoaH_ConfigMenuQuest extends SKI_ConfigBase
 
 MoaH_CommonProperties property CommonProperties auto
 
-string morphFile = "MoaH_HarlotMorphs.json"
 
 int function GetVersion()
 	return 2
@@ -94,10 +93,11 @@ event OnPageReset (string a_page)
 			opt = 0
 		endIf
 		AddHeaderOption("Progress", opt)
-		AddTextOptionST("DisplayDesireST","Current desire level", "-",opt)
+		AddTextOptionST("DisplayDesireST","Current harlot stage", "-",opt)
+		AddSliderOptionST("SetHarlotScore", "Set harlot score", PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction),opt)
 		AddEmptyOption()
 		AddHeaderOption("BodyMorphs")
-		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save")
+		AddTextOptionST("SaveBodyMorphs","Current body morph values", "Save", OPTION_FLAG_DISABLED)
 		AddEmptyOption()
 		;AddHeaderOption("Debug")
 	elseIf(a_page == "Sanguine")
@@ -284,6 +284,32 @@ state DisplayDesireST
 	endEvent
 endState
 
+state SetHarlotScore
+		
+	event OnSliderOpenST()
+		Actor playerRef = CommonProperties.PlayerRef
+		SetSliderDialogStartValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+		SetSliderDialogDefaultValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+		SetSliderDialogRange(0, CommonProperties.HarlotScoreMaxRank)
+		SetSliderDialogInterval(1)
+	endEvent
+
+	event OnSliderAcceptST(float value)
+		Actor playerRef = CommonProperties.PlayerRef
+		PlayerRef.SetFactionRank(CommonProperties.HarlotScoreFaction, value as int)
+		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+	endEvent
+
+	event OnDefaultST()
+		Actor playerRef = CommonProperties.PlayerRef
+		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+	endEvent
+
+	event OnHighlightST()
+		SetInfoText("In seconds how often thoughts should update.")
+	endEvent
+endState
+
 state StartIntroductionToggle
 	event OnDefaultST()
 		MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
@@ -435,26 +461,27 @@ state SaveBodyMorphs
 	endEvent
 
 	event OnSelectST()
+		string morphFile = CommonProperties.SettingHarlotMorphFile
 		Actor playerRef = CommonProperties.PlayerRef
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		JSONUtil.Load(morphFile)
-		JSONUtil.ClearAll(morphFile)
-		string[] names = NiOverride.GetMorphNames(PlayerRef)
+		;JSONUtil.ClearAll(morphFile)
+		string[] names = NiOverride.GetMorphNames(playerRef)
 		int indexNames = 0
 		int indexKeys = 0
 		while indexNames < names.Length
 			string morphName = names[indexNames]
 			; This was bullshit
-			;string[] keys = NiOverride.GetMorphKeys(PlayerRef,morphName)
+			;string[] keys = NiOverride.GetMorphKeys(playerRef,morphName)
 			;while indexKeys < keys.Length
 			;	string keyName = keys[indexKeys]
-			;	float morphValue = NiOverride.GetBodyMorph(PlayerRef,morphName, keyName)
+			;	float morphValue = NiOverride.GetBodyMorph(playerRef,morphName, keyName)
 			;	Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName + ";;" + keyName)
 			;	JSONUtil.SetFloatValue(morphFile, morphName+";;"+keyName, morphValue)
 			;	indexKeys += 1
 			;endWhile
 			
-			float morphValue = NiOverride.GetMorphValue(PlayerRef,morphName)
+			float morphValue = NiOverride.GetMorphValue(playerRef,morphName)
 			Debug.Trace("[MoaH] Got value " + morphValue + " for morph " + morphName)
 			JSONUtil.SetFloatValue(morphFile, morphName, morphValue)
 
