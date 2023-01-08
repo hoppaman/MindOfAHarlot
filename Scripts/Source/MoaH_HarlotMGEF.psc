@@ -76,8 +76,12 @@ int function UpdateScore(Actor akTarget, float updateStep)
 	
 	if(Score < HarlotScoreMaxRank)
 		int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
-		Score = PapyrusUtil.ClampInt(Score + Step, 0, HarlotScoreMaxRank)
-		
+		Score = Score + Step
+		if(Score > HarlotScoreMaxRank)
+			Step = Step + (HarlotScoreMaxRank - Score)
+			Score = HarlotScoreMaxRank
+		EndIf
+	
 		akTarget.ModFactionRank(HarlotScoreFaction, Step)
 	endIf
 	

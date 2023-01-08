@@ -244,3 +244,36 @@ string function ReplaceString(string from, string toReplace, string replacingStr
 	endWhile
 	return retString
 endFunction
+
+function AddHarlotScore(Actor akActor, int amount)
+	Faction HarlotScoreFaction = CommonProperties.HarlotScoreFaction
+	int HarlotScoreMaxRank = CommonProperties.HarlotScoreMaxRank
+	int Score = akActor.GetFactionRank(HarlotScoreFaction)
+	
+	if(Score < HarlotScoreMaxRank)
+		Score = Score + amount
+		if(Score > HarlotScoreMaxRank)
+			amount = amount + (HarlotScoreMaxRank - Score)
+			Score = HarlotScoreMaxRank
+		EndIf
+	
+		akActor.ModFactionRank(HarlotScoreFaction, amount)
+	endIf
+endFunction
+
+function ReduceHarlotScore(Actor akActor, int amount)
+	Faction HarlotScoreFaction = CommonProperties.HarlotScoreFaction
+	int HarlotScoreMaxRank = CommonProperties.HarlotScoreMaxRank
+	int Score = akActor.GetFactionRank(HarlotScoreFaction)
+	
+	if(Score > 0)
+		Score = Score - amount
+		if(Score < 0)
+			amount = Score + amount
+			Score = 0
+		EndIf
+	
+		akActor.ModFactionRank(HarlotScoreFaction, -amount)
+	endIf
+	akActor.ModFactionRank(CommonProperties.HarlotScoreFaction, -amount)
+endFunction

@@ -1,6 +1,7 @@
 Scriptname MoaH_ModEventTrackerQuest extends MoaH_QuestBase  
 
 MoaH_CommonProperties Property CommonProperties Auto 
+MoaH_Utility Property MUtility Auto
 
 Message Property BlowJobQuestion01 Auto
 
@@ -97,7 +98,7 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 	bool playerHasCock = false
 	bool playerHavingOrgasm = akActor == PlayerRef
 	bool notPlayerCockOrgasm = HasCock(akActor) && !playerHavingOrgasm
-	bool playerGettingFilled = involvesPlayer && notPlayerCockOrgasm
+	
 	int idx = 0	
 	while idx < actors.Length
 		Actor actr = actors[idx]
@@ -106,6 +107,7 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 			playerHasCock = HasCock(actr)
 		endif
 	endWhile
+	bool playerGettingFilled = involvesPlayer && notPlayerCockOrgasm
 	string heSheCap = "She"
 	string heShe = "she"
 	if(SexLab.GetGender(akActor) == 0)
@@ -115,15 +117,22 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 	
 	if (animation.HasTag("Oral"))
 		if(playerGettingFilled)
-			BlowJobQuestion01.Show()
+			if(BlowJobQuestion01.Show() > 0)
+				; Swallow
+				MUtility.AddHarlotScore(PlayerRef, CommonProperties.HarlotScorePerSwallow)
+			else
+				MUtility.AddHarlotScore(PlayerRef, CommonProperties.HarlotScorePerNormalSex)
+			endIf
 		endIf
 	elseif (animation.HasTag("Anal"))
 		if(playerGettingFilled)
 			Debug.Notification("MMmm, " + heShe + " came in to my rose!")
+			MUtility.AddHarlotScore(PlayerRef, CommonProperties.HarlotScorePerAnal)
 		endIf
 	elseif(animation.HasTag("Vaginal"))
 		if(playerGettingFilled)
 			Debug.Notification("MMmm, " + heShe + " came in to my lotus!")
+			MUtility.AddHarlotScore(PlayerRef, CommonProperties.HarlotScorePerNormalSex)
 		endIf
 	endif
 	

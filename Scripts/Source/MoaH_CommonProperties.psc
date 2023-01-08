@@ -86,7 +86,10 @@ float Property DefaultArousalBoundaryHorny = 80.0 autoReadonly Hidden; a between
 
 ; Harlot
 int Property HarlotScoreMaxRank = 127 autoReadonly Hidden
-int Property HarlotScorePerDay = 24 autoReadonly Hidden ; 255.0/7.0
+int Property HarlotScorePerDay = 12 autoReadonly Hidden
+int Property HarlotScorePerAnal = 5 autoReadonly Hidden
+int Property HarlotScorePerSwallow = 5 autoReadonly Hidden
+int Property HarlotScorePerNormalSex = 2 autoReadonly Hidden
 
 Float Property HarlotScoreUpdateIntervalGameTime = 1.0 autoReadonly Hidden; every half hour gt
 ; Curse will fulfill in a 2 days
