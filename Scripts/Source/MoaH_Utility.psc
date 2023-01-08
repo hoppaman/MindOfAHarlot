@@ -253,10 +253,9 @@ function AddHarlotScore(Actor akActor, int amount)
 	if(Score < HarlotScoreMaxRank)
 		Score = Score + amount
 		if(Score > HarlotScoreMaxRank)
-			amount = amount + (HarlotScoreMaxRank - Score)
+			amount = amount - (Score - HarlotScoreMaxRank)
 			Score = HarlotScoreMaxRank
 		EndIf
-	
 		akActor.ModFactionRank(HarlotScoreFaction, amount)
 	endIf
 endFunction

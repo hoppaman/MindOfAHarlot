@@ -1,6 +1,8 @@
 Scriptname MoaH_HarlotMGEF extends activemagiceffect  
 
 MoaH_CommonProperties property CommonProperties auto
+MoaH_Utility Property MUtility auto
+
 Topic Property OtherSayTopic Auto
 int lastUpdateStage = 0
 float lastUpdateTime = 0.0
@@ -76,13 +78,7 @@ int function UpdateScore(Actor akTarget, float updateStep)
 	
 	if(Score < HarlotScoreMaxRank)
 		int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
-		Score = Score + Step
-		if(Score > HarlotScoreMaxRank)
-			Step = Step + (HarlotScoreMaxRank - Score)
-			Score = HarlotScoreMaxRank
-		EndIf
-	
-		akTarget.ModFactionRank(HarlotScoreFaction, Step)
+		MUtility.AddHarlotScore(akTarget, Step)
 	endIf
 	
 	return Score
