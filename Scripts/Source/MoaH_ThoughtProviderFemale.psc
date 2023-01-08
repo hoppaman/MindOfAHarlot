@@ -86,7 +86,7 @@ event OnInit()
 	ThoughtsStage2ArousalB[7] = "mmm, how I get this itch off?"
 	; Theme arousal c: I need to feel this craving somehow
 	ThoughtsStage2ArousalC = new string[5]
-	ThoughtsStage2ArousalBExpressions = new int[5]
+	ThoughtsStage2ArousalCExpressions = new int[5]
 	ThoughtsStage2ArousalC[0] = "I feel moist. I should do something about it."
 	ThoughtsStage2ArousalC[1] = "Wonder if <RandomVisibleNPCMale> would like to please me."
 	ThoughtsStage2ArousalC[2] = "Am I pretty enough that they notice me?"
@@ -118,7 +118,7 @@ event OnInit()
 	ThoughtsStage3ArousalB[6] = "Mmm, my crotch is all wet."
 	; Theme arousal c: Looking actively for sex partner
 	ThoughtsStage3ArousalC = new string[7]
-	ThoughtsStage3ArousalBExpressions = new int[7]
+	ThoughtsStage3ArousalCExpressions = new int[7]
 	ThoughtsStage3ArousalC[0] = "I feel moist. I should do something about it."
 	ThoughtsStage3ArousalC[1] = "Wonder if <RandomVisibleNPCMale> would like to please me."
 	ThoughtsStage3ArousalC[2] = "Am I pretty enough that they notice me?"
@@ -136,7 +136,7 @@ string function GetThought()
 	Actor player = Game.GetPlayer()
 	int addictionStage = MUtility.GetAddictionStage(player)
 	int arousalStage = MUtility.GetArousalStage(player)
-	string[] arousalThoughts = None
+	string[] arousalThoughts
 	if(addictionStage == 3) ; Enjoying / not wanting to let go
 		if(arousalStage == 3) ; 'C'
 			arousalThoughts = ThoughtsStage3ArousalC

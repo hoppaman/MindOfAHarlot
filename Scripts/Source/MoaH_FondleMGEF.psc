@@ -10,6 +10,10 @@ Idle Property FemaleFondle1 Auto
 Idle Property FemaleFondle2 Auto
 Idle Property FemaleFondle3 Auto
 
+Idle Property GS371 Auto
+Idle Property GS402 Auto
+Idle Property GS403 Auto
+
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	float duration = GetDuration()
 	SexLabFramework SexLab = CommonProperties.SexLab
@@ -70,11 +74,11 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 		
 		; 455 - exhausted sitting
 		if(r == 0)
-			MUtility.PlayThirdPersonAnimation(akTarget, FemaleFondle1, duration)
+			MUtility.PlayThirdPersonAnimation(akTarget, GS371, duration)
 		elseif(r == 1)
-			MUtility.PlayThirdPersonAnimation(akTarget, FemaleFondle2, duration)
+			MUtility.PlayThirdPersonAnimation(akTarget, GS402, duration)
 		elseif(r == 2)
-			MUtility.PlayThirdPersonAnimation(akTarget, FemaleFondle3, duration)
+			MUtility.PlayThirdPersonAnimation(akTarget, GS403, duration)
 		endIf
 	else
 		Debug.Trace("[MoaH] Creature cannot fondle.")
@@ -86,16 +90,11 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
     ModEvent.PushFloat(ModArousalEvent, 5)
     ModEvent.Send(ModArousalEvent)
 	voice.PlayMoanEx(akTarget)
-	Actor[] actors = MUtility.FindAdultActorsNear(akTarget, 4000.0)
-	if(actors.Length > 0)
-		int randomIndex = Utility.RandomInt(0, actors.Length - 1)
-		Actor randomActor = (actors[randomIndex] as Actor)
-		Debug.Trace("[MoaH] sending spanker " + randomActor.GetDisplayName())
-		Int ModSpankEvent = ModEvent.Create("STA_DoNpcSpankSpecific")
-		ModEvent.PushFloat(ModSpankEvent, 30) ; Timeout
-		ModEvent.PushForm(ModSpankEvent, randomActor) ; Spanker
-		ModEvent.PushBool(ModSpankEvent, true) ; Comment
-		ModEvent.Send(ModSpankEvent)
-	endIf
+	
+	Debug.Trace("[MoaH] sending spanker ")
+	Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
+	ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
+	ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
+	ModEvent.Send(ModSpankEvent)
 	
 endEvent
