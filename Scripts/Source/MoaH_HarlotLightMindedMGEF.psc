@@ -14,11 +14,14 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	UpdateStats(akTarget)
 	; Pretty killer 
 	; TODO: if possible trigger this on levelup and read book?
-	RegisterForUpdate(1)
+	RegisterForUpdate(30)
 endEvent
 
 event OnUpdate()
-	UpdateStats(GetTargetActor())
+	Actor akTarget = GetTargetActor()
+	if(!akTarget.IsInCombat())
+		UpdateStats(akTarget)
+	endIf
 endEvent
 
 float function UpdateCappedStat(Actor akTarget, string stat, float cap, float lastStrength)
