@@ -7,14 +7,19 @@ bool isWatching = false
 event OnInit()
 	Actor akTarget = Game.GetPlayer()
 	watcher = GetActorReference()
-	watcher.SetLookAt(akTarget, true)
-	isWatching = true
-	Debug.Notification("[MoaH] Attention " + watcher.GetDisplayName() + " is watching " + akTarget.GetDisplayName())
-	int handle = ModEvent.Create(CommonProperties.AttentionLookAtEventName)
-	ModEvent.PushForm(handle, watcher)
-	ModEvent.PushForm(handle, akTarget)
-	ModEvent.Send(handle)
-	RegisterForSingleUpdate(Utility.RandomFloat(4,8))
+	if(watcher != None)
+		watcher.SetLookAt(akTarget, true)
+		isWatching = true
+		Debug.Notification("[MoaH] Attention " + watcher.GetDisplayName() + " is watching " + akTarget.GetDisplayName())
+		int handle = ModEvent.Create(CommonProperties.AttentionLookAtEventName)
+		ModEvent.PushForm(handle, watcher)
+		ModEvent.PushForm(handle, akTarget)
+		ModEvent.Send(handle)
+		RegisterForSingleUpdate(Utility.RandomFloat(4,8))
+	else
+		; Free reference
+		Clear()
+	endIf
 endEvent
 
 event OnUpdate()

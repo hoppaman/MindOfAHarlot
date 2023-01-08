@@ -4,6 +4,10 @@ MoaH_CommonProperties property CommonProperties auto
 Topic Property OtherSayTopic Auto
 int lastUpdateStage = 0
 float lastUpdateTime = 0.0
+
+bool stage1ToStage2Passed = false
+bool stage2ToStage3Passed = false
+
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status starting.")
 	RegisterForUpdateGameTime(CommonProperties.HarlotScoreUpdateIntervalGameTime)
@@ -118,6 +122,14 @@ endFunction
 function UpdateAbilities(Actor akTarget, int stage)
 	if(lastUpdateStage == stage) 
 		return
+	endif
+	
+	if(!stage1ToStage2Passed && lastUpdateStage == 1 && stage == 2)
+		stage1ToStage2Passed = true
+		Debug.MessageBox("My body is warm and tingling and its more difficult to concerntrate. I could swear something is happening with my body. Maybe I should ask Tara about this?")
+	elseif(!stage2ToStage3Passed && lastUpdateStage == 2 && stage == 3)
+		stage2ToStage3Passed = true
+		Debug.MessageBox("My body is excited. My lips are sensitive and throbbing. I need to have someone inside me.")
 	endif
 	lastUpdateStage = stage
 	Spell LongNails1 = CommonProperties.HarlotLongNailsStage1Ability

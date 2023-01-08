@@ -151,7 +151,7 @@
 		},
 		"BreastWidth" : 
 		{
-			"value" : 0.5
+			"value" : 0.15
 		},
 		"BreastsConverage_v2" : 
 		{
@@ -159,7 +159,7 @@
 		},
 		"BreastsFantasy" : 
 		{
-			"value" : 0.14000000059604645
+			"value" : 0.24000000059604645
 		},
 		"BreastsGone" : 
 		{
@@ -167,7 +167,7 @@
 		},
 		"BreastsNewSH" : 
 		{
-			"value" : -0.25
+			"value" : -0.5
 		},
 		"BreastsNewSHSymmetry" : 
 		{
@@ -291,7 +291,7 @@
 		},
 		"DoubleMelon" : 
 		{
-			"value" : 0.25
+			"value" : 0.5
 		},
 		"FeetFeminine" : 
 		{
