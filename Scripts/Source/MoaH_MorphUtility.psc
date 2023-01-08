@@ -1,6 +1,8 @@
 Scriptname MoaH_MorphUtility Hidden
 
 function MorphActor(Actor akActor, string morphFile, float mod = 1.0) global
+	Debug.Trace("[MoaH] Morphing " + akActor.GetDisplayName() + " with mod " + mod)
+	Debug.Notification("[MoaH] Morphing " + akActor.GetDisplayName() + " with mod " + mod)
 	JSONUtil.Load(morphFile)
 	string[] morphNames = NiOverride.GetMorphNames(akActor)
 	int index = 0

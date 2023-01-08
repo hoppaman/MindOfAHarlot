@@ -92,6 +92,12 @@ Float Property HarlotScoreUpdateIntervalGameTime = 1.0 autoReadonly Hidden; ever
 ; Curse will fulfill in a 2 days
 
 ;;;;;
+;; Mod Events
+;;;;;
+
+string Property AttentionLookAtEventName = "MoaH_AttentionLookAt" autoReadonly hidden
+
+;;;;;
 ;; Config
 ;;;;;
 
