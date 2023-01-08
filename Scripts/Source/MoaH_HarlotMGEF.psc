@@ -8,7 +8,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status starting.")
 	RegisterForUpdateGameTime(CommonProperties.HarlotScoreUpdateIntervalGameTime)
 	RegisterForSleep()
-	akTarget.AddPerk(CommonProperties.HarlotPerk)
+	
 	; Will handle any possible ranks relation between harlots
 	if(!akTarget.IsInFaction(CommonProperties.HarlotFaction))
 		akTarget.AddToFaction(CommonProperties.HarlotFaction)
@@ -165,8 +165,7 @@ event OnEffectFinish(Actor akTarget, Actor akCaster)
 	Debug.Trace("[MoaH] Harlot status ending. On " + akTarget.GetDisplayName())
 	UnregisterForUpdateGameTime()
 	UnregisterForSleep()
-	akTarget.RemovePerk(CommonProperties.HarlotPerk)
-	
+		
 	Spell LongNails1 = CommonProperties.HarlotLongNailsStage1Ability
 	Spell LongNails2 = CommonProperties.HarlotLongNailsStage2Ability
 	Spell LongNails3 = CommonProperties.HarlotLongNailsStage3Ability

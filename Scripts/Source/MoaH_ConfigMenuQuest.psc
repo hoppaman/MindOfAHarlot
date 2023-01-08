@@ -265,7 +265,7 @@ endState
 state DisplayDesireST
 	event OnDefaultST()
 		Actor playerRef = CommonProperties.PlayerRef
-		Perk HarlotAbility = CommonProperties.TurnHarlotAbility
+		Spell HarlotAbility = CommonProperties.TurnHarlotAbility
 		if(PlayerRef.HasSpell(HarlotAbility))
 			
 			if(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))

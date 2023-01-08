@@ -28,7 +28,6 @@ Keyword Property ActorTypeNPCKeyword auto
 
 
 ; Perks/Spell/MGEF
-MoaH_HarlotPerk Property HarlotPerk  Auto
 Spell Property MasturbateAbility Auto
 Spell Property FondleAbility Auto
 
