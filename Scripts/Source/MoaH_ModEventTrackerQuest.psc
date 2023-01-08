@@ -28,6 +28,7 @@ Event OnInit()
 endEvent
 
 event OnReset()
+	UnregisterForAllModEvents()
 	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
 	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
 	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
@@ -35,6 +36,7 @@ event OnReset()
 	RegisterForModEvent("StageStart", "OnSexLabStageStart")
 	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
 	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
+	UnregisterForUpdateGameTime()
 	RegisterForUpdateGameTime(0.5)
 endEvent
 
@@ -50,6 +52,7 @@ function OnLoadGame()
 	RegisterForModEvent("StageStart", "OnSexLabStageStart")
 	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
 	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
+	UnregisterForUpdateGameTime()
 	RegisterForUpdateGameTime(0.5)
 endFunction
 
