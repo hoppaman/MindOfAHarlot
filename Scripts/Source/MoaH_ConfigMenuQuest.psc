@@ -288,21 +288,21 @@ state SetHarlotScore
 		
 	event OnSliderOpenST()
 		Actor playerRef = CommonProperties.PlayerRef
-		SetSliderDialogStartValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
-		SetSliderDialogDefaultValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
-		SetSliderDialogRange(0, CommonProperties.HarlotScoreMaxRank)
+		SetSliderDialogStartValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
+		SetSliderDialogDefaultValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
+		SetSliderDialogRange(0, CommonProperties.HarlotScoreMaxRank as float)
 		SetSliderDialogInterval(1)
 	endEvent
 
 	event OnSliderAcceptST(float value)
 		Actor playerRef = CommonProperties.PlayerRef
 		PlayerRef.SetFactionRank(CommonProperties.HarlotScoreFaction, value as int)
-		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 	endEvent
 
 	event OnDefaultST()
 		Actor playerRef = CommonProperties.PlayerRef
-		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction))
+		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 	endEvent
 
 	event OnHighlightST()

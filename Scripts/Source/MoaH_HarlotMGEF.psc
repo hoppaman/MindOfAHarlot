@@ -60,8 +60,9 @@ function Update()
 	endIf
 	;Debug.Notification("Your body is getting more sensitive.")
 	UpdateKeywords(akTarget,Score)
-	UpdateMorphs(akTarget, (Score as float)/(CommonProperties.HarlotScoreMaxRank as float))
-	; TODO: update self text
+	float progress = (Score as float)/(CommonProperties.HarlotScoreMaxRank as float)
+	Debug.Notification("[MoaH] Updating morphs with progress of " + progress)
+	UpdateMorphs(akTarget, progress)
 endFunction
 
 int function UpdateScore(Actor akTarget, float updateStep)

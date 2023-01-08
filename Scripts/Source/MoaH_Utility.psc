@@ -204,7 +204,7 @@ int function GetArousalStage(Actor akActor)
 endFunction
 
 string function GetRandomString(string[] stringArray)
-	if(stringArray != None && stringArray.Length > 0)
+	if(stringArray.Length > 0)
 		int randomInt = Utility.RandomInt(0,stringArray.Length - 1)
 		return stringArray[randomInt]
 	endIf
