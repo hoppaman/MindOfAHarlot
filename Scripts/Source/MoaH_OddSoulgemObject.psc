@@ -81,6 +81,7 @@ function SummonTara(int ThreadID)
 		Actor TarasSpirit = PlaceActorAtMe(CommonProperties.TarasSpirit)
 		CommonProperties.Tara = TarasSpirit
 		IntroductionQuest.SetObjectiveCompleted(30)
+		IntroductionQuest.SetCurrentStageID(100)
 		; TODO: set player to pose and hold it
 	EndIf
 endFunction
