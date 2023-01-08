@@ -5,9 +5,13 @@ float lastStaminaDebuff = 0.0
 
 Perk Property HarlotFragilePerk Auto
 
+; When ability is removed it appears that mgef is removed before OnEffectFinish is ran
+float mag = 0.0
+
 event OnEffectStart(Actor akTarget, Actor akCaster)
+	mag = GetMagnitude()
 	akTarget.AddPerk(HarlotFragilePerk)
-	akTarget.ModAV("CarryWeight", GetMagnitude() * -1)
+	akTarget.ModAV("CarryWeight", mag * -1)
 	UpdateStats(akTarget)
 	; Pretty killer 
 	; TODO: if possible trigger this on levelup? Except sacrosanct adds base health
@@ -33,7 +37,7 @@ endFunction
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
 	akTarget.RemovePerk(HarlotFragilePerk)
-	akTarget.ModAV("CarryWeight", GetMagnitude())
+	akTarget.ModAV("CarryWeight", mag)
 	akTarget.ModAV("Health", lastHealthDebuff * -1)
 	akTarget.ModAV("Stamina", lastStaminaDebuff * -1)
 endEvent

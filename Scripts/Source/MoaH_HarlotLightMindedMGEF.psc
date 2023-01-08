@@ -4,9 +4,13 @@ Perk Property HarlotLightMindedPerk Auto
 
 float lastMagickaDebuff = 0.0
 
+; When ability is removed it appears that mgef is removed before OnEffectFinish is ran
+float mag = 0.0
+
 event OnEffectStart(Actor akTarget, Actor akCaster)
+	mag = GetMagnitude()
 	akTarget.AddPerk(HarlotLightMindedPerk)
-	akTarget.ModAV("Destruction", GetMagnitude() * -1)
+	akTarget.ModAV("Destruction", mag * -1)
 	UpdateStats(akTarget)
 	; Pretty killer 
 	; TODO: if possible trigger this on levelup and read book?
@@ -31,6 +35,6 @@ endFunction
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
 	akTarget.RemovePerk(HarlotLightMindedPerk)
-	akTarget.ModAV("Destruction", GetMagnitude())
+	akTarget.ModAV("Destruction", mag)
 	akTarget.ModAV("Magicka", lastMagickaDebuff * -1)
 endEvent

@@ -61,7 +61,9 @@ function Update()
 	;Debug.Notification("Your body is getting more sensitive.")
 	UpdateKeywords(akTarget,Score)
 	float progress = (Score as float)/(CommonProperties.HarlotScoreMaxRank as float)
-	Debug.Notification("[MoaH] Updating morphs with progress of " + progress)
+	if(CommonProperties.SettingDebugHarlot)
+		Debug.Notification("[MoaH] Updating morphs with progress of " + progress)
+	endIf
 	UpdateMorphs(akTarget, progress)
 endFunction
 
