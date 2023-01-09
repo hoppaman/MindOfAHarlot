@@ -22,14 +22,14 @@ float lastUpdateTime = 0.0
 
 event OnInit()
 	SelfConfidenceScore = AcceptableSelfConfidenceScore
-	RegisterForModEvent(CommonProperties.AttentionLookAtEventName, "AttentionLookAtEvent")
+	RegisterForModEvent(CommonProperties.AttentionPlayerLookAtEventName, "Att_PlayerIsLookedAt")
 	RegisterForModEvent("_STA_RandomRunUpAndSpankComplete", "STA_RandomRunUpAndSpankCompleted")
 	RegisterForUpdateGameTime(1.0)
 	lastUpdateTime = Utility.GetCurrentGameTime()
 	Update()
 endEvent
 
-event AttentionLookAtEvent(Actor akViewer, Actor akViewed)
+event Att_PlayerIsLookedAt(Actor akViewer, float distance)
 	Debug.Notification("You enjoy to be watched.")
 	SelfConfidenceScore += SelfConfidenceScoreTinyBoost
 endEvent

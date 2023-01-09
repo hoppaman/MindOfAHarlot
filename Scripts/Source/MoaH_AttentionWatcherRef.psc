@@ -5,15 +5,14 @@ MoaH_CommonProperties property CommonProperties auto
 Actor watcher = None
 bool isWatching = false
 event OnInit()
-	Actor akTarget = Game.GetPlayer()
+	Actor player = Game.GetPlayer()
 	watcher = GetActorReference()
 	if(watcher != None)
-		watcher.SetLookAt(akTarget, true)
-		isWatching = true
-		Debug.Notification("[MoaH] Attention " + watcher.GetDisplayName() + " is watching " + akTarget.GetDisplayName())
-		int handle = ModEvent.Create(CommonProperties.AttentionLookAtEventName)
+		watcher.SetLookAt(player, true)
+		Debug.Notification("[MoaH] Attention " + watcher.GetDisplayName() + " is watching " + player.GetDisplayName())
+		int handle = ModEvent.Create(CommonProperties.AttentionPlayerLookAtEventName)
 		ModEvent.PushForm(handle, watcher)
-		ModEvent.PushForm(handle, akTarget)
+		ModEvent.PushFloat(handle, watcher.GetDistance(player))
 		ModEvent.Send(handle)
 		RegisterForSingleUpdate(Utility.RandomFloat(4,8))
 	else
@@ -23,10 +22,10 @@ event OnInit()
 endEvent
 
 event OnUpdate()
-	if(isWatching)
+	if(watcher != None)
 		watcher.ClearLookAt()
 		watcher = None
 	endIf
 	; Free reference
-	Clear()
+	GetOwningQuest().Stop()
 endEvent

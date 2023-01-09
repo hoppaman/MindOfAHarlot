@@ -98,7 +98,7 @@ Float Property HarlotScoreUpdateIntervalGameTime = 1.0 autoReadonly Hidden; ever
 ;; Mod Events
 ;;;;;
 
-string Property AttentionLookAtEventName = "MoaH_AttentionLookAt" autoReadonly hidden
+string Property AttentionPlayerLookAtEventName = "MoaH_Att_PlayerLookAt" autoReadonly hidden
 
 ;;;;;
 ;; Config
