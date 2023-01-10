@@ -1,4 +1,4 @@
-Scriptname MoaH_HarlotMGEF extends activemagiceffect  
+Scriptname MoaH_MGEFHarlotAddiction extends activemagiceffect  
 
 MoaH_CommonProperties property CommonProperties auto
 MoaH_Utility Property MUtility auto
@@ -54,11 +54,12 @@ event OnUpdateGameTime()
 endEvent
 
 function Update()
+	Actor akTarget = GetTargetActor()
+	bool isPlayer = akTarget == Game.GetPlayer()
 	; As player can wait or sleep we cannot trust that Update hits always. Count the real time passed.
 	float step = PapyrusUtil.ClampFloat((Utility.GetCurrentGameTime() - lastUpdateTime) * 24, CommonProperties.HarlotScoreUpdateIntervalGameTime, 48)
 	lastUpdateTime = Utility.GetCurrentGameTime()
-	Actor akTarget = GetTargetActor()
-
+	
 	int Score = UpdateScore(akTarget, step)
 	
 	if(CommonProperties.SettingDebugHarlot)
@@ -67,6 +68,11 @@ function Update()
 	;Debug.Notification("Your body is getting more sensitive.")
 	UpdateKeywords(akTarget,Score)
 	float progress = (Score as float)/(CommonProperties.HarlotScoreMaxRank as float)
+
+	if(isPlayer)
+		CommonProperties.PlayerHarlotAddictionProgressFloat.SetValue(progress)
+		CommonProperties.PlayerHarlotMorphsProgressFloat.SetValue(progress)
+	endif
 
 	UpdateMorphs(akTarget, progress)
 endFunction

@@ -1,11 +1,14 @@
 Scriptname MoaH_CommonProperties extends MoaH_QuestBase
 
+; Globals - dialogue...
+GlobalVariable Property PlayerHarlotAddictionProgressFloat Auto
+GlobalVariable Property PlayerHarlotMorphsProgressFloat Auto
+
 ; Actors
 Actor Property PlayerRef Auto
 
 ; Common quests
 MoaH_IntroductionQuest Property IntroductionQuest Auto
-MoaH_FlirtDialogueQuest Property FlirtDialogueQuest Auto
 MoaH_SuccubusIntroductionQuest Property SuccubusIntroductionQuest Auto
 MoaH_ThoughtsQuest Property ThoughtsQuest Auto
 MoaH_ModEventTrackerQuest Property ModEventTrackerQuest Auto

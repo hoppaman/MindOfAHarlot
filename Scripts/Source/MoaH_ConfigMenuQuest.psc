@@ -54,7 +54,7 @@ event OnPageReset (string a_page)
 		UnloadCustomContent()
 	endIf
 	
-	MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
+	;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
 	Actor playerRef = CommonProperties.PlayerRef
 	Spell MasturbateAbility = CommonProperties.MasturbateAbility
 	Spell FondleAbility = CommonProperties.FondleAbility
@@ -69,7 +69,7 @@ event OnPageReset (string a_page)
 	if(a_page == "General")
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Dialogue")
-		AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
+		;AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
 		AddEmptyOption()
 		AddHeaderOption("Thoughts")
 		AddToggleOptionST("ThoughtsToggle","Enable Thoughts", ThoughtsQuest.IsRunning())
@@ -140,27 +140,27 @@ endEvent
 
 state FlirtToggle
 	event OnDefaultST()
-		MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
-		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
-		SetToggleOptionValueST(IsFlirtOn)
+		;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
+		;bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
+		;SetToggleOptionValueST(IsFlirtOn)
 	endEvent
 	
 	event OnSelectST()
-		MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
-		bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
-		if(IsFlirtOn)
-			FlirtDialogueQuest.Stop()
-		else
-			FlirtDialogueQuest.Reset()
-			if(!FlirtDialogueQuest.Start())
-				Debug.Trace("[MoaH] failed to start Flirt")
-			endIf
-		endIf
-		SetToggleOptionValueST(FlirtDialogueQuest.IsRunning())
+		;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
+		;bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
+		;if(IsFlirtOn)
+		;	FlirtDialogueQuest.Stop()
+		;else
+		;	FlirtDialogueQuest.Reset()
+		;	if(!FlirtDialogueQuest.Start())
+		;		Debug.Trace("[MoaH] failed to start Flirt")
+		;	endIf
+		;endIf
+		;SetToggleOptionValueST(FlirtDialogueQuest.IsRunning())
 	endEvent
 
 	event OnHighlightST()
-		SetInfoText("Show <flirt> in chat.")
+		;SetInfoText("Show <flirt> in chat.")
 	endEvent
 endState
 
