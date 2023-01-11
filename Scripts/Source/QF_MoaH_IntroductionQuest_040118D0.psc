@@ -2,11 +2,6 @@
 ;NEXT FRAGMENT INDEX 8
 Scriptname QF_MoaH_IntroductionQuest_040118D0 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY akSanguine
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_akSanguine Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY PlayerRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_PlayerRef Auto
@@ -37,6 +32,18 @@ setObjectiveDisplayed(30)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
+Quest __temp = self as Quest
+MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
+;END AUTOCAST
+;BEGIN CODE
+SetObjectiveDisplayed(20)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_0
 Function Fragment_0()
 ;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
@@ -49,14 +56,4 @@ SetObjectiveDisplayed(10)
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
-Quest __temp = self as Quest
-MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
-;END AUTOCAST
-;BEGIN CODE
-SetObjectiveDisplayed(20)
-;END CODE
-EndFunction
-;END FRAGMENT
+;END FRAGMENT CODE - Do not edit anything between this and the begin comment
