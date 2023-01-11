@@ -1,7 +1,7 @@
 Scriptname MoaH_MGEFHarlotAddiction extends activemagiceffect  
 
-MoaH_CommonProperties property CommonProperties auto
-MoaH_Utility Property MUtility auto
+MoaH_QuestCommonProperties property CommonProperties auto
+MoaH_QuestUtility Property MUtility auto
 
 Topic Property OtherSayTopic Auto
 int lastUpdateStage = 0
@@ -95,7 +95,7 @@ function UpdateMorphs(Actor akTarget, float mod)
 endFunction
 
 function UpdateKeywords(Actor akTarget, int Score)
-	MoaH_IntroductionQuest IntroductionQuest = CommonProperties.IntroductionQuest
+	MoaH_QuestIntroduction IntroductionQuest = CommonProperties.IntroductionQuest
 	int iqCSI = IntroductionQuest.GetCurrentStageID()
 	; Update keywords
 	Keyword DesireStage1 = CommonProperties.HarlotSexAddictionStage1Keyword
