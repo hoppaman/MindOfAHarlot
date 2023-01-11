@@ -1,12 +1,16 @@
 Scriptname MoaH_RefSanguine extends ReferenceAlias  
 
+MoaH_QuestIntroductionCourier Property IntroductionCourier Auto
+
 event OnInit()
 	Debug.Trace("[MoaH] Sanguine found.")
-	;Debug.MessageBox("[MoaH] Evil raises.")
-	Actor sanguine = GetActorReference()	
 endEvent
 
 event OnActivate(ObjectReference akActionRef)
 	Debug.Notification("[MoaH] Sanguine is activated.")
-	; Do Courrier magic
+	if(!IntroductionCourier.CourierMagicDone && !IntroductionCourier.DA14NightToRemember.IsCompleted())
+		Debug.Trace("[MoaH] Player talking to sanguine starting courier.")
+		IntroductionCourier.StartCourierMagic()
+	endIf
 endEvent
+
