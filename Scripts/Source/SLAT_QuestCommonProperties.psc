@@ -20,5 +20,8 @@ float Property SettingThoughtsInterval = 60.0 Auto Hidden
 
 string Property FlatterEventName = "SLAT_Flattered" autoReadonly hidden
 
+string Property RegisterThoughtProviderEventName = "SLAT_RegisterThoughtProvider" autoReadonly hidden
+string Property UnregisterThoughtProviderEventName = "SLAT_UnregisterThoughtProvider" autoReadonly hidden
+
 ;TODO: "Is teasing" is needed?
 ;Faction property IsAnimatingFaction Auto

@@ -1,4 +1,4 @@
-Scriptname MoaH_HarlotQuestThoughtProviderFemale extends SLAT_ThoughtProviderBase
+Scriptname MoaH_QuestHarlotSLATTPFemale extends SLAT_ThoughtProviderBase
 
 MoaH_QuestUtility Property MUtility Auto
 
@@ -128,6 +128,7 @@ event OnInit()
 	ThoughtsStage3ArousalC[4] = "Please I need to have have it now."
 	ThoughtsStage3ArousalC[5] = "Do they want me?"
 	ThoughtsStage3ArousalC[6] = "Where are all the horny men?"
+	RegisterThoughtProvider()
 endEvent
 
 bool function HasThoughts()
@@ -164,6 +165,6 @@ string function GetThought()
 			arousalThoughts = ThoughtsStage1ArousalA
 		endif
 	endif
-	string thought = MUtility.GetRandomString(arousalThoughts)
+	string thought = COMMON_Utility.GetRandomString(arousalThoughts)
 	return thought
 endFunction

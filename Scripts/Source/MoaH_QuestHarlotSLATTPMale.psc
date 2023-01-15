@@ -1,4 +1,4 @@
-scriptname MoaH_HarlotQuestThoughtProviderMaleMemory extends SLAT_ThoughtProviderBase
+scriptname MoaH_QuestHarlotSLATTPMale extends SLAT_ThoughtProviderBase
 
 bool function HasThought()
 	return false

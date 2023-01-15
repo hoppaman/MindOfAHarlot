@@ -1,4 +1,4 @@
-scriptname MoaH_HarlotQuestThoughtProviderFemaleMemory extends SLAT_ThoughtProviderBase
+scriptname MoaH_QuestHarlotSLATTPFemaleMemory extends SLAT_ThoughtProviderBase
 
 ; Sex partners
 string[] SexPartnersLow ; Lower addiction

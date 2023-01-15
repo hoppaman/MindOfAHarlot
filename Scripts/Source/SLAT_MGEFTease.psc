@@ -41,6 +41,8 @@ Idle Property GS371 Auto
 
 Idle[] FemaleFondles
 
+Actor target;
+
 event OnInit()
 	FemaleFondles = new Idle[14]
 	FemaleFondles[0] = GS92
@@ -60,23 +62,24 @@ event OnInit()
 endEvent
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
+	target = akTarget
 	float duration = GetDuration()
 	SexLabFramework SexLab = CommonProperties.SexLab
 	Debug.Trace("[MoaH] Fondle starting with duration of " + duration)
-	int gender = SexLab.GetGender(akTarget)
+	int gender = SexLab.GetGender(target)
 	if( gender == 0) ; is Male
 		int r = Utility.RandomInt(0,2)
 		if(r == 0)
-			COMMON_Utility.PlayThirdPersonAnimation(akTarget, MaleFondle1, duration)
+			COMMON_Utility.PlayThirdPersonAnimation(target, MaleFondle1, duration)
 		elseif(r == 1)
-			COMMON_Utility.PlayThirdPersonAnimation(akTarget, MaleFondle2, duration)
+			COMMON_Utility.PlayThirdPersonAnimation(target, MaleFondle2, duration)
 		endIf
 	elseif(gender == 1) ; female
 		int r = Utility.RandomInt(0,FemaleFondles.Length - 1)
 		
 		Idle chosenFondle = FemaleFondles[r]
 			
-		COMMON_Utility.PlayThirdPersonAnimation(akTarget, chosenFondle, duration)
+		COMMON_Utility.PlayThirdPersonAnimation(target, chosenFondle, duration)
 		
 	else
 		Debug.Trace("[MoaH] Creature cannot fondle.")
@@ -89,6 +92,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
 	ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
 	ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
+	ModEvent.PushFloat(ModSpankEvent, 1.5)
 	ModEvent.Send(ModSpankEvent)
 	if(duration > 5.0)
 		RegisterForUpdate(3.0)
@@ -97,13 +101,13 @@ endEvent
 
 function UpdateArousal()
 	SexLabFramework SexLab = CommonProperties.SexLab
-	Actor akTarget = GetTargetActor()
-	sslBaseVoice voice = SexLab.PickVoice(akTarget)
+	
+	sslBaseVoice voice = SexLab.PickVoice(target)
 	Int ModArousalEvent = ModEvent.Create("slaUpdateExposure")
-    ModEvent.PushForm(ModArousalEvent, akTarget)
+    ModEvent.PushForm(ModArousalEvent, target)
     ModEvent.PushFloat(ModArousalEvent, 2)
     ModEvent.Send(ModArousalEvent)
-	voice.PlayMoanEx(akTarget)
+	voice.PlayMoanEx(target)
 endFunction
 
 event OnUpdate()

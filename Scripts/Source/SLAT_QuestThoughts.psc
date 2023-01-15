@@ -6,18 +6,19 @@ SLAT_QuestCommonProperties Property CommonProperties Auto
 Form[] providers = NONE
 
 event OnInit()
-	
+UnregisterForUpdate()
 	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
+	UnregisterForAllModEvents()
+	RegisterForModEvent(CommonProperties.RegisterThoughtProviderEventName, "RegisterThoughtProviderEvent")
+	RegisterForModEvent(CommonProperties.UnregisterThoughtProviderEventName, "UnregisterThoughtProviderEvent")
 endEvent
 	
-event OnReset()
-	UnregisterForUpdate()
-	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
+event RegisterThoughtProviderEvent(Form tp)
+	RegisterThoughtProvider(tp as SLAT_ThoughtProviderBase)
 endEvent
 
-event OnLoadGame()
-	UnregisterForUpdate()
-	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
+event UnregisterThoughtProviderEvent(Form tp)
+	RemoveThoughtProvider(tp as SLAT_ThoughtProviderBase)
 endEvent
 
 function RegisterThoughtProvider(SLAT_ThoughtProviderBase thoughtProvider)
