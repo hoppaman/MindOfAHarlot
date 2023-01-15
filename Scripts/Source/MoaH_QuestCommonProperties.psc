@@ -29,7 +29,8 @@ Keyword Property ActorTypeNPCKeyword auto
 ; Factions
 Faction property HarlotFaction Auto
 Faction property HarlotScoreFaction Auto
-Faction Property HarlotMorphFaction Auto
+Faction property HarlotBreastMorphFaction Auto
+Faction Property HarlotBodyMorphFaction Auto
 Faction property SanguineStandingFaction Auto
 Faction property SuccubusFaction Auto
 Faction property SuccubusSatiationFaction Auto

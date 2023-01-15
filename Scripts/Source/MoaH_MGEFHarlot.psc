@@ -23,6 +23,15 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	if(!akTarget.IsInFaction(CommonProperties.HarlotScoreFaction))
 		akTarget.AddToFaction(CommonProperties.HarlotScoreFaction)
 	endIf
+	
+	if(!akTarget.IsInFaction(CommonProperties.HarlotBodyMorphFaction))
+		akTarget.AddToFaction(CommonProperties.HarlotBodyMorphFaction)
+	endIf
+	
+	if(!akTarget.IsInFaction(CommonProperties.HarlotBreastMorphFaction))
+		akTarget.AddToFaction(CommonProperties.HarlotBreastMorphFaction)
+	endIf
+	
 	; Even this mgef doesn't handle sanguine favor add receiver to faction to start tracking
 	if(!akTarget.IsInFaction(CommonProperties.SanguineStandingFaction))
 		akTarget.AddToFaction(CommonProperties.SanguineStandingFaction)
@@ -94,14 +103,14 @@ int function UpdateAddictionScore(Actor akTarget, float updateStep)
 endFunction
 
 function UpdateMorphs(Actor akTarget, float updateStep)
-	Faction HarlotMorphFaction = CommonProperties.HarlotMorphFaction
+	Faction HarlotBodyMorphFaction = CommonProperties.HarlotBodyMorphFaction
 	int HarlotScoreMaxRank = CommonProperties.HarlotScoreMaxRank
-	if(akTarget.GetFactionRank(HarlotMorphFaction) < HarlotScoreMaxRank)
+	if(akTarget.GetFactionRank(HarlotBodyMorphFaction) < HarlotScoreMaxRank)
 		int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
-		COMMON_Utility.AddFactionRank( akTarget, HarlotMorphFaction, Step, HarlotScoreMaxRank)
+		COMMON_Utility.AddFactionRank( akTarget, HarlotBodyMorphFaction, Step, HarlotScoreMaxRank)
 	endIf
 
-	int Score = akTarget.GetFactionRank(HarlotMorphFaction)
+	int Score = akTarget.GetFactionRank(HarlotBodyMorphFaction)
 	COMMON_MorphUtility.MorphActor(akTarget, CommonProperties.SettingHarlotMorphFile, (Score as float)/(HarlotScoreMaxRank as float))
 
 	if(CommonProperties.SettingDebugHarlot)
