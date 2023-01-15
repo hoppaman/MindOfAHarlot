@@ -4,20 +4,17 @@ Scriptname MoaH_QuestCommonProperties extends MoaH_QuestBase
 GlobalVariable Property PlayerHarlotAddictionProgressFloat Auto
 GlobalVariable Property PlayerHarlotMorphsProgressFloat Auto
 
-; Actors
-Actor Property PlayerRef Auto
-
 ; Common quests
 MoaH_QuestIntroduction Property IntroductionQuest Auto
 MoaH_QuestSuccubusIntroduction Property SuccubusIntroductionQuest Auto
-MoaH_QuestThoughts Property ThoughtsQuest Auto
 MoaH_QuestModEventTracker Property ModEventTrackerQuest Auto
 
 ; Integrations
 SexLabFramework Property SexLab Auto
+slaFrameworkScr Property SLA Auto
 SOS_SetupQuest_Script Property SOSSetupQuest Auto
 SLSF_CompatibilityScript Property SLSF Auto
-slaFrameworkScr Property SLA Auto
+
 
 ; Keywords
 Keyword Property HarlotSexAddictionStage1Keyword  Auto
@@ -29,18 +26,14 @@ Keyword Property HarlotSexAddictionStage3Keyword  Auto
 
 Keyword Property ActorTypeNPCKeyword auto
 
-
-; Perks/Spell/MGEF
-Spell Property MasturbateAbility Auto
-Spell Property FondleAbility Auto
-
 ; Factions
 Faction property HarlotFaction Auto
 Faction property HarlotScoreFaction Auto
+Faction Property HarlotMorphFaction Auto
 Faction property SanguineStandingFaction Auto
 Faction property SuccubusFaction Auto
 Faction property SuccubusSatiationFaction Auto
-Faction property IsAnimatingFaction Auto
+
 
 
 ; Active properties
@@ -51,6 +44,7 @@ ActorBase Property TarasSpirit Auto
 
 
 Spell Property TurnHarlotAbility Auto
+Spell Property SexAddictionIMAD Auto
 
 ; Harlot buffs and debuffs
 
@@ -98,12 +92,6 @@ Float Property HarlotScoreUpdateIntervalGameTime = 1.0 autoReadonly Hidden; ever
 ; Curse will fulfill in a 2 days
 
 ;;;;;
-;; Mod Events
-;;;;;
-
-string Property AttentionPlayerLookAtEventName = "MoaH_Att_PlayerLookAt" autoReadonly hidden
-
-;;;;;
 ;; Config
 ;;;;;
 
@@ -113,7 +101,5 @@ bool Property SettingDebugSuccubus = true Auto Hidden
 bool Property SettingDebugIntroduction = true Auto Hidden
 bool Property SettingDebugSanguine = true Auto Hidden
 
-; Thought settings
-float Property SettingThoughtsInterval = 60.0 Auto Hidden
-
+; TODO: Breasts morph file
 string Property SettingHarlotMorphFile = "MoaH_HarlotMorphs.json" Auto Hidden

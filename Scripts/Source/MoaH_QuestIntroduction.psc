@@ -13,7 +13,7 @@ event OnLoadGame()
 endEvent
 
 Event OnUpdateGameTime()
-	Actor PlayerRef = CommonProperties.PlayerRef
+	Actor PlayerRef = Game.GetPlayer()
 	Keyword DesireStage1 = CommonProperties.HarlotSexAddictionStage1Keyword
 	Keyword DesireStage2 = CommonProperties.HarlotSexAddictionStage2Keyword
 	Keyword DesireStage3 = CommonProperties.HarlotSexAddictionStage3Keyword

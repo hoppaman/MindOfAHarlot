@@ -92,7 +92,7 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 	Debug.Trace("[MoaH] Detect orgasm.")
 	SexLabFramework SexLab = CommonProperties.SexLab
 
-	Actor PlayerRef = CommonProperties.PlayerRef
+	Actor PlayerRef = Game.GetPlayer()
 	Actor[] actors = SexLab.HookActors(_args)
 
 	sslBaseAnimation animation = SexLab.HookAnimation(_args)

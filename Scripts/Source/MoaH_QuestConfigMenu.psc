@@ -55,30 +55,17 @@ event OnPageReset (string a_page)
 	endIf
 	
 	;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
-	Actor playerRef = CommonProperties.PlayerRef
-	Spell MasturbateAbility = CommonProperties.MasturbateAbility
-	Spell FondleAbility = CommonProperties.FondleAbility
+	Actor playerRef = Game.GetPlayer()
 	Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 	MoaH_QuestIntroduction IntroductionQuest = CommonProperties.IntroductionQuest
-	MoaH_QuestThoughts ThoughtsQuest = CommonProperties.ThoughtsQuest
+	
 	bool DebugHarlot = CommonProperties.SettingDebugHarlot
 	bool DebugSanguine = CommonProperties.SettingDebugSanguine
 	bool DebugSuccubus = CommonProperties.SettingDebugSuccubus
 	bool DebugIntroduction = CommonProperties.SettingDebugIntroduction
 	
 	if(a_page == "General")
-		SetCursorFillMode(TOP_TO_BOTTOM)
-		AddHeaderOption("Dialogue")
-		;AddToggleOptionST("FlirtToggle","Enable Flirt", FlirtDialogueQuest.IsRunning())
-		AddEmptyOption()
-		AddHeaderOption("Thoughts")
-		AddToggleOptionST("ThoughtsToggle","Enable Thoughts", ThoughtsQuest.IsRunning())
-		AddSliderOptionST("ThoughtsInterval","Thoughts interval (seconds)", CommonProperties.SettingThoughtsInterval)
-		AddEmptyOption()
-		AddHeaderOption("Abilities")
-		AddToggleOptionST("ToggleFondleAbility", "Add/remove fondle", PlayerRef.HasSpell(FondleAbility))
-		AddToggleOptionST("ToggleMasturbateAbility", "Add/remove masturbate", PlayerRef.HasSpell(MasturbateAbility))
-		AddEmptyOption()
+		
 	elseIf(a_page == "Harlot")
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		bool playerIsHarlot = false
@@ -93,7 +80,7 @@ event OnPageReset (string a_page)
 			opt = 0
 		endIf
 		AddHeaderOption("Progress", opt)
-		AddTextOptionST("DisplayDesireST","Current harlot stage", "-",opt)
+		AddTextOptionST("DisplaySexAddictionST","Current harlot stage", "-",opt)
 		AddSliderOptionST("SetHarlotScore", "Set harlot score", PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction),opt)
 		AddEmptyOption()
 		AddHeaderOption("BodyMorphs")
@@ -138,133 +125,10 @@ event OnPageReset (string a_page)
 	
 endEvent
 
-state FlirtToggle
+
+state DisplaySexAddictionST
 	event OnDefaultST()
-		;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
-		;bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
-		;SetToggleOptionValueST(IsFlirtOn)
-	endEvent
-	
-	event OnSelectST()
-		;MoaH_FlirtDialogueQuest FlirtDialogueQuest = CommonProperties.FlirtDialogueQuest
-		;bool IsFlirtOn = FlirtDialogueQuest.IsRunning()
-		;if(IsFlirtOn)
-		;	FlirtDialogueQuest.Stop()
-		;else
-		;	FlirtDialogueQuest.Reset()
-		;	if(!FlirtDialogueQuest.Start())
-		;		Debug.Trace("[MoaH] failed to start Flirt")
-		;	endIf
-		;endIf
-		;SetToggleOptionValueST(FlirtDialogueQuest.IsRunning())
-	endEvent
-
-	event OnHighlightST()
-		;SetInfoText("Show <flirt> in chat.")
-	endEvent
-endState
-
-state ThoughtsToggle
-	event OnDefaultST()
-		MoaH_QuestThoughts thoughtsQuest = CommonProperties.ThoughtsQuest
-		bool IsOn = thoughtsQuest.IsRunning()
-		SetToggleOptionValueST(IsOn)
-	endEvent
-	
-	event OnSelectST()
-		MoaH_QuestThoughts thoughtsQuest = CommonProperties.ThoughtsQuest
-		bool IsOn = thoughtsQuest.IsRunning()
-		if(IsOn)
-			thoughtsQuest.Stop()
-		else
-			thoughtsQuest.Reset()
-			if(!thoughtsQuest.Start())
-				Debug.Trace("[MoaH] failed to start thoughts")
-			endIf
-		endIf
-		SetToggleOptionValueST(thoughtsQuest.IsRunning())
-	endEvent
-
-	event OnHighlightST()
-		SetInfoText("Player thoughts on/off")
-	endEvent
-endState
-
-state ThoughtsInterval
-	event OnSliderOpenST()
-		SetSliderDialogStartValue(CommonProperties.SettingThoughtsInterval)
-		SetSliderDialogDefaultValue(CommonProperties.SettingThoughtsInterval)
-		SetSliderDialogRange(12, 300)
-		SetSliderDialogInterval(1)
-	endEvent
-
-	event OnSliderAcceptST(float value)
-		CommonProperties.SettingThoughtsInterval = value
-		SetSliderOptionValueST(CommonProperties.SettingThoughtsInterval)
-	endEvent
-
-	event OnDefaultST()
-		SetSliderOptionValueST(CommonProperties.SettingThoughtsInterval)
-	endEvent
-
-	event OnHighlightST()
-		SetInfoText("In seconds how often thoughts should update.")
-	endEvent
-endState
-
-state ToggleMasturbateAbility
-	event OnDefaultST()
-		; Default 
-		Actor playerRef = CommonProperties.PlayerRef
-		Spell MasturbateAbility = CommonProperties.MasturbateAbility
-		if(!PlayerRef.HasSpell(MasturbateAbility))
-			PlayerRef.AddSpell(MasturbateAbility)
-		endIf
-		SetToggleOptionValueST(PlayerRef.HasSpell(MasturbateAbility))
-	endEvent
-	event OnSelectST()
-		Actor playerRef = CommonProperties.PlayerRef
-		Spell MasturbateAbility = CommonProperties.MasturbateAbility
-		if(PlayerRef.HasSpell(MasturbateAbility))
-			PlayerRef.RemoveSpell(MasturbateAbility)
-		else
-			PlayerRef.AddSpell(MasturbateAbility)
-		endIf
-		SetToggleOptionValueST(PlayerRef.HasSpell(MasturbateAbility))
-	endEvent
-	event OnHighlightST()
-		SetInfoText("Add/remove masturbate ability.")
-	endEvent
-endState
-
-state ToggleFondleAbility
-	event OnDefaultST()
-		; Default 
-		Actor playerRef = CommonProperties.PlayerRef
-		Spell FondleAbility = CommonProperties.FondleAbility
-		if(!PlayerRef.HasSpell(FondleAbility))
-			PlayerRef.AddSpell(FondleAbility)
-		endIf
-		SetToggleOptionValueST(PlayerRef.HasSpell(FondleAbility))
-	endEvent
-	event OnSelectST()
-		Actor playerRef = CommonProperties.PlayerRef
-		Spell FondleAbility = CommonProperties.FondleAbility
-		if(PlayerRef.HasSpell(FondleAbility))
-			PlayerRef.RemoveSpell(FondleAbility)
-		else
-			PlayerRef.AddSpell(FondleAbility)
-		endIf
-		SetToggleOptionValueST(PlayerRef.HasSpell(FondleAbility))
-	endEvent
-	event OnHighlightST()
-		SetInfoText("Add/remove masturbate ability.")
-	endEvent
-endState
-
-state DisplayDesireST
-	event OnDefaultST()
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		Spell HarlotAbility = CommonProperties.TurnHarlotAbility
 		if(PlayerRef.HasSpell(HarlotAbility))
 			
@@ -287,7 +151,7 @@ endState
 state SetHarlotScore
 		
 	event OnSliderOpenST()
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		SetSliderDialogStartValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 		SetSliderDialogDefaultValue(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 		SetSliderDialogRange(0, CommonProperties.HarlotScoreMaxRank as float)
@@ -295,18 +159,18 @@ state SetHarlotScore
 	endEvent
 
 	event OnSliderAcceptST(float value)
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		PlayerRef.SetFactionRank(CommonProperties.HarlotScoreFaction, value as int)
 		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 	endEvent
 
 	event OnDefaultST()
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		SetSliderOptionValueST(PlayerRef.GetFactionRank(CommonProperties.HarlotScoreFaction) as float)
 	endEvent
 
 	event OnHighlightST()
-		SetInfoText("In seconds how often thoughts should update.")
+		SetInfoText("Set harlot score.")
 	endEvent
 endState
 
@@ -342,13 +206,13 @@ endState
 
 state HarlotToggle
 	event OnDefaultST()
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 		SetToggleOptionValueST(PlayerRef.HasSpell(TurnHarlotAbility))
 	endEvent
 	
 	event OnSelectST()
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 		if(PlayerRef.HasSpell(TurnHarlotAbility))
 			Debug.Trace("[MoaH] Removing harlot")
@@ -462,7 +326,7 @@ state SaveBodyMorphs
 
 	event OnSelectST()
 		string morphFile = CommonProperties.SettingHarlotMorphFile
-		Actor playerRef = CommonProperties.PlayerRef
+		Actor playerRef = Game.GetPlayer()
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		JSONUtil.Load(morphFile)
 		;JSONUtil.ClearAll(morphFile)

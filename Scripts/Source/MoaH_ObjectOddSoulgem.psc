@@ -5,7 +5,7 @@ MoaH_QuestCommonProperties property CommonProperties auto
 bool done = false
 
 Event OnActivate(ObjectReference akActionRef)
-	Actor PlayerRef = CommonProperties.PlayerRef
+	Actor PlayerRef = Game.GetPlayer()
 	Utility.Wait(0.2)
 	TriggerSex(PlayerRef)
 	Debug.MessageBox("As you touch the soulgem sensation hits your mind. Its all a blur and you can't make it out. As it fades your body tingles it appears that you have triggered a trap. Something in the soulgem is guiding you its taking over.")
@@ -63,7 +63,7 @@ function SummonTara(int ThreadID)
 	If(!done)
 		done = true
 		SexLabFramework SexLab = CommonProperties.SexLab
-		Actor PlayerRef = CommonProperties.PlayerRef
+		Actor PlayerRef = Game.GetPlayer()
 		Spell TurnHarlotAbility = CommonProperties.TurnHarlotAbility
 		Quest IntroductionQuest = CommonProperties.IntroductionQuest
 		if(!PlayerRef.HasSpell(TurnHarlotAbility))

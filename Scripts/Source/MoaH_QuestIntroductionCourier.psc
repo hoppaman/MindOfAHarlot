@@ -20,7 +20,7 @@ endEvent
 
 function StartCourierMagic()
 	if(!CourierStarting)	
-		Debug.Notification("StartCourierMagic")
+		Debug.Trace("[MoaH] StartCourierMagic")
 		UnregisterForUpdate()
 		RegisterForUpdate(30.0)
 		CourierStarting = true
@@ -35,7 +35,7 @@ event OnUpdate()
 endEvent
 
 function DoCourierMagic()
-	Debug.Notification("DoCourierMagic")
+	Debug.Trace("[MoaH] DoCourierMagic")
 	if(!courierMagicDone)
 		CourierScript.addItemToContainer(BasementKey)
 		CourierScript.addItemToContainer(BasementNote)
