@@ -7,13 +7,57 @@ SLAT_QuestCommonProperties property CommonProperties auto
 Idle Property MaleFondle1 Auto
 Idle Property MaleFondle2 Auto
 
-Idle Property FemaleFondle1 Auto
-Idle Property FemaleFondle2 Auto
-Idle Property FemaleFondle3 Auto
-
+; Female
+Idle Property GS92 Auto
+{Seductive torso touching}
+Idle Property GS105 Auto
+{Seductive touching}
+Idle Property GS122 Auto
+{Seductive torso touching}
+Idle Property GS153 Auto
+{Seductive hip touch}
+Idle Property GS156 Auto
+{Seductive breast massage}
+Idle Property GS158 Auto
+{Seductive sway}
+Idle Property GS170 Auto
+{Stand pussy rub}
+Idle Property GS174 Auto
+{Hands caress body}
+Idle Property GS185 Auto
+{Hands caress breasts}
+Idle Property GS198 Auto
+{Breast cup hip tease}
+Idle Property GS229 Auto
+{Slow right breast caress}
+Idle Property GS259 Auto
+{Hands flat hip tease}
+Idle Property GS300 Auto
+{You can stare}
+Idle Property GS303 Auto
+{I said you can stare}
 Idle Property GS371 Auto
-Idle Property GS402 Auto
-Idle Property GS403 Auto
+{Masturbating one hand behind}
+
+Idle[] FemaleFondles
+
+event OnInit()
+	FemaleFondles = new Idle[14]
+	FemaleFondles[0] = GS92
+	FemaleFondles[1] = GS105
+	FemaleFondles[2] = GS122
+	FemaleFondles[3] = GS153
+	FemaleFondles[4] = GS156
+	FemaleFondles[5] = GS158
+	FemaleFondles[6] = GS170
+	FemaleFondles[7] = GS174
+	FemaleFondles[8] = GS198
+	FemaleFondles[9] = GS229
+	FemaleFondles[10] = GS259
+	FemaleFondles[11] = GS300
+	FemaleFondles[12] = GS303
+	FemaleFondles[13] = GS371
+endEvent
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	float duration = GetDuration()
@@ -28,59 +72,12 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 			COMMON_Utility.PlayThirdPersonAnimation(akTarget, MaleFondle2, duration)
 		endIf
 	elseif(gender == 1) ; female
-		int r = Utility.RandomInt(0,2)
-		; Seductive torso touching x2
-		; Sassy body sway
-		; Naughty hand gesture
-		; Seductive touching
-		; Sexy laying on stomach
-		; Shy butt sway
-		; Slow swaying x2
-		; Seductive hip touch
-		; Seductive breast massage
-		; Stand pussy rub
-		; Hands caress body
-		; hip sway
-		; Hands caress breasts
-		; Slow up/down hip sway
-		; Breast cup hip tease
-		; Hands on Hips Twirl
-		; Laydown Ass Fingering
+		int r = Utility.RandomInt(0,FemaleFondles.Length - 1)
 		
-		; Stand Still Slow Shift
-		; 312
-		; 337
-		; 344
+		Idle chosenFondle = FemaleFondles[r]
+			
+		COMMON_Utility.PlayThirdPersonAnimation(akTarget, chosenFondle, duration)
 		
-		; Slow right breast caress
-		; Hey hey
-		; Squat boob shake
-		; Bend over super butt shake
-		; Face down ass up superb tease
-		; Hands flat hip tease
-		; Side to side dance
-		; All fours worship
-		; Pray
-		; You can stare
-		; I said you can stare
-		; 310
-		; 324
-		; 335
-		; 369
-		; 371
-		; 402
-		; 403
-		
-		; 451 - casting idle
-		
-		; 455 - exhausted sitting
-		if(r == 0)
-			COMMON_Utility.PlayThirdPersonAnimation(akTarget, GS371, duration)
-		elseif(r == 1)
-			COMMON_Utility.PlayThirdPersonAnimation(akTarget, GS402, duration)
-		elseif(r == 2)
-			COMMON_Utility.PlayThirdPersonAnimation(akTarget, GS403, duration)
-		endIf
 	else
 		Debug.Trace("[MoaH] Creature cannot fondle.")
 	endIf
