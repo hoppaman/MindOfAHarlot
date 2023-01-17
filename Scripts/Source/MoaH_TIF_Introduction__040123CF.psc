@@ -15,7 +15,7 @@ EndFunction
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-akSpeaker.GetDialogueTarget().SetDontMove(false)
+
 ;END CODE
 EndFunction
 ;END FRAGMENT

@@ -1,0 +1,141 @@
+{
+	"morphs" : 
+	{
+		"AppleCheeks" : 
+		{
+			"value" : 0.25
+		},
+		"Arms" : 
+		{
+			"value" : 0.25
+		},
+		"Back" : 
+		{
+			"value" : -0.20000000298023224
+		},
+		"BackArch" : 
+		{
+			"value" : 0.25
+		},
+		"BackValley_v2" : 
+		{
+			"value" : 0.0099999997764825821
+		},
+		"Belly" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"BellyFrontUpFat_v2" : 
+		{
+			"value" : 0.15000000596046448
+		},
+		"BigBelly" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"BigButt" : 
+		{
+			"value" : 0.34999999403953552
+		},
+		"BigTorso" : 
+		{
+			"value" : -0.15000000596046448
+		},
+		"ButtClassic" : 
+		{
+			"value" : 0.15000000596046448
+		},
+		"ButtCrack" : 
+		{
+			"value" : -0.25
+		},
+		"ButtNarrow_v2" : 
+		{
+			"value" : 0.5
+		},
+		"ButtPressed_v2" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"ButtShape2" : 
+		{
+			"value" : -0.30000001192092896
+		},
+		"ButtSmall" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ChestDepth" : 
+		{
+			"value" : -0.40000000596046448
+		},
+		"ChestWidth" : 
+		{
+			"value" : -0.30000001192092896
+		},
+		"ChubbyArms" : 
+		{
+			"value" : 0.05000000074505806
+		},
+		"ChubbyButt" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ChubbyWaist" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ForearmSize" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"HipBone" : 
+		{
+			"value" : -0.60000002384185791
+		},
+		"Hips" : 
+		{
+			"value" : 0.20000000298023224
+		},
+		"RoundAss" : 
+		{
+			"value" : 0.05000000074505806
+		},
+		"ShoulderSmooth" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ShoulderWidth" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"SlimThighs" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"SternumHeight" : 
+		{
+			"value" : 0.40000000596046448
+		},
+		"TummyTuck" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"Waist" : 
+		{
+			"value" : -0.20000000298023224
+		},
+		"WaistHeight" : 
+		{
+			"value" : 0.40000000596046448
+		},
+		"WideWaistLine" : 
+		{
+			"value" : -0.25
+		},
+		"butt" : 
+		{
+			"value" : 0.10000000149011612
+		}
+	}
+}

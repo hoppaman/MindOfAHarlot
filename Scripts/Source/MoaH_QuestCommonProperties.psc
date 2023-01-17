@@ -102,5 +102,8 @@ bool Property SettingDebugSuccubus = true Auto Hidden
 bool Property SettingDebugIntroduction = true Auto Hidden
 bool Property SettingDebugSanguine = true Auto Hidden
 
-; TODO: Breasts morph file
-string Property SettingHarlotMorphFile = "MoaH_HarlotMorphs.json" Auto Hidden
+
+string Property SettingHarlotBodyMorphFile = "MoaH_HarlotBodyMorphs.json" autoReadonly Hidden
+{Everything else than breast}
+string Property SettingHarlotBreastMorphFile = "MoaH_HarlotBreastMorphs.json" autoReadonly Hidden
+{Breasts and nipples}
