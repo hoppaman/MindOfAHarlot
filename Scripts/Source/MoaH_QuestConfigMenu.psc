@@ -325,7 +325,7 @@ state SaveBodyMorphs
 	endEvent
 
 	event OnSelectST()
-		string morphFile = CommonProperties.SettingHarlotMorphFile
+		string morphFile = "MoaH_HarlotCustomMorphs.json"
 		Actor playerRef = Game.GetPlayer()
 		;SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		JSONUtil.Load(morphFile)

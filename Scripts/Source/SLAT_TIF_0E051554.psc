@@ -6,7 +6,7 @@ Scriptname SLAT_TIF_0E051554 Extends TopicInfo Hidden
 Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-SLAT_UC_NipplePiercings.Notice(akSpeaker, true)
+SLAT_CU_NipplePiercings.Notice(akSpeaker, true)
 ;END CODE
 EndFunction
 ;END FRAGMENT

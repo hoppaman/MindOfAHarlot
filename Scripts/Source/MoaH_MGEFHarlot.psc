@@ -128,7 +128,7 @@ function UpdateMorphs(Actor akTarget, float updateStep)
 	;	Debug.Notification("[MoaH] Harlot morph score update on " + akTarget.GetDisplayName() + ". Current value " + Score)
 	;endIf
 	; Finally tell Racemenu to update morphs
-	NiOverride.UpdateModelWeight(akActor)
+	NiOverride.UpdateModelWeight(akTarget)
 endFunction
 
 function UpdateKeywords(Actor akTarget, int Score)

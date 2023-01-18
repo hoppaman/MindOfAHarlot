@@ -1,9 +1,11 @@
 Scriptname SLAT_CU_Breasts 
 
-Function Notice(Actor akSpeaker, bool positive) global
-	if (positive)
+Function Notice(Actor akSpeaker, int mod) global
+	if (mod > 0)
 		Debug.Notification(akSpeaker.GetName() + " gaze visits on your chest and smiles.")
-	else
+	elseif (mod < 0)
 		Debug.Notification(akSpeaker.GetName() + " pouts at you.")
+	else
+		Debug.Notification(akSpeaker.GetName() + " gaze visits on your chest.")
 	endIf
 EndFunction
