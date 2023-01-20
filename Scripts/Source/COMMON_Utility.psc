@@ -211,7 +211,7 @@ Actor[] function FindAdultActorsNear(Actor akTarget, float radius, int sex = -1)
 	; ActorTypeNPC
 	Keyword actorTypeNPC = Game.GetFormFromFile(0x013794, "Skyrim.esm") as Keyword
 	Actor[] actors = MiscUtil.ScanCellNPCs(akTarget, radius, actorTypeNPC)
-	if (actors != None)
+	if (actors.Length > 0)
 		;PapyrusUtil.RemoveActor(actors, akTarget) ; don't allow self
 		
 		int index = 0
