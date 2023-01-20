@@ -211,20 +211,7 @@ Actor[] function FindAdultActorsNear(Actor akTarget, float radius, int sex = -1)
 	; ActorTypeNPC
 	Keyword actorTypeNPC = Game.GetFormFromFile(0x013794, "Skyrim.esm") as Keyword
 	Actor[] actors = MiscUtil.ScanCellNPCs(akTarget, radius, actorTypeNPC)
-	if (actors.Length > 0)
-		;PapyrusUtil.RemoveActor(actors, akTarget) ; don't allow self
-		
-		int index = 0
-		While index < actors.Length
-			Actor randomNPC = (actors[index] as Actor)
-			
-			if( (sex == -1 || SexLab.GetGender(randomNPC) == sex) && !randomNPC.IsChild() && !randomNPC.IsDead())
-				index + 1
-			else
-				PapyrusUtil.RemoveActor(actors, randomNPC)
-			endIf
-		endWhile
-	endIf
+	return actors
 endFunction
 
 function AddFactionRank(Actor akActor, Faction akFaction, int amount, int maxRank = 127) global
