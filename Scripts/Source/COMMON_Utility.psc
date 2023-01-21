@@ -239,3 +239,46 @@ function ReduceFactionRank(Actor akActor, Faction akFaction, int amount) global
 		akActor.ModFactionRank(akFaction, -amount)
 	endIf
 endFunction
+
+bool function IsAIntoB(Actor a, actor b) global
+	SexLabFramework SexLab = SexLabUtil.GetAPI()
+	; Fem SexLab.GetSexuality() < 65 male > 35 female
+	int aSex = SexLab.GetGender(a)
+	int aSexuality = SexLab.GetSexuality(a)
+	int bSex = SexLab.GetGender(b)
+	bool isInto = false
+	if(bSex == 1)
+		; b is female
+		if(aSex == 0 && aSexuality > 35)
+			; Straight male
+			;Debug.Trace("[SLAT] Male is into female")
+			isInto = true
+		elseif(aSex == 1 && aSexuality < 65)
+			; Lesbian/bi-curious female
+			;Debug.Trace("[SLAT] Female is into female")
+			isInto = true
+		endIf
+	elseif(bSex == 0)
+		; b is male
+		if(aSex == 1 && aSexuality > 35)
+			; Straight female
+			;Debug.Trace("[SLAT] Female is into male")
+			isInto = true
+		elseif(aSex == 0 && aSexuality < 65)
+			; Gay/gayish male
+			;Debug.Trace("[SLAT] male is into male")
+			isInto = true
+		endIf
+	endIf
+	;Debug.Trace("[SLAT] " + a.GetDisplayName() + " is into " + b.GetDisplayName())
+	return isInto
+endFunction
+
+bool Function IsActorNaked(Actor akActor) global
+	Faction slaNakedFaction = Game.GetFormFromFile(0x06077F87, "SexLabAroused.esm") as slaMainScr
+	return akActor.GetFactionRank(slaNakedFaction)
+endFunction
+
+bool Function DoesASeeB(Actor a, Actor b) global
+	return a.GetDistance(b) < 3000 && a.HasLOS(b)
+endFunction

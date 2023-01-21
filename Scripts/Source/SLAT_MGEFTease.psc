@@ -65,7 +65,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	target = akTarget
 	float duration = GetDuration()
 	SexLabFramework SexLab = CommonProperties.SexLab
-	Debug.Trace("[MoaH] Fondle starting with duration of " + duration)
+	Debug.Trace("[MoaH] Tease starting with duration of " + duration)
 	int gender = SexLab.GetGender(target)
 	if( gender == 0) ; is Male
 		int r = Utility.RandomInt(0,2)
@@ -82,18 +82,22 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 		COMMON_Utility.PlayThirdPersonAnimation(target, chosenFondle, duration)
 		
 	else
-		Debug.Trace("[MoaH] Creature cannot fondle.")
+		Debug.Trace("[MoaH] Creature cannot tease.")
 	endIf
 	Utility.Wait(1.5)
 
 	UpdateArousal()
+	if(target == Game.GetPlayer())
+		Debug.Trace("[MoaH] sending spanker ")
+		Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
+		ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
+		ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
+		ModEvent.PushFloat(ModSpankEvent, 1.5)
+		ModEvent.Send(ModSpankEvent)
+		
+		CommonProperties.PlayerIsTeasing = true
+	endIf
 	
-	Debug.Trace("[MoaH] sending spanker ")
-	Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
-	ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
-	ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
-	ModEvent.PushFloat(ModSpankEvent, 1.5)
-	ModEvent.Send(ModSpankEvent)
 	if(duration > 5.0)
 		RegisterForUpdate(3.0)
 	endIf
@@ -115,6 +119,9 @@ event OnUpdate()
 endEvent
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
-	Debug.Notification("[MoaH] Fondle end")
-	UnregisterForUpdate()
+	Debug.Notification("[MoaH] Teasing end")
+	;UnregisterForUpdate()
+	if(akTarget == Game.GetPlayer())
+		CommonProperties.PlayerIsTeasing = false
+	endIf
 endEvent

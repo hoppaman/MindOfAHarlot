@@ -14,6 +14,17 @@ GlobalVariable Property DebugCommentsGlobal Auto
 ; Thought settings
 float Property SettingThoughtsInterval = 60.0 Auto Hidden
 
+Keyword Property IsTeasingKeyword Auto
+
+
+;;;;;
+;; Runtime states
+;; Updated by several places -- (optimization)
+;;;;;
+
+bool Property PlayerIsNaked Auto Hidden
+bool Property PlayerIsTeasing Auto Hidden
+
 ;;;;;
 ;; Mod Events
 ;;;;;
