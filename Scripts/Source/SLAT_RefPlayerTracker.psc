@@ -10,22 +10,26 @@ Actor player
 event OnInit()
 	SexLab = SexLabUtil.GetAPI()
 	player = GetActorRef()
+	Spell MasturbatePower = CommonProperties.MasturbatePower
+	Spell TeasePower = CommonProperties.TeasePower
+	player.AddSpell(MasturbatePower, false)
+	player.AddSpell(TeasePower, false)
 endEvent
 
 event OnReset()
 	CommonProperties.PlayerIsNaked = player.GetFactionRank(slaNakedFaction) >= 0
 	UnregisterForAllModEvents()
 		
-	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
-	RegisterForModEvent("AnimationEnd", "OnSexLabAnimationEnd")
+	RegisterForModEvent("HookAnimationStart", "OnSexLabAnimationStart")
+	RegisterForModEvent("HookAnimationEnd", "OnSexLabAnimationEnd")
 	
 	UnregisterForUpdate()
-	RegisterForUpdate(5)
+	RegisterForUpdate(2.5)
 endEvent
 
-Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form sender)
+Event OnSexlabAnimationStart(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] SexLabAnimationStart")
-	sslThreadController thread = SexLab.GetController(strArg as int)
+	sslThreadController thread = SexLab.GetController(tid)
 	if(thread.hasPlayer)
 		Debug.Trace("[SLAT] Player is having sex.")
 		Debug.Notification("[SLAT] Player is having sex.")
@@ -33,11 +37,11 @@ Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form
 	endIf
 endEvent
 
-Event OnSexlabAnimationEnd(string eventName, string strArg, float numArg, Form sender)
+Event OnSexlabAnimationEnd(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] SexLabAnimationEnd")
 			
-	sslThreadController thread = SexLab.GetController(strArg as int)
-	if(thread.hasPlayer)
+	sslThreadController thread = SexLab.GetController(tid)
+	if(hasPlayer)
 		Debug.Trace("[SLAT] Player is having sex. (ending)")
 		Debug.Notification("[SLAT] Player is having sex. (ending)")
 		CommonProperties.PlayerIsHavingSex = false

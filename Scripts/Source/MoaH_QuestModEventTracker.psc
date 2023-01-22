@@ -18,10 +18,10 @@ Event OnInit()
 	NotAPenis[3] = "SOS Pubic Hair Landing Strip"
 	NotAPenis[4] = "SOS Pubic Hair Untamed"
 	;RegisterForModEvent("DeviceActorOrgasm", "OnDDOrgasm")
-	RegisterForModEvent("OrgasmStart", "OnSexLabOrgasm")
-	RegisterForModEvent("AnimationStart", "OnSexLabAnimationStart")
-	RegisterForModEvent("AnimationEnd", "OnSexLabAnimationEnd")
-	RegisterForModEvent("StageStart", "OnSexLabStageStart")
+	RegisterForModEvent("HookOrgasmStart", "OnSexLabOrgasm")
+	RegisterForModEvent("HookAnimationStart", "OnSexLabAnimationStart")
+	RegisterForModEvent("HookAnimationEnd", "OnSexLabAnimationEnd")
+	RegisterForModEvent("HookStageStart", "OnSexLabStageStart")
 	RegisterForModEvent("SexLabOrgasmSeparate", "OnSexLabOrgasmSeparate")
 	Last_SLSF_fame = CommonProperties.SLSF.GetCurrentFameValues()
 	RegisterForUpdateGameTime(0.5)
@@ -54,35 +54,34 @@ Event OnUpdateGameTime()
 EndEvent
 
 
-Event OnSexLabOrgasm(String _eventName, String _args, Float _argc, Form _sender)
+Event OnSexLabOrgasm(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] OnSexlabOrgasm.")
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
-	Actor[] actors = SexLab.HookActors(_args)
+	Actor[] actors = SexLab.HookActors(tid as string)
 	int idx = 0
 
 	While idx < actors.Length
-		DetectOrgasmEffect(actors[idx], _args)
+		DetectOrgasmEffect(actors[idx], tid)
 		idx += 1
 	EndWhile
 EndEvent
 
 ; SLSO
-Event OnSexLabOrgasmSeparate(Form ActorRef, Int Thread)
+Event OnSexLabOrgasmSeparate(Actor akActor, int tid)
 	Debug.Trace("[MoaH] OnSLSOOrgasm.")
-	actor akActor = ActorRef as actor
-	string _args =  Thread as string
 	
-	DetectOrgasmEffect(akActor, _args)
+		
+	DetectOrgasmEffect(akActor, tid)
 EndEvent
 
-Function DetectOrgasmEffect(Actor akActor, String _args)
+Function DetectOrgasmEffect(Actor akActor, int tid)
 	Debug.Trace("[MoaH] Detect orgasm.")
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 
 	Actor PlayerRef = Game.GetPlayer()
-	Actor[] actors = SexLab.HookActors(_args)
+	Actor[] actors = SexLab.HookActors(tid as string)
 
-	sslBaseAnimation animation = SexLab.HookAnimation(_args)
+	sslBaseAnimation animation = SexLab.HookAnimation(tid as string)
 	bool involvesPlayer = false
 	bool involvesHarlot = false
 	bool playerHasCock = false
@@ -129,35 +128,35 @@ Function DetectOrgasmEffect(Actor akActor, String _args)
 	
 EndFunction
 	
-Event OnSexLabStageStart(String _eventName, String _args, Float _argc, Form _sender)
+Event OnSexLabStageStart(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] SexLabStageStart")
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	
-	Actor[] actors = SexLab.HookActors(_args)
-	int idx = 0
-	sslBaseAnimation animation = SexLab.HookAnimation(_args)
+	;Actor[] actors = SexLab.HookActors(_args)
+	;int idx = 0
+	;sslBaseAnimation animation = SexLab.HookAnimation(_args)
 	
 	;if animation.HasTag("Vaginal") && actors.Length > 1
 	;
 	;endif
 EndEvent
 
-Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form sender)
+Event OnSexlabAnimationStart(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] SexLabAnimationStart")
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
-	sslThreadController thread = SexLab.GetController(strArg as int)
-	if thread.HasPlayer == true
+	sslThreadController thread = SexLab.GetController(tid)
+	if hasPlayer == true
 		Actor akActor = Game.GetPlayer()
 		; TODO
 	endif
 EndEvent
 
-Event OnSexlabAnimationEnd(string eventName, string strArg, float numArg, Form sender)
+Event OnSexlabAnimationEnd(int tid, bool hasPlayer)
 	Debug.Trace("[MoaH] SexLabAnimationEnd")
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 			
-	sslThreadController thread = SexLab.GetController(strArg as int)
-	if thread.HasPlayer == true
+	sslThreadController thread = SexLab.GetController(tid)
+	if hasPlayer == true
 		; TODO
 	endif
 EndEvent
@@ -187,6 +186,7 @@ int function CalculateSLSFFame(int[] fames)
 	int fameTotal = 0
 	While index < fames.Length
 		fameTotal += fames[index]
+		index += 1
 	endWhile
 	return fameTotal
 EndFunction

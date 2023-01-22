@@ -105,7 +105,7 @@ endEvent
 
 function UpdateArousal()
 	if(!isRunning)
-		UnregisterForUpdate()
+		;UnregisterForUpdate()
 		return
 	endIf
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
