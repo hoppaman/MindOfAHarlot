@@ -73,6 +73,7 @@ bool Function IsIn(ReferenceAlias[] list, Actor act)
 		if(ra.GetActorRef() == act)
 			isIn = true
 		endIf
+		index += 1
 	endWhile
 	return isIn
 endFunction
