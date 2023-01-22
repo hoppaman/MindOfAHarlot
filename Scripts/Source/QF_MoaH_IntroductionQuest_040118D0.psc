@@ -7,15 +7,14 @@ Scriptname QF_MoaH_IntroductionQuest_040118D0 Extends Quest Hidden
 ReferenceAlias Property Alias_PlayerRef Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_6
-Function Fragment_6()
+;BEGIN FRAGMENT Fragment_0
+Function Fragment_0()
 ;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
 Quest __temp = self as Quest
 MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
 ;END AUTOCAST
 ;BEGIN CODE
-SetObjectiveDisplayed(40)
-SetObjectiveDisplayed(45)
+SetObjectiveDisplayed(10)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -32,6 +31,19 @@ setObjectiveDisplayed(30)
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_6
+Function Fragment_6()
+;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
+Quest __temp = self as Quest
+MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
+;END AUTOCAST
+;BEGIN CODE
+SetObjectiveDisplayed(40)
+SetObjectiveDisplayed(45)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_2
 Function Fragment_2()
 ;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
@@ -40,18 +52,6 @@ MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
 ;END AUTOCAST
 ;BEGIN CODE
 SetObjectiveDisplayed(20)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_0
-Function Fragment_0()
-;BEGIN AUTOCAST TYPE MoaH_QuestIntroduction
-Quest __temp = self as Quest
-MoaH_QuestIntroduction kmyQuest = __temp as MoaH_QuestIntroduction
-;END AUTOCAST
-;BEGIN CODE
-SetObjectiveDisplayed(10)
 ;END CODE
 EndFunction
 ;END FRAGMENT

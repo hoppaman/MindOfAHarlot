@@ -7,6 +7,7 @@ GlobalVariable Property PlayerHarlotMorphsProgressFloat Auto
 ; Common quests
 MoaH_QuestIntroduction Property IntroductionQuest Auto
 MoaH_QuestSuccubusIntroduction Property SuccubusIntroductionQuest Auto
+MoaH_QuestSanguinesFavor Property SanguinesFavorQuest Auto
 MoaH_QuestModEventTracker Property ModEventTrackerQuest Auto
 
 ; Integrations
@@ -40,8 +41,11 @@ Faction property SuccubusSatiationFaction Auto
 ; Active properties
 
 ; Note tara maybe either spirit (wisp) or possessed actor
-Actor Property Tara = None Auto
-ActorBase Property TarasSpirit Auto
+ReferenceAlias Property TaraRef Auto
+
+; MoaH's copy of sanguine
+ReferenceAlias Property MoaHSanguineRef Auto
+
 
 
 Spell Property TurnHarlotAbility Auto

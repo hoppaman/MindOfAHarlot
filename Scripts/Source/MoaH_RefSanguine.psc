@@ -1,8 +1,15 @@
 Scriptname MoaH_RefSanguine extends ReferenceAlias  
 
+{ Script should be renamed to MoaH_RefSanguineIntroduction
+}
+
 MoaH_QuestIntroductionCourier Property IntroductionCourier Auto
 
 event OnInit()
+	
+endEvent
+
+event OnReset()
 	Debug.Trace("[MoaH] Sanguine found.")
 endEvent
 

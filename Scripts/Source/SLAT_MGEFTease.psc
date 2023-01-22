@@ -66,6 +66,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	float duration = GetDuration()
 	SexLabFramework SexLab = CommonProperties.SexLab
 	Debug.Trace("[MoaH] Tease starting with duration of " + duration)
+	Debug.Notification("[MoaH] Tease starting with duration of " + duration)
 	int gender = SexLab.GetGender(target)
 	if( gender == 0) ; is Male
 		int r = Utility.RandomInt(0,2)
@@ -76,11 +77,8 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 		endIf
 	elseif(gender == 1) ; female
 		int r = Utility.RandomInt(0,FemaleFondles.Length - 1)
-		
 		Idle chosenFondle = FemaleFondles[r]
-			
 		COMMON_Utility.PlayThirdPersonAnimation(target, chosenFondle, duration)
-		
 	else
 		Debug.Trace("[SLAT] Creature cannot tease.")
 	endIf
