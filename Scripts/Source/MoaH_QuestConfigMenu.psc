@@ -48,7 +48,7 @@ event OnPageReset (string a_page)
 		SetCursorFillMode(TOP_TO_BOTTOM)
 		AddHeaderOption("Mind of a Harlot")
 		;AddTextOption(1,"Configuration menu","")
-		LoadCustomContent("skyui/MoaH/mcm_logo.dds", 258, 95)
+		LoadCustomContent("SkyUI/MoaH/mcm_logo.dds", 258, 95)
 		return
 	else
 		UnloadCustomContent()
