@@ -19,13 +19,17 @@ endEvent
 
 event SexLabAnimationStart(int tid, bool hasPlayer)
 	if(hasPlayer)
+		Debug.Trace("[SLAT] Player is having sex.")
+		Debug.Notification("[SLAT] Player is having sex.")
 		CommonProperties.PlayerIsHavingSex = true
 	endIf
 endEvent
 
 event SexLabAnimationEnd(int tid, bool hasPlayer)
 	if(hasPlayer)
-		CommonProperties.PlayerIsHavingSex = true
+		Debug.Trace("[SLAT] Player is having sex. (ending)")
+		Debug.Notification("[SLAT] Player is having sex. (ending)")
+		CommonProperties.PlayerIsHavingSex = false
 	endIf
 endEvent
 

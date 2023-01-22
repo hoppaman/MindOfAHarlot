@@ -82,18 +82,18 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 		COMMON_Utility.PlayThirdPersonAnimation(target, chosenFondle, duration)
 		
 	else
-		Debug.Trace("[MoaH] Creature cannot tease.")
+		Debug.Trace("[SLAT] Creature cannot tease.")
 	endIf
 	Utility.Wait(1.5)
 
 	UpdateArousal()
 	if(target == Game.GetPlayer())
-		Debug.Trace("[MoaH] sending spanker ")
-		Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
-		ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
-		ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
-		ModEvent.PushFloat(ModSpankEvent, 1.5)
-		ModEvent.Send(ModSpankEvent)
+		;Debug.Trace("[SLAT] sending spanker ")
+		;Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
+		;ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
+		;ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
+		;ModEvent.PushFloat(ModSpankEvent, 1.5)
+		;ModEvent.Send(ModSpankEvent)
 		
 		CommonProperties.PlayerIsTeasing = true
 	endIf
@@ -119,7 +119,7 @@ event OnUpdate()
 endEvent
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
-	Debug.Notification("[MoaH] Teasing end")
+	Debug.Notification("[SLAT] Teasing end")
 	;UnregisterForUpdate()
 	if(akTarget == Game.GetPlayer())
 		CommonProperties.PlayerIsTeasing = false

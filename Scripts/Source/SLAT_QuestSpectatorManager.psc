@@ -42,9 +42,9 @@ event OnUpdate()
 			int index = 0
 			While index < foundCount
 				Actor spect = potSpecs[index]
-				Debug.Notification("We have spectator " + spect.GetDisplayName())
+				;Debug.Notification("We have spectator " + spect.GetDisplayName())
 				;spect.Say(Comments)
-				if(CommonProperties.PlayerIsTeasing && COMMON_Utility.DoesASeeB(spect, player))
+				if(COMMON_Utility.DoesASeeB(spect, player))
 					int indexY = 0
 					bool isSet = false
 				

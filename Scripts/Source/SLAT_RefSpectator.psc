@@ -23,17 +23,26 @@ SexLabFramework SexLab
 
 bool ActorLikesPlayer
 float timer = 0.0
+float updateDelta = 5.0
+
 
 event OnInit()
 	SexLab = SexLabUtil.GetAPI()
+	player = Game.GetPlayer()
+endEvent
+	
+event OnReset()
 	timer = 0.0
 	a = GetActorRef()
-	player = Game.GetPlayer()
+	if(!a)
+		Debug.Trace("[SLAT] spectator did not get correct reference.")
+		return
+	endIf
 	Debug.Notification("[SLAT] New spectator " + a.GetDisplayName())
 	a.AddSpell(CommonProperties.MarkSpectatorAbility)
 	
 	ActorLikesPlayer = COMMON_Utility.IsAIntoB(a, player)
-	RegisterForSingleUpdate(5)
+	RegisterForSingleUpdate(updateDelta)
 	UpdateVision()
 endEvent
 
@@ -46,7 +55,7 @@ event OnUpdate()
 		return
 	endIf
 	
-	timer += 5
+	timer += updateDelta
 	
 	bool reasonForFocus = UpdateVision()
 
@@ -69,7 +78,7 @@ event OnUpdate()
 		a.ClearLookAt()
 		Clear()
 	else
-		RegisterForSingleUpdate(5)
+		RegisterForSingleUpdate(updateDelta)
 	endIf
 endEvent
 
@@ -77,7 +86,7 @@ endEvent
 bool function UpdateVision()
 	float distance = player.GetDistance(a)
 	
-	if(distance < 1000.0)
+	if(distance <= closeReachDistance)
 		reasonForFocus = UpdateCloseReach() || reasonForFocus
 	endIf
 	
@@ -85,12 +94,12 @@ bool function UpdateVision()
 		a.SetLookAt(player, true)
 	endIf
 	
-	if(distance < 3000.0)
+	if(distance <= midReachDistance)
 		reasonForFocus = UpdateMidReach() || reasonForFocus
 	endIf
 	
 	bool reasonForFocus = false
-	if(distance < 5000.0)
+	if(distance <= longReachDistance)
 		reasonForFocus = UpdateLongReach() || reasonForFocus
 	endIf
 	
