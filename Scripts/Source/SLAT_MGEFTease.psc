@@ -41,7 +41,8 @@ Idle Property GS371 Auto
 
 Idle[] FemaleFondles
 
-Actor target;
+Actor target
+bool isRunning
 
 event OnInit()
 	FemaleFondles = new Idle[14]
@@ -62,9 +63,10 @@ event OnInit()
 endEvent
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
+	isRunning = true
 	target = akTarget
 	float duration = GetDuration()
-	SexLabFramework SexLab = CommonProperties.SexLab
+	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	Debug.Trace("[MoaH] Tease starting with duration of " + duration)
 	Debug.Notification("[MoaH] Tease starting with duration of " + duration)
 	int gender = SexLab.GetGender(target)
@@ -102,7 +104,11 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 endEvent
 
 function UpdateArousal()
-	SexLabFramework SexLab = CommonProperties.SexLab
+	if(!isRunning)
+		UnregisterForUpdate()
+		return
+	endIf
+	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	
 	sslBaseVoice voice = SexLab.PickVoice(target)
 	Int ModArousalEvent = ModEvent.Create("slaUpdateExposure")
@@ -117,6 +123,7 @@ event OnUpdate()
 endEvent
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
+	isRunning = false
 	Debug.Notification("[SLAT] Teasing end")
 	;UnregisterForUpdate()
 	if(akTarget == Game.GetPlayer())

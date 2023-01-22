@@ -27,7 +27,7 @@ event OnInit()
 	Watchers[3] = Watcher04
 	Watchers[4] = Watcher05
 	Watchers[5] = Watcher06
-	RegisterForUpdate(5.0)
+	RegisterForUpdate(10.0)
 endEvent
 
 event OnUpdate()
@@ -50,7 +50,8 @@ event OnUpdate()
 				
 					While indexY < Watchers.Length && !isSet
 						ReferenceAlias watcher = Watchers[indexY]
-						if(!watcher.GetReference())
+						
+						if(!watcher.GetReference() && !IsIn(Watchers, spect))
 							Debug.Notification("[SLAT] Observer " + indexY + " is now " + spect.GetDisplayName())
 							watcher.ForceRefTo(spect)
 							isSet = true
@@ -63,3 +64,15 @@ event OnUpdate()
 		endIf
 	endIf
 endEvent
+
+bool Function IsIn(ReferenceAlias[] list, Actor act)
+	bool isIn = false
+	int index = 0
+	While index < list.Length && !isIn
+		ReferenceAlias ra = list[index]
+		if(ra.GetActorRef() == act)
+			isIn = true
+		endIf
+	endWhile
+	return isIn
+endFunction
