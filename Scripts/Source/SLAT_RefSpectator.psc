@@ -2,36 +2,138 @@ Scriptname SLAT_RefSpectator extends ReferenceAlias
 
 SLAT_QuestCommonProperties Property CommonProperties auto
 
-float timer = 0.0
+
+
+; Long reach
+float longReachDistance = 5000.0
+bool PlayerWasNaked = false
+bool PlayerWasHavingSex = false
+
+; Mid reach
+float midReachDistance = 3000.0
+bool PlayerWasTeasing = false
+
+; Close reach
+float closeReachDistance = 1000.0
+bool PlayerHadCum = false
+
+Actor a
+Actor player
+SexLabFramework SexLab
 
 bool ActorLikesPlayer
-bool PlayerWasNaked
-bool PlayerWasTeasing
+float timer = 0.0
 
 event OnInit()
-	Actor a = GetActorRef()
+	SexLab = SexLabUtil.GetAPI()
+	timer = 0.0
+	a = GetActorRef()
+	player = Game.GetPlayer()
 	Debug.Notification("[SLAT] New spectator " + a.GetDisplayName())
+	a.AddSpell(CommonProperties.MarkSpectatorAbility)
 	
-	Actor player = Game.GetPlayer()
-	PlayerWasNaked = CommonProperties.PlayerIsNaked
-	PlayerWasTeasing = CommonProperties.PlayerIsTeasing
 	ActorLikesPlayer = COMMON_Utility.IsAIntoB(a, player)
-	RegisterForUpdate(5)
+	RegisterForSingleUpdate(5)
+	UpdateVision()
 endEvent
 
 event OnUpdate()
-	timer += 5
-	Actor a = GetActorRef()
-	Actor player = Game.GetPlayer()
-	bool playerIsNaked = CommonProperties.PlayerIsNaked
-	
-	bool playerIsTeasing = CommonProperties.PlayerIsTeasing
-
-	bool stoppedNaked = PlayerWasNaked && !playerIsNaked
-	bool stoppedTeasing = PlayerWasTeasing && !playerIsTeasing
-
-	if(timer > 45.0 || !COMMON_Utility.DoesASeeB(a, player) || (ActorLikesPlayer && (stoppedNaked || stoppedTeasing)))
-		Debug.Notification("[SLAT] " + a.GetDisplayName() + " lost interest.")
+	; needed to see if alias still points to right actor
+	a = GetActorRef()
+	if(!a || a.IsDead() || player.IsDead() || a.GetParentCell() != player.GetParentCell())
+		; Terminated
 		Clear()
+		return
+	endIf
+	
+	timer += 5
+	
+	bool reasonForFocus = UpdateVision()
+
+	bool intrestTimerEnding = timer > 45.0
+	bool LOSLost = !COMMON_Utility.DoesASeeB(a, player)
+	
+	if(intrestTimerEnding)
+		Debug.Notification("[SLAT] " + a.GetDisplayName() + " timer ending.")
+	endIf
+	
+	if(LOSLost)
+		Debug.Notification("[SLAT] " + a.GetDisplayName() + " lost LOS.")
+	endIf
+	
+	if(!reasonForFocus)
+		Debug.Notification("[SLAT] " + a.GetDisplayName() + " has no reason for focus. ")
+	endIf
+	
+	if(intrestTimerEnding || LOSLost || !reasonForFocus)
+		a.ClearLookAt()
+		Clear()
+	else
+		RegisterForSingleUpdate(5)
 	endIf
 endEvent
+
+
+bool function UpdateVision()
+	float distance = player.GetDistance(a)
+	
+	if(distance < 1000.0)
+		reasonForFocus = UpdateCloseReach() || reasonForFocus
+	endIf
+	
+	if(reasonForFocus)
+		a.SetLookAt(player, true)
+	endIf
+	
+	if(distance < 3000.0)
+		reasonForFocus = UpdateMidReach() || reasonForFocus
+	endIf
+	
+	bool reasonForFocus = false
+	if(distance < 5000.0)
+		reasonForFocus = UpdateLongReach() || reasonForFocus
+	endIf
+	
+	return reasonForFocus
+endFunction
+
+;return if there is reason for attention
+bool Function UpdateLongReach()
+	bool playerIsNaked = CommonProperties.PlayerIsNaked
+	bool playerIsHavingSex = CommonProperties.PlayerIsHavingSex
+
+	if(!PlayerWasNaked && playerIsNaked)
+		Debug.Notification("[SLAT] Player became naked. " + a.GetDisplayName())
+		PlayerWasNaked = true
+	endIf
+	
+	if(!PlayerWasHavingSex && playerIsHavingSex)
+		Debug.Notification("[SLAT] Player started having sex. " + a.GetDisplayName())
+		PlayerWasHavingSex = true
+	endIf
+	
+	return playerIsHavingSex || (playerIsNaked && ActorLikesPlayer)
+endFunction
+
+;return if there is reason for attention
+bool Function UpdateMidReach()
+	bool playerIsTeasing = CommonProperties.PlayerIsTeasing
+
+	if(!PlayerWasTeasing && playerIsTeasing)
+		Debug.Notification(""+ a.GetDisplayName() + " sees player is teasing.")
+		PlayerWasTeasing = true
+	endIf
+	
+	return playerIsTeasing
+endFunction
+
+;return if there is reason for attention
+bool Function UpdateCloseReach()
+	bool playerHasCum = CommonProperties.PlayerHasCumOn
+	if(!PlayerHadCum && playerHasCum)
+		Debug.Notification(""+ a.GetDisplayName() + " sees cum on player.")
+		PlayerHadCum = true
+	endIf
+	return playerHasCum
+endFunction
+	

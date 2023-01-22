@@ -17,6 +17,8 @@ float Property SettingThoughtsInterval = 60.0 Auto Hidden
 Keyword Property IsTeasingKeyword Auto
 
 
+Spell Property MarkSpectatorAbility Auto
+
 ;;;;;
 ;; Runtime states
 ;; Updated by several places -- (optimization)
@@ -24,6 +26,8 @@ Keyword Property IsTeasingKeyword Auto
 
 bool Property PlayerIsNaked Auto Hidden
 bool Property PlayerIsTeasing Auto Hidden
+bool Property PlayerHasCumOn Auto Hidden
+bool Property PlayerIsHavingSex Auto Hidden
 
 ;;;;;
 ;; Mod Events

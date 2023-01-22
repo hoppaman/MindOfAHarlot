@@ -275,7 +275,7 @@ bool function IsAIntoB(Actor a, actor b) global
 endFunction
 
 bool Function IsActorNaked(Actor akActor) global
-	Faction slaNakedFaction = Game.GetFormFromFile(0x06077F87, "SexLabAroused.esm") as slaMainScr
+	Faction slaNakedFaction = Game.GetFormFromFile(0x06077F87, "SexLabAroused.esm") as Faction
 	return akActor.GetFactionRank(slaNakedFaction)
 endFunction
 
