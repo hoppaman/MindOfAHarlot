@@ -25,7 +25,6 @@ endEvent
 
 Event OnSexlabAnimationStart(string eventName, string strArg, float numArg, Form sender)
 	Debug.Trace("[MoaH] SexLabAnimationStart")
-	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	sslThreadController thread = SexLab.GetController(strArg as int)
 	if(thread.hasPlayer)
 		Debug.Trace("[SLAT] Player is having sex.")
@@ -36,7 +35,6 @@ endEvent
 
 Event OnSexlabAnimationEnd(string eventName, string strArg, float numArg, Form sender)
 	Debug.Trace("[MoaH] SexLabAnimationEnd")
-	SexLabFramework SexLab = SexLabUtil.GetAPI()
 			
 	sslThreadController thread = SexLab.GetController(strArg as int)
 	if(thread.hasPlayer)

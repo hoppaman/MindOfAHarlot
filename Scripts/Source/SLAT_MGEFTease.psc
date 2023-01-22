@@ -126,7 +126,7 @@ event OnEffectFinish(Actor akTarget, Actor akCaster)
 	isRunning = false
 	Debug.Notification("[SLAT] Teasing end")
 	;UnregisterForUpdate()
-	if(akTarget == Game.GetPlayer())
+	if(target == Game.GetPlayer())
 		CommonProperties.PlayerIsTeasing = false
 	endIf
 endEvent
