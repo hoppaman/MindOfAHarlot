@@ -9,7 +9,7 @@ Actor player
 
 event OnInit()
 	SexLab = SexLabUtil.GetAPI()
-	player = GetActorRef()
+	player = Game.GetPlayer()
 	Spell MasturbatePower = CommonProperties.MasturbatePower
 	Spell TeasePower = CommonProperties.TeasePower
 	player.AddSpell(MasturbatePower, false)

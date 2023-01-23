@@ -31,7 +31,7 @@ event OnInit()
 	player = Game.GetPlayer()
 endEvent
 	
-event OnReset()
+event BootUp()
 	timer = 0.0
 	a = GetActorRef()
 	if(!a)

@@ -1,32 +1,17 @@
 Scriptname SLAT_QuestSpectatorManager extends Quest  
 
 SLAT_QuestCommonProperties Property CommonProperties auto
-
 SLAT_QuestSpectatorScanner Property scanner auto
 
 Topic Property Comments auto
 
-ReferenceAlias Property Watcher01 auto
-ReferenceAlias Property Watcher02 auto
-ReferenceAlias Property Watcher03 auto
-ReferenceAlias Property Watcher04 auto
-ReferenceAlias Property Watcher05 auto
-ReferenceAlias Property Watcher06 auto
-
 Actor Property Player auto
 
-ReferenceAlias[] Watchers
+SLAT_RefSpectator[] Property Watchers auto
 
 ;Actor[] Property CurrentSpectators auto hidden
 
 event OnInit()
-	Watchers = new ReferenceAlias[6]
-	Watchers[0] = Watcher01
-	Watchers[1] = Watcher02
-	Watchers[2] = Watcher03
-	Watchers[3] = Watcher04
-	Watchers[4] = Watcher05
-	Watchers[5] = Watcher06
 	RegisterForUpdate(10.0)
 endEvent
 
@@ -49,11 +34,13 @@ event OnUpdate()
 					bool isSet = false
 				
 					While indexY < Watchers.Length && !isSet
-						ReferenceAlias watcher = Watchers[indexY]
+						SLAT_RefSpectator watcher = Watchers[indexY]
 						
 						if(!watcher.GetReference() && !IsIn(Watchers, spect))
 							Debug.Notification("[SLAT] Observer " + indexY + " is now " + spect.GetDisplayName())
 							watcher.ForceRefTo(spect)
+							watcher.BootUp()
+							
 							isSet = true
 						endIf
 						indexY += 1
@@ -65,11 +52,11 @@ event OnUpdate()
 	endIf
 endEvent
 
-bool Function IsIn(ReferenceAlias[] list, Actor act)
+bool Function IsIn(SLAT_RefSpectator[] list, Actor act)
 	bool isIn = false
 	int index = 0
 	While index < list.Length && !isIn
-		ReferenceAlias ra = list[index]
+		SLAT_RefSpectator ra = list[index]
 		if(ra.GetActorRef() == act)
 			isIn = true
 		endIf
