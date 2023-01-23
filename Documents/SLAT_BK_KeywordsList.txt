@@ -1,0 +1,96 @@
+Keyword definitions by Baka
+https://www.studocu.com/en-us/document/lester-b-pearson-high-school-alberta/social-study/about-sexlab-aroused-redux-additional-keywords/29908675
+
+Main armor slot 32
+
+Keyword: 
+sla_ArmorPretty 
+Description: 
+This indicates non-skimpy but girly clothes. Cute and pretty.
+
+Keyword: 
+Eroticarmor 
+Description: 
+Relatively less skimpy than bikini armor but somewhat exposed and suggestive. Belly and thighs exposed or emphasis on breasts can be categorized here.
+
+Keyword: 
+sla_ArmorSpandex 
+Description: 
+Spandex, Latex... What else do you need for explanation? People will see her the whole body lines. People might even notice the shapes of nipples, pussy. Quite lewd.
+
+Keyword: 
+SLA_ArmorLewdLeotard 
+Description: 
+Very tight lewd leotard type clothes.
+
+Keyword: 
+SLA_ArmorCurtain 
+Description: 
+Every man definitely wants to unveil that curtain. Her privates 
+will be fully exposed unless she wears underwear. This kind of  clothes is normally SMPfied(If not, there’s no point of using  it ;p).
+
+Keyword: 
+SLA_HalfNakedBikini 
+Description: 
+Cover privates only! You might want to wear a cape to cover your silky skin. You better be extra careful not to get stripped. A single slip can easily reveal your secrets.
+
+Keyword: 
+SLA_ArmorTransparent 
+Description: 
+You wear but you don’t wear. See-through clothes. Very 
+revealing and not very different than being naked.
+
+Keyword: 
+SLA_ArmorHalfNaked 
+Description: 
+Cover? Why cover? That`s for pussies. A woman must be ready for sex at any time. A completely whorish outfit could fit this category.
+
+OAroused:
+SLA_AnalPlug
+SLA_AnalPlugBeads
+SLA_AnalPlugTail
+SLA_ArmorBondage
+SLA_Armor_CapeFull
+SLA_ArmorCurtain
+SLA_ArmorFemaleOnly
+SLA_ArmorHalfNaked
+SLA_ArmorHalfNakedBikini
+SLA_ArmorHarness
+SLA_ArmorIllegal
+SLA_ArmorLewdLeotard
+SLA_ArmorPartBottom
+SLA_ArmorPartTop
+SLA_ArmorPretty
+SLA_ArmorRubber
+SLA_ArmorSpendex
+SLA_ArmorTransparent
+SLA_BootsHeels
+SLA_Brabikini
+SLA_Earrings
+SLA_FullSkirt
+SLA_HasLeggings
+SLA_HasSleeves
+SLA_HasStockings
+SLA_ImpossibleClothes
+SLA_KillerHeels
+SLA_MicroHotpants
+SLA_MicroSkirt
+SLA_MiniSkirt
+SLA_PantiesNormal
+SLA_PantsNormal
+SLA_PastiesCrotch
+SLA_PastiesNipple
+SLA_PelvicCurtain
+SLA_PiercingBelly
+SLA_PiercingClit
+SLA_PiercingLips
+SLA_PiercingNipple
+SLA_PiercingNose
+SLA_PiercingVulva
+SLA_ShowgirlSkirt
+SLA_ThongCString
+SLA_ThongGstring
+SLA_ThongLowleg
+SLA_ThongT
+SLA_VaginalBeads
+SLA_VaginalDildo
