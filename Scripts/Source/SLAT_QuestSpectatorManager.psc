@@ -37,7 +37,7 @@ event OnUpdate()
 						SLAT_RefSpectator watcher = Watchers[indexY]
 						
 						if(!watcher.GetReference() && !IsIn(Watchers, spect))
-							Debug.Notification("[SLAT] Observer " + indexY + " is now " + spect.GetDisplayName())
+							;Debug.Notification("[SLAT] Observer " + indexY + " is now " + spect.GetDisplayName())
 							watcher.ForceRefTo(spect)
 							watcher.BootUp()
 							
