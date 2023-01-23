@@ -1,9 +1,5 @@
 Scriptname SLAT_QuestCommonProperties extends Quest  
 
-; Integrations
-SexLabFramework Property SexLab Auto
-slaFrameworkScr Property SLA Auto
-
 SLAT_QuestThoughts Property ThoughtsQuest Auto
 
 Spell Property MasturbatePower Auto
@@ -15,9 +11,19 @@ GlobalVariable Property DebugCommentsGlobal Auto
 float Property SettingThoughtsInterval = 60.0 Auto Hidden
 
 Keyword Property IsTeasingKeyword Auto
+Faction Property IsSexistFaction Auto
 
+Spell Property SpectatorCooldownAbility Auto
 
-Spell Property MarkSpectatorAbility Auto
+Spell Property SpectatorSlapCooldownAbility Auto
+Keyword Property SpectatorSlapCooldownKeyword Auto
+Spell Property SpectatorCommentCooldownAbility Auto
+Keyword Property SpectatorCommentCooldownKeyword Auto
+Spell Property SpectatorMasrtubateCooldownAbility Auto
+Keyword Property SpectatorMasturbateCooldownKeyword Auto
+Spell Property SpectatorRapeCooldownAbility Auto
+Keyword Property SpectatorRapeCooldownKeyword Auto
+
 
 ;;;;;
 ;; Runtime states

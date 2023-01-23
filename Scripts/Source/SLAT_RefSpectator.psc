@@ -1,7 +1,7 @@
 Scriptname SLAT_RefSpectator extends ReferenceAlias  
 
 SLAT_QuestCommonProperties Property CommonProperties auto
-
+SLAT_QuestIntegrations Property Integrations auto
 
 
 ; Long reach
@@ -17,14 +17,19 @@ bool PlayerWasTeasing = false
 float closeReachDistance = 1000.0
 bool PlayerHadCum = false
 
+; Can touch
+float canTouchDistance = 200.0
+
+
 Actor a
 Actor player
 SexLabFramework SexLab
 
-bool ActorLikesPlayer
+bool ActorFanciesPlayer
+bool IsSexist
 float timer = 0.0
-float updateDelta = 5.0
-
+float updateDelta = 6.0
+int arousal
 
 event OnInit()
 	SexLab = SexLabUtil.GetAPI()
@@ -39,14 +44,17 @@ event BootUp()
 		return
 	endIf
 	Debug.Notification("[SLAT] New spectator " + a.GetDisplayName())
-	a.AddSpell(CommonProperties.MarkSpectatorAbility)
+	a.AddSpell(CommonProperties.SpectatorCooldownAbility)
 	
-	ActorLikesPlayer = COMMON_Utility.IsAIntoB(a, player)
-	RegisterForSingleUpdate(updateDelta)
+	IsSexist = a.GetFactionRank(CommonProperties.IsSexistFaction) >= 0
+	ActorFanciesPlayer = COMMON_Utility.IsAIntoB(a, player)
+	; Variate delta so that spectator caused load spreads more evenly
+	RegisterForSingleUpdate(updateDelta + Utility.RandomFloat(-0.5,0.5))
 	UpdateVision()
 endEvent
 
 event OnUpdate()
+	
 	; needed to see if alias still points to right actor
 	a = GetActorRef()
 	if(!a || a.IsDead() || player.IsDead() || a.GetParentCell() != player.GetParentCell())
@@ -54,6 +62,8 @@ event OnUpdate()
 		Clear()
 		return
 	endIf
+	
+	arousal = a.GetFactionRank(Integrations.SLA.slaArousal)
 	
 	timer += updateDelta
 	
@@ -78,7 +88,8 @@ event OnUpdate()
 		a.ClearLookAt()
 		Clear()
 	else
-		RegisterForSingleUpdate(updateDelta)
+		; Spread update for even load
+		RegisterForSingleUpdate(updateDelta + Utility.RandomFloat(-0.5,0.5))
 	endIf
 endEvent
 
@@ -90,17 +101,21 @@ bool function UpdateVision()
 		reasonForFocus = UpdateCloseReach() || reasonForFocus
 	endIf
 	
-	if(reasonForFocus)
-		a.SetLookAt(player, true)
-	endIf
-	
 	if(distance <= midReachDistance)
 		reasonForFocus = UpdateMidReach() || reasonForFocus
+	endIf
+	
+	if(reasonForFocus)
+		a.SetLookAt(player, true)
 	endIf
 	
 	bool reasonForFocus = false
 	if(distance <= longReachDistance)
 		reasonForFocus = UpdateLongReach() || reasonForFocus
+	endIf
+	
+	if(distance <= canTouchDistance)
+		reasonForFocus = UpdateCanTouchReach() || reasonForFocus
 	endIf
 	
 	return reasonForFocus
@@ -121,7 +136,7 @@ bool Function UpdateLongReach()
 		PlayerWasHavingSex = true
 	endIf
 	
-	return playerIsHavingSex || (playerIsNaked && ActorLikesPlayer)
+	return playerIsHavingSex || (playerIsNaked && ActorFanciesPlayer)
 endFunction
 
 ;return if there is reason for attention
@@ -133,6 +148,8 @@ bool Function UpdateMidReach()
 		PlayerWasTeasing = true
 	endIf
 	
+	; Whistle?
+	; Fancy + visible nipple piercings
 	return playerIsTeasing
 endFunction
 
@@ -144,5 +161,32 @@ bool Function UpdateCloseReach()
 		PlayerHadCum = true
 	endIf
 	return playerHasCum
+endFunction
+
+bool Function UpdateCanTouchReach()
+	
+	; Can slap?
+	if(Integrations.STA)
+		; IsSexist == Slap
+		if(IsSexist)
+			float chance = Utility.RandomFloat(0, 0.3)
+			if(chance <= 0.3)
+				Debug.Trace("[SLAT] sending spanker " + a.GetDisplayName())
+				Int ModSpankEvent = ModEvent.Create("STA_DoNpcSpankSpecific")
+				ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
+				ModEvent.PushForm(ModSpankEvent, a as Form)
+				ModEvent.PushBool(ModSpankEvent, true) ; allow furniture spank
+				ModEvent.PushFloat(ModSpankEvent, -1.0)
+				ModEvent.Send(ModSpankEvent)
+			endIf
+		endIf
+	endIf
+	; Small chance to rape if ActorFanciesPlayer that raises with arousement
+	; Comment cum? PlayerHadCum
+	; Comment masturbation
+	; Comment sex
+	; If arousal is high && male jerk at player? Needs corrupt world?
+
+
 endFunction
 	
