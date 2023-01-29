@@ -131,11 +131,11 @@ event OnInit()
 	RegisterThoughtProvider()
 endEvent
 
-bool function HasThoughts()
+bool function HasThoughts(Actor closeByCrush)
 	return true
 endFunction
 
-string function GetThought()
+string function GetThought(Actor closeByCrush)
 	Actor player = Game.GetPlayer()
 	int addictionStage = MUtility.GetAddictionStage(player)
 	int arousalStage = MUtility.GetArousalStage(player)

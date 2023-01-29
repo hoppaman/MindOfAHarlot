@@ -5,18 +5,27 @@ Scriptname SLAT_QuestIntegrations extends Quest
 }
 
 ; Integrations
-SexLabFramework Property SexLab Auto Hidden
-slaFrameworkScr Property SLA Auto Hidden
+; HARD
+SexLabFramework Property SexLab Auto
+slaFrameworkScr Property SLA Auto
 
-; Optional
+Faction Property SLA_NakedFaction Auto
+Faction Property SLA_ArousalFaction Auto
+
+; Soft
 Quest Property STA Auto Hidden
 
 event OnInit()
-	;SexLab = Game.GetFormFromFile(0x00000D62, "SexLab.esm") as SexLabFramework
-	SexLab = SexLabUtil.GetAPI()
-	SLA = Game.GetFormFromFile(0x290f, "SexLabAroused.esm") as slaFrameworkScr
 	; Only test if STA exists
 	STA = Game.GetFormFromFile(0x0D62, "Spank That Ass.esp") as Quest
 	
 endEvent
+
+int Function GetArousal(Actor akActor)
+	return akActor.GetFactionRank(SLA_ArousalFaction)
+endFunction
+
+bool Function IsNaked(Actor akActor)
+	return akActor.GetFactionRank(SLA_NakedFaction) >= 0
+endFunction
 

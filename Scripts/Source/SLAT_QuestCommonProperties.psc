@@ -5,13 +5,19 @@ SLAT_QuestThoughts Property ThoughtsQuest Auto
 Spell Property MasturbatePower Auto
 Spell Property TeasePower Auto
 
+; Debug toggles
 GlobalVariable Property DebugCommentsGlobal Auto
+GlobalVariable Property DebugThoughtsGlobal Auto
+GlobalVariable Property DebugSpectatorsGlobal Auto
 
 ; Thought settings
 float Property SettingThoughtsInterval = 60.0 Auto Hidden
+float Property PlayerRuntimeVariablesUpdateInterval = 1.5 Auto Hidden
+
 
 Keyword Property IsTeasingKeyword Auto
 Faction Property IsSexistFaction Auto
+Faction Property IsHedonistFaction Auto
 
 Spell Property SpectatorCooldownAbility Auto
 
@@ -24,6 +30,14 @@ Keyword Property SpectatorMasturbateCooldownKeyword Auto
 Spell Property SpectatorRapeCooldownAbility Auto
 Keyword Property SpectatorRapeCooldownKeyword Auto
 
+Faction Property SexAddictionStagesFaction Auto
+Spell Property SexAddictionHighArousalIMAD Auto
+int Property SAHA_ArousalToApplyIMAD = 70 Auto Hidden
+
+; Morphs
+Faction Property MorphScoreBigBreast Auto
+Faction Property MorphScoreHourglassBody Auto
+Faction Property MorphScoreRoundAss Auto
 
 ;;;;;
 ;; Runtime states

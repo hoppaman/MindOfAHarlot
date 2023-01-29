@@ -13,10 +13,6 @@
 		{
 			"value" : 0.059999998658895493
 		},
-		"BreastGravity2" : 
-		{
-			"value" : -0.10000000149011612
-		},
 		"BreastHeight" : 
 		{
 			"value" : -0.05000000074505806
@@ -31,7 +27,11 @@
 		},
 		"BreastWidth" : 
 		{
-			"value" : 0.15
+			"value" : 0.5
+		},
+		"Breasts" : 
+		{
+			"value" : 0.80000001192092896
 		},
 		"BreastsConverage_v2" : 
 		{
@@ -39,7 +39,7 @@
 		},
 		"BreastsFantasy" : 
 		{
-			"value" : 0.24000000059604645
+			"value" : 0.14000000059604645
 		},
 		"BreastsGone" : 
 		{
@@ -47,7 +47,7 @@
 		},
 		"BreastsNewSH" : 
 		{
-			"value" : -0.5
+			"value" : -0.25
 		},
 		"BreastsNewSHSymmetry" : 
 		{
@@ -67,7 +67,7 @@
 		},
 		"BreastsTogether" : 
 		{
-			"value" : 0.25
+			"value" : 0.19
 		},
 		"DoubleMelon" : 
 		{
@@ -88,10 +88,6 @@
 		"PushUp" : 
 		{
 			"value" : 0.039999999105930328
-		},
-		"breasts" : 
-		{
-			"value" : 0.20000000298023224
 		}
 	}
 }

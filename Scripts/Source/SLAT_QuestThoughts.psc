@@ -1,12 +1,18 @@
 Scriptname SLAT_QuestThoughts extends Quest
 
+import SLAT_GlobalUtility
+
 SLAT_QuestCommonProperties Property CommonProperties Auto
+
+SLAT_QuestThoughtsScanner Property Scanner Auto
+
+
 
 ; SLAT_ThoughtProviderBase
 Form[] providers = NONE
 
 event OnInit()
-UnregisterForUpdate()
+	UnregisterForUpdate()
 	RegisterForUpdate(CommonProperties.SettingThoughtsInterval)
 	UnregisterForAllModEvents()
 	RegisterForModEvent(CommonProperties.RegisterThoughtProviderEventName, "RegisterThoughtProviderEvent")
@@ -30,54 +36,49 @@ function RemoveThoughtProvider(SLAT_ThoughtProviderBase thoughtProvider)
 endFunction
 
 event OnUpdate()
-	Debug.Trace("[MoaH] Thoughts update")
-		
-	Actor[] closeByActors = COMMON_Utility.FindAdultActorsNear(Game.GetPlayer(), 6000, 0)
+	Actor player = Game.GetPlayer()
+	bool pcLikesMales = COMMON_Utility.IsAIntoSex(player, 0)
+	bool pcLikesFemales = COMMON_Utility.IsAIntoSex(player, 1)
+
+	if(IsOn(CommonProperties.DebugThoughtsGlobal))
+		Debug.Trace("[MoaH] Thoughts update")
+	endIf
 	
-	bool done = false
-	bool acceptRandomVisibleNPCMale = closeByActors.Length > 0
-	string thought
-	While !done
-		thought = GetRandomThought()
-		if(StringUtil.Find(thought,"<RandomVisibleNPCMale>") != -1)
-			if(acceptRandomVisibleNPCMale)
-				thought=COMMON_Utility.ReplaceString(thought,"<RandomVisibleNPCMale>", "Bob")
-				done = true
-			endIf
-		else
-			done = true
+	int foundCount = scanner.Scan()
+	Actor closeByCrush
+	if(foundCount > 0)
+		if(scanner.CloseByMale && pcLikesMales)
+			closeByCrush = scanner.CloseByMale.GetActorRef()
+		elseIf(scanner.CloseByFemale && pcLikesFemales)
+			closeByCrush = scanner.CloseByFemale.GetActorRef()
 		endIf
-	endWhile
-	Debug.Notification(thought)
+		
+		; TODO: Rich & guard
+	endIf
+		
+	string thought = GetRandomThought(closeByCrush)
+	if(StringUtil.Find(thought,"<RandomVisibleNPCMale>") != -1)
+		thought = COMMON_Utility.ReplaceString(thought,"<RandomVisibleNPCMale>", "Bob")
+	endIf
+	
+	PresentThought(thought)
 endEvent
 
-string function GetRandomThought()
-	Actor player = Game.GetPlayer()
+Function PresentThought(string thought)
+	Debug.Notification(thought)
+endFunction
 
-	; Memories
-	; Quest stage/completion related things
-	
-	; Prioritize
-	; Sex Partner Thoughts
-	;SexLab.LastSexPartner
-	;SexLab.MostUsedPlayerSexPartners
-	
-;	float chance = Utility.RandomFloat(0.0, 100.0)
-;	If(HasRecentSexPartner() && chance < 10)
-;		return "<daydream here>"
-;	elseIf(HasRecentMemories() && chance < 50)
-;		return "<memory here>"
-;	else
-;		return GetCommonThoughtsForFemale(addictionStage, arousalStage)
-;	endIf
+string function GetRandomThought(Actor closeByCrush)
+	Actor player = Game.GetPlayer()
 	int index = 0
 	int tpCount = providers.Length
 	string[] thoughts = Utility.CreateStringArray(tpCount, "NO_THOUGHT")
 	while index < tpCount
 		SLAT_ThoughtProviderBase thoughtProvider = providers[index] as SLAT_ThoughtProviderBase
-		if(thoughtProvider.HasThought())
-			thoughts[index] = thoughtProvider.GetThought()
+		if(thoughtProvider.HasThought(closeByCrush))
+			thoughts[index] = thoughtProvider.GetThought(closeByCrush)
 		endIf
+		index += 1
 	endWhile
 	thoughts = PapyrusUtil.RemoveString(thoughts, "NO_THOUGHT")
 	return COMMON_Utility.GetRandomString(thoughts)

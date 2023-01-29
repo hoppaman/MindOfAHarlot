@@ -246,6 +246,19 @@ bool function IsAIntoB(Actor a, actor b) global
 	int aSex = SexLab.GetGender(a)
 	int aSexuality = SexLab.GetSexuality(a)
 	int bSex = SexLab.GetGender(b)
+	bool isInto = IsSSIntoSex(aSex, aSexuality, bSex)
+	;Debug.Trace("[SLAT] " + a.GetDisplayName() + " is into " + b.GetDisplayName())
+	return isInto
+endFunction
+
+bool Function IsAIntoSex(Actor a, int bSex) global
+	SexLabFramework SexLab = SexLabUtil.GetAPI()
+	int aSex = SexLab.GetGender(a)
+	int aSexuality = SexLab.GetSexuality(a)
+	return IsSSIntoSex(aSex, aSexuality, bSex)
+endFunction
+
+bool Function IsSSIntoSex(int aSex, int aSexuality, int bSex) global
 	bool isInto = false
 	if(bSex == 1)
 		; b is female
@@ -270,7 +283,6 @@ bool function IsAIntoB(Actor a, actor b) global
 			isInto = true
 		endIf
 	endIf
-	;Debug.Trace("[SLAT] " + a.GetDisplayName() + " is into " + b.GetDisplayName())
 	return isInto
 endFunction
 

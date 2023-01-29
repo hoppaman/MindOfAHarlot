@@ -1,7 +1,7 @@
 Scriptname SLAT_RefPlayerTracker extends ReferenceAlias  
 
 SLAT_QuestCommonProperties Property CommonProperties Auto
-
+SLAT_QuestIntegrations Property Integrations Auto
 Faction Property slaNakedFaction Auto
 
 SexLabFramework SexLab
@@ -24,7 +24,7 @@ event OnReset()
 	RegisterForModEvent("HookAnimationEnd", "OnSexLabAnimationEnd")
 	
 	UnregisterForUpdate()
-	RegisterForUpdate(2.5)
+	RegisterForUpdate(CommonProperties.PlayerRuntimeVariablesUpdateInterval)
 endEvent
 
 Event OnSexlabAnimationStart(int tid, bool hasPlayer)
@@ -49,6 +49,12 @@ Event OnSexlabAnimationEnd(int tid, bool hasPlayer)
 endEvent
 
 event OnUpdate()
+	int playerArousal = Integrations.GetArousal(player)
 	CommonProperties.PlayerIsNaked = player.GetFactionRank(slaNakedFaction) == 0
 	CommonProperties.PlayerHasCumOn = SexLab.CountCum(player) > 0
+	if(playerArousal >= CommonProperties.SAHA_ArousalToApplyIMAD)
+		player.AddSpell(CommonProperties.SexAddictionHighArousalIMAD)
+	elseif(player.HasSpell(CommonProperties.SexAddictionHighArousalIMAD))
+		player.RemoveSpell(CommonProperties.SexAddictionHighArousalIMAD)
+	endIf
 endEvent

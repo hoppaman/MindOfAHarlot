@@ -1,6 +1,10 @@
 Scriptname MoaH_MGEFHarlotLightMinded extends activemagiceffect  
 
-Perk Property HarlotLightMindedPerk Auto
+MoaH_QuestCommonProperties Property CommonProperties Auto
+
+Perk Property HarlotLightMindedPerk01 Auto
+Perk Property HarlotLightMindedPerk02 Auto
+Perk Property HarlotLightMindedPerk03 Auto
 
 float lastMagickaDebuff = 0.0
 
@@ -9,7 +13,6 @@ float mag = 0.0
 
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	mag = GetMagnitude()
-	akTarget.AddPerk(HarlotLightMindedPerk)
 	akTarget.ModAV("Destruction", mag * -1)
 	UpdateStats(akTarget)
 	; Pretty killer 
@@ -34,10 +37,61 @@ endFunction
 function UpdateStats(Actor akTarget)
 	; Remove old before update
 	lastMagickaDebuff = UpdateCappedStat(akTarget, "Magicka", 100, lastMagickaDebuff)
+	
+	int rank = akTarget.GetFactionRank(CommonProperties.HarlotStagesFaction)
+	
+	if(rank == 3)
+		if(akTarget.HasPerk(HarlotLightMindedPerk01))
+			akTarget.RemovePerk(HarlotLightMindedPerk01)
+		endif
+		
+		if(akTarget.HasPerk(HarlotLightMindedPerk02))
+			akTarget.RemovePerk(HarlotLightMindedPerk02)
+		endif
+		
+		if(!akTarget.HasPerk(HarlotLightMindedPerk03))
+			akTarget.AddPerk(HarlotLightMindedPerk03)
+		endif
+	elseif(rank == 2)
+		if(akTarget.HasPerk(HarlotLightMindedPerk01))
+			akTarget.RemovePerk(HarlotLightMindedPerk01)
+		endif
+		
+		if(akTarget.HasPerk(HarlotLightMindedPerk03))
+			akTarget.RemovePerk(HarlotLightMindedPerk03)
+		endif
+		
+		if(!akTarget.HasPerk(HarlotLightMindedPerk02))
+			akTarget.AddPerk(HarlotLightMindedPerk02)
+		endif
+	else
+		if(akTarget.HasPerk(HarlotLightMindedPerk03))
+			akTarget.RemovePerk(HarlotLightMindedPerk03)
+		endif
+		
+		if(akTarget.HasPerk(HarlotLightMindedPerk02))
+			akTarget.RemovePerk(HarlotLightMindedPerk02)
+		endif
+		
+		if(!akTarget.HasPerk(HarlotLightMindedPerk01))
+			akTarget.AddPerk(HarlotLightMindedPerk01)
+		endif
+	endIf
 endFunction
 
 event OnEffectFinish(Actor akTarget, Actor akCaster)
-	akTarget.RemovePerk(HarlotLightMindedPerk)
+	if(akTarget.HasPerk(HarlotLightMindedPerk03))
+		akTarget.RemovePerk(HarlotLightMindedPerk03)
+	endif
+	
+	if(akTarget.HasPerk(HarlotLightMindedPerk02))
+		akTarget.RemovePerk(HarlotLightMindedPerk02)
+	endif
+	
+	if(akTarget.HasPerk(HarlotLightMindedPerk01))
+		akTarget.RemovePerk(HarlotLightMindedPerk01)
+	endif
+	
 	akTarget.ModAV("Destruction", mag)
 	akTarget.ModAV("Magicka", lastMagickaDebuff * -1)
 endEvent

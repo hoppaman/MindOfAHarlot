@@ -16,27 +16,17 @@ slaFrameworkScr Property SLA Auto
 SOS_SetupQuest_Script Property SOSSetupQuest Auto
 SLSF_CompatibilityScript Property SLSF Auto
 
-
-; Keywords
-Keyword Property HarlotSexAddictionStage1Keyword  Auto
-{Feels the effects}
-Keyword Property HarlotSexAddictionStage2Keyword  Auto
-{Effects get much stronger}
-Keyword Property HarlotSexAddictionStage3Keyword  Auto
-{Constantly aroused and horny}
-
 Keyword Property ActorTypeNPCKeyword auto
 
 ; Factions
-Faction property HarlotFaction Auto
-Faction property HarlotScoreFaction Auto
+Faction property HarlotFaction Auto ; Intended to be harlot faction but probably no use. Name is still reserved
+Faction property HarlotScoreFaction Auto ; Score
+Faction Property HarlotStagesFaction auto ; Which stage this is for easy dialogue
 Faction property HarlotBreastMorphFaction Auto
 Faction Property HarlotBodyMorphFaction Auto
 Faction property SanguineStandingFaction Auto
 Faction property SuccubusFaction Auto
 Faction property SuccubusSatiationFaction Auto
-
-
 
 ; Active properties
 
@@ -46,10 +36,7 @@ ReferenceAlias Property TaraRef Auto
 ; MoaH's copy of sanguine
 ReferenceAlias Property MoaHSanguineRef Auto
 
-
-
 Spell Property TurnHarlotAbility Auto
-Spell Property SexAddictionIMAD Auto
 
 ; Harlot buffs and debuffs
 

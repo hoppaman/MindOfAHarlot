@@ -1,0 +1,681 @@
+{
+	"morphs" : 
+	{
+		"7B Lower" : 
+		{
+			"value" : 0.0
+		},
+		"7B Upper" : 
+		{
+			"value" : 0.0
+		},
+		"7BLeg_v2" : 
+		{
+			"value" : 0.0
+		},
+		"AnalLoose_v2" : 
+		{
+			"value" : 0.0
+		},
+		"AnalPosition_v2" : 
+		{
+			"value" : 0.0
+		},
+		"AnalTexPosRe_v2" : 
+		{
+			"value" : 0.0
+		},
+		"AnalTexPos_v2" : 
+		{
+			"value" : 0.0
+		},
+		"AnkleSize" : 
+		{
+			"value" : 0.0
+		},
+		"AppleCheeks" : 
+		{
+			"value" : 0.25
+		},
+		"AreolaPull_v2" : 
+		{
+			"value" : 0.20000000298023224
+		},
+		"AreolaSize" : 
+		{
+			"value" : 0.20000000298023224
+		},
+		"ArmpitShape_v2" : 
+		{
+			"value" : 0.0
+		},
+		"Arms" : 
+		{
+			"value" : 0.25
+		},
+		"Back" : 
+		{
+			"value" : -0.20000000298023224
+		},
+		"BackArch" : 
+		{
+			"value" : 0.25
+		},
+		"BackValley_v2" : 
+		{
+			"value" : 0.0099999997764825821
+		},
+		"BackWing_v2" : 
+		{
+			"value" : 0.0
+		},
+		"Belly" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"BellyFrontDownFat_v2" : 
+		{
+			"value" : 0.0
+		},
+		"BellyFrontUpFat_v2" : 
+		{
+			"value" : 0.15000000596046448
+		},
+		"BellySideDownFat_v2" : 
+		{
+			"value" : 0.0
+		},
+		"BellySideUpFat_v2" : 
+		{
+			"value" : 0.0
+		},
+		"BellyUnder_v2" : 
+		{
+			"value" : 0.0
+		},
+		"BigBelly" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"BigButt" : 
+		{
+			"value" : 0.34999999403953552
+		},
+		"BigTorso" : 
+		{
+			"value" : -0.15000000596046448
+		},
+		"BreastCenter" : 
+		{
+			"value" : 0.0
+		},
+		"BreastCenterBig" : 
+		{
+			"value" : 0.0
+		},
+		"BreastCleavage" : 
+		{
+			"value" : 0.059999998658895493
+		},
+		"BreastFlatness" : 
+		{
+			"value" : 0.0
+		},
+		"BreastFlatness2" : 
+		{
+			"value" : 0.0
+		},
+		"BreastGravity2" : 
+		{
+			"value" : 0.0
+		},
+		"BreastHeight" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"BreastPerkiness" : 
+		{
+			"value" : -0.25
+		},
+		"BreastSideShape" : 
+		{
+			"value" : 0.0
+		},
+		"BreastTopSlope" : 
+		{
+			"value" : -0.15000000596046448
+		},
+		"BreastUnderDepth" : 
+		{
+			"value" : 0.0
+		},
+		"BreastWidth" : 
+		{
+			"value" : 0.5
+		},
+		"Breasts" : 
+		{
+			"value" : 0.80000001192092896
+		},
+		"BreastsConverage_v2" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"BreastsFantasy" : 
+		{
+			"value" : 0.14000000059604645
+		},
+		"BreastsGone" : 
+		{
+			"value" : -0.15000000596046448
+		},
+		"BreastsNewSH" : 
+		{
+			"value" : -0.25
+		},
+		"BreastsNewSHSymmetry" : 
+		{
+			"value" : 0.0
+		},
+		"BreastsPressed_v2" : 
+		{
+			"value" : 0.05000000074505806
+		},
+		"BreastsSmall" : 
+		{
+			"value" : 0.0099999997764825821
+		},
+		"BreastsSmall2" : 
+		{
+			"value" : 0.0099999997764825821
+		},
+		"BreastsTogether" : 
+		{
+			"value" : 0.18999999761581421
+		},
+		"Butt" : 
+		{
+			"value" : 0.0
+		},
+		"ButtClassic" : 
+		{
+			"value" : 0.15000000596046448
+		},
+		"ButtCrack" : 
+		{
+			"value" : -0.25
+		},
+		"ButtDimples" : 
+		{
+			"value" : 0.0
+		},
+		"ButtNarrow_v2" : 
+		{
+			"value" : 0.5
+		},
+		"ButtPressed_v2" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"ButtSaggy_v2" : 
+		{
+			"value" : 0.0
+		},
+		"ButtShape2" : 
+		{
+			"value" : -0.30000001192092896
+		},
+		"ButtSmall" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ButtUnderFold" : 
+		{
+			"value" : 0.0
+		},
+		"CBPC" : 
+		{
+			"value" : 0.0
+		},
+		"CalfFBThicc_v2" : 
+		{
+			"value" : 0.0
+		},
+		"CalfSize" : 
+		{
+			"value" : 0.0
+		},
+		"CalfSmooth" : 
+		{
+			"value" : 0.0
+		},
+		"ChestDepth" : 
+		{
+			"value" : -0.40000000596046448
+		},
+		"ChestWidth" : 
+		{
+			"value" : -0.30000001192092896
+		},
+		"ChubbyArms" : 
+		{
+			"value" : 0.05000000074505806
+		},
+		"ChubbyButt" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ChubbyLegs" : 
+		{
+			"value" : 0.0
+		},
+		"ChubbyWaist" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"Clavicle_v2" : 
+		{
+			"value" : 0.0
+		},
+		"Clit" : 
+		{
+			"value" : 0.0
+		},
+		"ClitSwell_v2" : 
+		{
+			"value" : 0.20000000298023224
+		},
+		"CrotchBack" : 
+		{
+			"value" : 0.0
+		},
+		"CrotchGap" : 
+		{
+			"value" : 0.0
+		},
+		"Cutepuffyness" : 
+		{
+			"value" : 0.0
+		},
+		"DoubleMelon" : 
+		{
+			"value" : 0.5
+		},
+		"FeetFeminine" : 
+		{
+			"value" : 0.0
+		},
+		"ForearmSize" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"Groin" : 
+		{
+			"value" : 0.0
+		},
+		"HipBone" : 
+		{
+			"value" : -0.60000002384185791
+		},
+		"HipCarved" : 
+		{
+			"value" : 0.0
+		},
+		"HipForward" : 
+		{
+			"value" : 0.0
+		},
+		"HipNarrow_v2" : 
+		{
+			"value" : 0.0
+		},
+		"HipUpperWidth" : 
+		{
+			"value" : 0.0
+		},
+		"Innieoutie" : 
+		{
+			"value" : 0.0
+		},
+		"KneeHeight" : 
+		{
+			"value" : 0.0
+		},
+		"KneeShape" : 
+		{
+			"value" : 0.0
+		},
+		"KneeTogether_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LabiaBulgogi_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LabiaCrumpled_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LabiaMorePuffyness_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LabiaNeat_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LabiaTightUp" : 
+		{
+			"value" : 0.0
+		},
+		"Labiaprotrude" : 
+		{
+			"value" : 0.0
+		},
+		"Labiaprotrude2" : 
+		{
+			"value" : 0.0
+		},
+		"Labiaprotrudeback" : 
+		{
+			"value" : 0.0
+		},
+		"Labiapuffyness" : 
+		{
+			"value" : 0.0
+		},
+		"Labiaspread" : 
+		{
+			"value" : 0.0
+		},
+		"LegShapeClassic" : 
+		{
+			"value" : 0.0
+		},
+		"LegSpread_v2" : 
+		{
+			"value" : 0.0
+		},
+		"LegsThin" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleAbs" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleArms" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleBack_v2" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleButt" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleLegs" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleMoreAbs_v2" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleMoreArms_v2" : 
+		{
+			"value" : 0.0
+		},
+		"MuscleMoreLegs_v2" : 
+		{
+			"value" : 0.0
+		},
+		"MusclePecs" : 
+		{
+			"value" : 0.0
+		},
+		"NavelEven" : 
+		{
+			"value" : 0.0
+		},
+		"NipBGone" : 
+		{
+			"value" : 0.0
+		},
+		"NippleBump_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleCrease_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleCrumpled_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleDip" : 
+		{
+			"value" : 0.0
+		},
+		"NippleDistance" : 
+		{
+			"value" : 0.0
+		},
+		"NippleDown" : 
+		{
+			"value" : -0.25
+		},
+		"NippleInvert_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleLength" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"NippleManga" : 
+		{
+			"value" : 0.0
+		},
+		"NipplePerkManga" : 
+		{
+			"value" : 0.0
+		},
+		"NipplePerkiness" : 
+		{
+			"value" : 0.0
+		},
+		"NipplePuffy_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleShy_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleSize" : 
+		{
+			"value" : 0.0
+		},
+		"NippleSquash1_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleSquash2_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleThicc_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleTip" : 
+		{
+			"value" : 0.0
+		},
+		"NippleTipManga" : 
+		{
+			"value" : 0.0
+		},
+		"NippleTube_v2" : 
+		{
+			"value" : 0.0
+		},
+		"NippleUp" : 
+		{
+			"value" : 0.34999999403953552
+		},
+		"OldBaseShape" : 
+		{
+			"value" : 0.0
+		},
+		"PregnancyBelly" : 
+		{
+			"value" : 0.0
+		},
+		"PushUp" : 
+		{
+			"value" : 0.0
+		},
+		"RibsMore_v2" : 
+		{
+			"value" : 0.0
+		},
+		"RibsProminance" : 
+		{
+			"value" : 0.0
+		},
+		"RoundAss" : 
+		{
+			"value" : 0.05000000074505806
+		},
+		"ShoulderSmooth" : 
+		{
+			"value" : -0.05000000074505806
+		},
+		"ShoulderTweak" : 
+		{
+			"value" : 0.0
+		},
+		"ShoulderWidth" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"SlimThighs" : 
+		{
+			"value" : 0.10000000149011612
+		},
+		"SternumDepth" : 
+		{
+			"value" : 0.0
+		},
+		"SternumHeight" : 
+		{
+			"value" : 0.40000000596046448
+		},
+		"ThighFBThicc_v2" : 
+		{
+			"value" : 0.0
+		},
+		"ThighInsideThicc_v2" : 
+		{
+			"value" : 0.0
+		},
+		"ThighOutsideThicc_v2" : 
+		{
+			"value" : 0.0
+		},
+		"Thighs" : 
+		{
+			"value" : 0.0
+		},
+		"TummyTuck" : 
+		{
+			"value" : -0.10000000149011612
+		},
+		"UNPHip_v2" : 
+		{
+			"value" : 0.0
+		},
+		"VaginaHole" : 
+		{
+			"value" : 0.0
+		},
+		"Vaginasize" : 
+		{
+			"value" : 0.0
+		},
+		"VanillaSSEHi" : 
+		{
+			"value" : 0.0
+		},
+		"VanillaSSELo" : 
+		{
+			"value" : 0.0
+		},
+		"VeraBellyButtonHeight" : 
+		{
+			"value" : 0.0
+		},
+		"VeraBodyA" : 
+		{
+			"value" : 0.0
+		},
+		"VeraBodyB" : 
+		{
+			"value" : 0.0
+		},
+		"VeraFit" : 
+		{
+			"value" : 0.0
+		},
+		"VeraKneeHeightFix" : 
+		{
+			"value" : 0.0
+		},
+		"VeraLowerBack" : 
+		{
+			"value" : 0.0
+		},
+		"VeraMuscleTones" : 
+		{
+			"value" : 0.0
+		},
+		"VeraNarrowBody" : 
+		{
+			"value" : 0.0
+		},
+		"VeraNarrowShoulders" : 
+		{
+			"value" : 0.0
+		},
+		"VeraPosture" : 
+		{
+			"value" : 0.0
+		},
+		"Waist" : 
+		{
+			"value" : -0.20000000298023224
+		},
+		"WaistHeight" : 
+		{
+			"value" : 0.40000000596046448
+		},
+		"WideWaistLine" : 
+		{
+			"value" : -0.25
+		},
+		"WristSize" : 
+		{
+			"value" : 0.0
+		},
+		"hips" : 
+		{
+			"value" : 0.0
+		}
+	}
+}

@@ -1,7 +1,6 @@
-Scriptname MoaH_QuestSelfConfidence extends Quest  
+Scriptname SLAT_QuestSelfConfidence extends Quest  
 
-MoaH_QuestCommonProperties Property CommonProperties Auto
-MoaH_QuestUtility Property MUtility Auto
+SLAT_QuestCommonProperties Property CommonProperties Auto
 
 float Property SelfConfidenceScoreMax = 100.0 autoReadonly Hidden
 float Property SelfConfidenceScore Auto Hidden
@@ -19,24 +18,25 @@ float Property SelfConfidenceScoreChangePerDay = -10.0 autoReadonly Hidden
 float Property SelfLooksDoubtPerDay = -5.0 autoReadonly Hidden
 
 float lastUpdateTime = 0.0
-
+Actor player
 event OnInit()
+	player = Game.GetPlayer()
 	SelfConfidenceScore = AcceptableSelfConfidenceScore
-	RegisterForModEvent("SLAT_Flattered", "SLAT_Flattered")
-	RegisterForModEvent("_STA_RandomRunUpAndSpankComplete", "STA_RandomRunUpAndSpankCompleted")
+	RegisterForModEvent("SLAT_Flattered", "OnSLATFlattered")
+	RegisterForModEvent("SLAT_Watched", "OnSLATWatched")
 	RegisterForUpdateGameTime(1.0)
 	lastUpdateTime = Utility.GetCurrentGameTime()
 	Update()
 endEvent
 
-event SLAT_Flattered(Actor akViewer, float distance)
+event OnSLATFlattered(Actor akSpeaker)
 	Debug.Notification("You enjoy to be watched.")
 	SelfConfidenceScore += SelfConfidenceScoreTinyBoost
 endEvent
 
-event STA_RandomRunUpAndSpankCompleted()
-	Debug.Notification("You enjoy the attention.")
-	SelfConfidenceScore += SelfConfidenceScoreModerateBoost
+event OnSLATWatcheded(Actor akWatcher)
+	Debug.Notification("You enjoy to be watched.")
+	SelfConfidenceScore += SelfConfidenceScoreTinyBoost
 endEvent
 
 event OnUpdateGameTime()
@@ -44,12 +44,15 @@ event OnUpdateGameTime()
 endEvent
 
 function Update()
+	; TODO: exhibitionist
+
 	; As player can wait or sleep we cannot trust that Update hits always. Count the real time passed.
+	int rank = player.GetFactionRank(CommonProperties.SexAddictionStagesFaction)
 	float step = PapyrusUtil.ClampFloat((Utility.GetCurrentGameTime() - lastUpdateTime) * 24, 1.0, 48)
 	lastUpdateTime = Utility.GetCurrentGameTime()
 	
 	SelfConfidenceScore += SelfConfidenceScoreChangePerDay/24.0 * step
-	if(!Game.GetPlayer().HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))
+	if(rank != 3)
 		SelfConfidenceScore += SelfLooksDoubtPerDay/24.0 * step
 	endIf
 	SelfConfidenceScore = PapyrusUtil.ClampFloat(SelfConfidenceScore, 0, SelfConfidenceScore)

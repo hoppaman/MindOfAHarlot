@@ -33,16 +33,16 @@ event OnUpdate()
 	
 endEvent
 
-bool function HasThought()
+bool function HasThought(Actor closeByCrush)
 	return ThoughtsCount > 0
 endFunction
 
 ; Relating to quest or sex partner..
-bool function HasPriorityThought()
-	return false
+int function GetProviderPriority(Actor closeByCrush)
+	return 80
 endFunction
 
-string function GetThought()
+string function GetThought(Actor closeByCrush)
 	return None
 endFunction
 

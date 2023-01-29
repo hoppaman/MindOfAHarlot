@@ -23,7 +23,7 @@ endFunction
 
 int Function Scan()
 	if(IsRunning())
-		Debug.Trace("[SLAT] multiple scan attempts")
+		Debug.Trace("[SLAT] ERROR: multiple scan attempts")
 		return 0
 	endIf
 	

@@ -60,6 +60,12 @@ event OnPageReset (string a_page)
 		bool debugComments = CommonProperties.DebugCommentsGlobal.GetValueInt() == 1
 		AddToggleOptionST("CommentsDebugToggle", "Show debug dialogue", debugComments)
 		
+		bool debugThoughts = CommonProperties.DebugThoughtsGlobal.GetValueInt() == 1
+		AddToggleOptionST("ThoughtsDebugToggle", "Debug thoughts", debugThoughts)
+		
+		bool debugSpectators = CommonProperties.DebugSpectatorsGlobal.GetValueInt() == 1
+		AddToggleOptionST("SpectatorsDebugToggle", "Debug spectators", debugSpectators)
+		
 	endIf
 	
 endEvent
@@ -207,5 +213,49 @@ state CommentsDebugToggle
 
 	event OnHighlightST()
 		SetInfoText("Adds debug lines to NPCS")
+	endEvent
+endState
+
+state ThoughtsDebugToggle
+	event OnDefaultST()
+		bool debugComments = CommonProperties.DebugThoughtsGlobal.GetValueInt() == 1
+		SetToggleOptionValueST(debugComments)
+	endEvent
+	
+	event OnSelectST()
+		bool debugComments = CommonProperties.DebugThoughtsGlobal.GetValueInt() == 1
+		debugComments = !debugComments
+		SetToggleOptionValueST(debugComments)
+		if(debugComments)
+			CommonProperties.DebugThoughtsGlobal.SetValueInt(1)
+		else
+			CommonProperties.DebugThoughtsGlobal.SetValueInt(0)
+		endIf
+	endEvent
+
+	event OnHighlightST()
+		SetInfoText("Adds debug to thoughts system.")
+	endEvent
+endState
+
+state SpectatorDebugToggle
+	event OnDefaultST()
+		bool debugComments = CommonProperties.DebugSpectatorsGlobal.GetValueInt() == 1
+		SetToggleOptionValueST(debugComments)
+	endEvent
+	
+	event OnSelectST()
+		bool debugComments = CommonProperties.DebugSpectatorsGlobal.GetValueInt() == 1
+		debugComments = !debugComments
+		SetToggleOptionValueST(debugComments)
+		if(debugComments)
+			CommonProperties.DebugSpectatorsGlobal.SetValueInt(1)
+		else
+			CommonProperties.DebugSpectatorsGlobal.SetValueInt(0)
+		endIf
+	endEvent
+
+	event OnHighlightST()
+		SetInfoText("Adds debug to spectator system.")
 	endEvent
 endState
