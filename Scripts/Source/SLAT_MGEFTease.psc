@@ -67,6 +67,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	isRunning = true
 	target = akTarget
 	isPlayer = target == Game.GetPlayer()
+	target.AddKeyword(CommonProperties.IsTeasingKeyword)
 	float duration = GetDuration()
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	Debug.Trace("[MoaH] Tease starting with duration of " + duration)
@@ -127,6 +128,8 @@ endEvent
 event OnEffectFinish(Actor akTarget, Actor akCaster)
 	isRunning = false
 	Debug.Notification("[SLAT] Teasing end")
+	
+	target.RemoveKeyword(CommonProperties.IsTeasingKeyword)
 	;UnregisterForUpdate()
 	if(isPlayer)
 		CommonProperties.PlayerIsTeasing = false

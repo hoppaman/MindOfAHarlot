@@ -294,3 +294,11 @@ endFunction
 bool Function DoesASeeB(Actor a, Actor b) global
 	return a.GetDistance(b) < 3000 && a.HasLOS(b)
 endFunction
+
+Function AddKeyword(Actor akActor, Keyword akKeyword) global
+	PO3_SKSEFunctions.AddKeywordToForm(akActor, akKeyword)
+endFunction
+
+Function RemoveKeyword(Actor akActor, Keyword akKeyword) global
+	PO3_SKSEFunctions.RemoveKeywordOnForm(akActor, akKeyword)
+endFunction

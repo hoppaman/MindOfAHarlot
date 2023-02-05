@@ -14,6 +14,8 @@ GlobalVariable Property DebugSpectatorsGlobal Auto
 float Property SettingThoughtsInterval = 60.0 Auto Hidden
 float Property PlayerRuntimeVariablesUpdateInterval = 1.5 Auto Hidden
 
+; Nail polish
+Keyword Property IsWearingNailPolish auto
 
 Keyword Property IsTeasingKeyword Auto
 Faction Property IsSexistFaction Auto
