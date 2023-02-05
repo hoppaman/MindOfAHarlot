@@ -43,6 +43,7 @@ Idle[] FemaleFondles
 
 Actor target
 bool isRunning
+bool isPlayer
 
 event OnInit()
 	FemaleFondles = new Idle[14]
@@ -65,6 +66,7 @@ endEvent
 event OnEffectStart(Actor akTarget, Actor akCaster)
 	isRunning = true
 	target = akTarget
+	isPlayer = target == Game.GetPlayer()
 	float duration = GetDuration()
 	SexLabFramework SexLab = SexLabUtil.GetAPI()
 	Debug.Trace("[MoaH] Tease starting with duration of " + duration)
@@ -87,7 +89,7 @@ event OnEffectStart(Actor akTarget, Actor akCaster)
 	Utility.Wait(1.5)
 
 	UpdateArousal()
-	if(target == Game.GetPlayer())
+	if(isPlayer)
 		;Debug.Trace("[SLAT] sending spanker ")
 		;Int ModSpankEvent = ModEvent.Create("STA_DoRandomNpcSpank")
 		;ModEvent.PushFloat(ModSpankEvent, 15) ; Timeout
@@ -126,7 +128,7 @@ event OnEffectFinish(Actor akTarget, Actor akCaster)
 	isRunning = false
 	Debug.Notification("[SLAT] Teasing end")
 	;UnregisterForUpdate()
-	if(target == Game.GetPlayer())
+	if(isPlayer)
 		CommonProperties.PlayerIsTeasing = false
 	endIf
 endEvent
