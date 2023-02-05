@@ -7,14 +7,6 @@ Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
 Debug.Notification("You feel powerless as the spirit starts to talk.")
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1(ObjectReference akSpeakerRef)
-Actor akSpeaker = akSpeakerRef as Actor
-;BEGIN CODE
 GetOwningQuest().SetCurrentStageID(110)
 ;END CODE
 EndFunction
