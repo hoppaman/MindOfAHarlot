@@ -22,6 +22,7 @@ function MorphActor(Actor akActor, string morphFile, float mod = 1.0) global
 endFunction
 
 function ApplyMorph(Actor akTarget, Faction morphFaction, string morphFile, float amountToMorph) global
+	Debug.Notification("[SLAT] " + morphFaction.GetName() + " " + amountToMorph)
 	float max = 127.0
 	float min = 0.0
 	if !akTarget.IsInFaction(morphFaction)
@@ -39,13 +40,12 @@ function ApplyMorph(Actor akTarget, Faction morphFaction, string morphFile, floa
 		;x
 		correction = min - nextRank 
 	endIf
+	
 	float realAmount = nextRank + correction
+	Debug.Notification("[SLAT] morph " + realAmount + " with correction " + correction)
+	akTarget.SetFactionRank(morphFaction, Math.Floor(realAmount) as int)
 	
-	akTarget.SetFactionRank(morphFaction, realAmount as int)
-	
-	currentRank = akTarget.GetFactionRank(morphFaction)
-
-	COMMON_MorphUtility.MorphActor(akTarget, morphFile, (currentRank as float) / max)
+	COMMON_MorphUtility.MorphActor(akTarget, morphFile, realAmount / max)
 	
 	; Finally tell Racemenu to update morphs
 	NiOverride.UpdateModelWeight(akTarget)
