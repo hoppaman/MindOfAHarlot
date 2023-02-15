@@ -83,7 +83,7 @@ function Update()
 		CommonProperties.PlayerHarlotMorphsProgressFloat.SetValue(progress)
 	endif
 
-	UpdateMorphs(akTarget, step)
+	;UpdateMorphs(akTarget, step)
 endFunction
 
 int function UpdateAddictionScore(Actor akTarget, float updateStep)
@@ -103,34 +103,34 @@ int function UpdateAddictionScore(Actor akTarget, float updateStep)
 	return Score
 endFunction
 
-function UpdateMorphs(Actor akTarget, float updateStep)
-	Faction HarlotBodyMorphFaction = CommonProperties.HarlotBodyMorphFaction
-	Faction HarlotBreastMorphFaction = CommonProperties.HarlotBreastMorphFaction
-	int HarlotScoreMaxRank = CommonProperties.HarlotScoreMaxRank
-	if(akTarget.GetFactionRank(HarlotBodyMorphFaction) <= HarlotScoreMaxRank)
-		int Step = Math.Floor(updateStep * CommonProperties.HarlotScorePerDay / 24.0)
-		COMMON_Utility.AddFactionRank( akTarget, HarlotBodyMorphFaction, Step, HarlotScoreMaxRank)
-	endIf
+;function UpdateMorphs(Actor akTarget, float updateStep)
+	;Faction HarlotBodyMorphFaction = CommonProperties.HarlotBodyMorphFaction
+	;Faction HarlotBreastMorphFaction = CommonProperties.HarlotBreastMorphFaction
+	;int HarlotScoreMaxRank = ;CommonProperties.HarlotScoreMaxRank
+	;if(akTarget.GetFactionRank(HarlotBodyMorphFaction) <= HarlotScoreMaxRank)
+		;int Step = Math.Floor(updateStep * CommonProperties.HarlotScorePerDay / 24.0)
+		;COMMON_Utility.AddFactionRank( akTarget, HarlotBodyMorphFaction, Step, HarlotScoreMaxRank)
+	;endIf
 	
-	int Score = akTarget.GetFactionRank(HarlotBodyMorphFaction)
-	COMMON_MorphUtility.MorphActor(akTarget, CommonProperties.SettingHarlotBodyMorphFile, (Score as float)/(HarlotScoreMaxRank as float))
+	;int Score = akTarget.GetFactionRank(HarlotBodyMorphFaction)
+	;COMMON_MorphUtility.MorphActor(akTarget, CommonProperties.SettingHarlotBodyMorphFile, (Score as float)/(HarlotScoreMaxRank as float))
 	
 	
-	if(akTarget.GetFactionRank(HarlotBreastMorphFaction) <= HarlotScoreMaxRank)
-		int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
-		COMMON_Utility.AddFactionRank( akTarget, HarlotBreastMorphFaction, Step, HarlotScoreMaxRank)
-	endIf
+	;if(akTarget.GetFactionRank(HarlotBreastMorphFaction) <= HarlotScoreMaxRank)
+	;	int Step = Math.Floor((updateStep / 24.0) * CommonProperties.HarlotScorePerDay)
+	;	COMMON_Utility.AddFactionRank( akTarget, HarlotBreastMorphFaction, Step, HarlotScoreMaxRank)
+	;endIf
 
 
-	Score = akTarget.GetFactionRank(HarlotBreastMorphFaction)
-	COMMON_MorphUtility.MorphActor(akTarget, CommonProperties.SettingHarlotBreastMorphFile, (Score as float)/(HarlotScoreMaxRank as float))
+	;Score = akTarget.GetFactionRank(HarlotBreastMorphFaction)
+	;COMMON_MorphUtility.MorphActor(akTarget, ;CommonProperties.SettingHarlotBreastMorphFile, (Score as float)/(HarlotScoreMaxRank as float))
 
 	;if(CommonProperties.SettingDebugHarlot)
 	;	Debug.Notification("[MoaH] Harlot morph score update on " + akTarget.GetDisplayName() + ". Current value " + Score)
 	;endIf
 	; Finally tell Racemenu to update morphs
-	NiOverride.UpdateModelWeight(akTarget)
-endFunction
+	;NiOverride.UpdateModelWeight(akTarget)
+;endFunction
 
 function UpdateFactionRanks(Actor akTarget, int Score)
 	MoaH_QuestIntroduction IntroductionQuest = CommonProperties.IntroductionQuest

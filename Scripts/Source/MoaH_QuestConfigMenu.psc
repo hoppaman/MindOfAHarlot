@@ -131,15 +131,7 @@ state DisplaySexAddictionST
 		Actor playerRef = Game.GetPlayer()
 		Spell HarlotAbility = CommonProperties.TurnHarlotAbility
 		if(PlayerRef.HasSpell(HarlotAbility))
-			
-			if(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage3Keyword))
-				SetTextOptionValueST("3")
-			elseif(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage2Keyword))
-				SetTextOptionValueST("2")
-			elseif(PlayerRef.HasKeyword(CommonProperties.HarlotSexAddictionStage1Keyword))
-				SetTextOptionValueST("1")
-			endIf
-		else
+		; TODO:
 			SetTextOptionValueST("-")
 		endIf
 	endEvent

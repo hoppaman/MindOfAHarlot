@@ -1,7 +1,5 @@
 Scriptname MoaH_QuestHarlotSLATTPFemale extends SLAT_ThoughtProviderBase
 
-MoaH_QuestUtility Property MUtility Auto
-
 string[] ThoughtsStage1ArousalA
 int[] ThoughtsStage1ArousalAExpressions
 string[] ThoughtsStage1ArousalB
@@ -137,8 +135,8 @@ endFunction
 
 string function GetThought(Actor closeByCrush)
 	Actor player = Game.GetPlayer()
-	int addictionStage = MUtility.GetAddictionStage(player)
-	int arousalStage = MUtility.GetArousalStage(player)
+	int addictionStage = COMMON_Utility.GetSexAddictionStage(player)
+	int arousalStage = COMMON_Utility.GetArousalStage(player)
 	string[] arousalThoughts
 	if(addictionStage == 3) ; Enjoying / not wanting to let go
 		if(arousalStage == 3) ; 'C'

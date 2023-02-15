@@ -37,7 +37,7 @@ Spell Property SexAddictionHighArousalIMAD Auto
 int Property SAHA_ArousalToApplyIMAD = 70 Auto Hidden
 
 ; Morphs
-Faction Property MorphScoreBigBreast Auto
+Faction Property MorphScoreBigBreasts Auto
 Faction Property MorphScoreHourglassBody Auto
 Faction Property MorphScoreRoundAss Auto
 
@@ -62,3 +62,10 @@ string Property UnregisterThoughtProviderEventName = "SLAT_UnregisterThoughtProv
 
 ;TODO: "Is teasing" is needed?
 ;Faction property IsAnimatingFaction Auto
+
+string Property BodyMorphsHourglassBodyFile = "SLAT_BodyMorphsHourglassBody.json" autoReadonly Hidden
+{Everything else than breast and ass}
+string Property BodyMorphsBigBreastsFile = "SLAT_BodyMorphsBigBreasts.json" autoReadonly Hidden
+{Breasts and nipples}
+string Property BodyMorphsRoundAssFile = "SLAT_BodyMorphsRoundAss.json" autoReadonly Hidden
+{Ass}

@@ -2,6 +2,7 @@ Scriptname SLAT_QuestSpectatorScanner extends Quest
 
 ReferenceAlias[] Property Spectators auto
 
+ReferenceAlias Property Spectated auto
 
 ; Buffer/cache
 Actor[] Property PotentialSpectators auto hidden

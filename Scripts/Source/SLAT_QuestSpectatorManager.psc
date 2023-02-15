@@ -9,6 +9,8 @@ Actor Property Player auto
 
 SLAT_RefSpectator[] Property Watchers auto
 
+ReferenceAlias Property Spectated auto
+
 ;Actor[] Property CurrentSpectators auto hidden
 
 event OnInit()
@@ -22,14 +24,16 @@ event OnUpdate()
 		
 		int foundCount = scanner.Scan()
 		Actor[] potSpecs = scanner.PotentialSpectators
-		Debug.Notification("Player is teasing: " + CommonProperties.PlayerIsTeasing + " specs " + foundCount)
+	
 		if (foundCount > 0)
+			Actor watched = scanner.Spectated.GetActorRef()
+			Spectated.ForceRefTo(watched)
+			Debug.Notification("[SLAT] " + watched.GetDisplayName() + " is watched. ")
 			int index = 0
 			While index < foundCount
 				Actor spect = potSpecs[index]
-				;Debug.Notification("We have spectator " + spect.GetDisplayName())
-				;spect.Say(Comments)
-				if(COMMON_Utility.DoesASeeB(spect, player))
+
+				if(COMMON_Utility.DoesASeeB(spect, watched))
 					int indexY = 0
 					bool isSet = false
 				

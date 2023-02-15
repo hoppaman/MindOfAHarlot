@@ -302,3 +302,13 @@ endFunction
 Function RemoveKeyword(Actor akActor, Keyword akKeyword) global
 	PO3_SKSEFunctions.RemoveKeywordOnForm(akActor, akKeyword)
 endFunction
+
+int Function GetArousalStage(Actor akActor) global
+	; TODO:
+	return 1
+endFunction
+
+int Function GetSexAddictionStage(Actor akActor) global
+	; TODO:
+	return 1
+endFunction
